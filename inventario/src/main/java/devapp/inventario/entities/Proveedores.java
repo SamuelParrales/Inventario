@@ -1,10 +1,9 @@
 package devapp.inventario.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Set;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -51,7 +50,10 @@ public class Proveedores {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.correo = correo;
-		this.productos = productos;
+		//this.productos = productos; 
+		
+		/*este atributo fue comentado debido a que esta 
+		asignacion no estaba definida*/
 	}
 
 

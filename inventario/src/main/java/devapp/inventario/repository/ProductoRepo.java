@@ -1,6 +1,6 @@
 package devapp.inventario.repository;
 
-import java.util.List;
+
 import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
