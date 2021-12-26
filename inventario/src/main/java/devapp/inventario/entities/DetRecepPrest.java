@@ -25,23 +25,24 @@ public class DetRecepPrest
     @ManyToOne
     private Producto producto;
     
-    private int cantidad;
-    private double totalLinea;
+    private int cantidadPrestada;
+    private double totalPrestacion;
+    
+    private int cantidadPerdida;
+    private double totalPerdida;
 
     public DetRecepPrest() 
     {
     }
-
     
-
-    public DetRecepPrest(RecepPrest recepPrest, Producto producto, int cantidad, double totalLinea) {
+    public DetRecepPrest(RecepPrest recepPrest, Producto producto, int cantidadPrestada, double totalPrestacion) {
         this.recepPrest = recepPrest;
         this.producto = producto;
-        this.cantidad = cantidad;
-        this.totalLinea = totalLinea;
+        this.cantidadPrestada = cantidadPrestada;
+        this.totalPrestacion = totalPrestacion;
+        this.cantidadPerdida = 0;
+        this.totalPerdida = 0;
     }
-
-
 
     public RecepPrest getRecepPrest() {
         return recepPrest;
@@ -58,25 +59,28 @@ public class DetRecepPrest
     public void setProducto(Producto producto) {
         this.producto = producto;
     }
-
-    public int getCantidad() {
-        return cantidad;
+    public int getCantidadPrestada() {
+        return cantidadPrestada;
     }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setCantidadPrestada(int cantidadPrestada) {
+        this.cantidadPrestada = cantidadPrestada;
     }
-
-    public double getTotalLinea() {
-        return totalLinea;
+    public double getTotalPrestacion() {
+        return totalPrestacion;
     }
-
-    public void setTotalLinea(double totalLinea) {
-        this.totalLinea = totalLinea;
+    public void setTotalPrestacion(double totalPrestacion) {
+        this.totalPrestacion = totalPrestacion;
     }
-
-    
-    
-
-
+    public int getCantidadPerdida() {
+        return cantidadPerdida;
+    }
+    public void setCantidadPerdida(int cantidadPerdida) {
+        this.cantidadPerdida = cantidadPerdida;
+    }
+    public double getTotalPerdida() {
+        return totalPerdida;
+    }
+    public void setTotalPerdida(double totalPerdida) {
+        this.totalPerdida = totalPerdida;
+    }
 }

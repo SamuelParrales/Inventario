@@ -1,6 +1,7 @@
 package devapp.inventario.entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -26,8 +27,10 @@ public class RecepPrest {
     @JoinColumn(name = "idCliente")
     @ManyToOne
     private Cliente cliente;
-
-    private double valorTotal;
+    private String direccion;
+    private Date fechaEntrega;
+    private double totalPrestacion;
+    private double totalPerdida;
     private double valorPagado;
 
     @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE}, mappedBy = "recepPrest",fetch = FetchType.EAGER)
@@ -38,13 +41,16 @@ public class RecepPrest {
 
     public RecepPrest()
     {
-
+        this.totalPerdida=0;
     }
- 
-    public RecepPrest(Cliente cliente, double valorTotal, double valorPagado, List<DetRecepPrest> detalles,
-            List<EstRecepPrest> estados) {
+
+    public RecepPrest(Cliente cliente, String direccion, Date fechaEntrega, double totalPrestacion,
+            double valorPagado, List<DetRecepPrest> detalles, List<EstRecepPrest> estados) {
         this.cliente = cliente;
-        this.valorTotal = valorTotal;
+        this.direccion = direccion;
+        this.fechaEntrega = fechaEntrega;
+        this.totalPrestacion = totalPrestacion;
+        this.totalPerdida = 0;
         this.valorPagado = valorPagado;
         this.detalles = detalles;
         this.estados = estados;
@@ -53,30 +59,63 @@ public class RecepPrest {
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
+
     public Cliente getCliente() {
         return cliente;
     }
+
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    public double getValorTotal() {
-        return valorTotal;
+
+    public String getDireccion() {
+        return direccion;
     }
-    public void setValorTotal(double valorTotal) {
-        this.valorTotal = valorTotal;
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
+
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }
+
+    public double getTotalPrestacion() {
+        return totalPrestacion;
+    }
+
+    public void setTotalPrestacion(double totalPrestacion) {
+        this.totalPrestacion = totalPrestacion;
+    }
+
+    public double getTotalPerdida() {
+        return totalPerdida;
+    }
+
+    public void setTotalPerdida(double totalPerdida) {
+        this.totalPerdida = totalPerdida;
+    }
+
     public double getValorPagado() {
         return valorPagado;
     }
+
     public void setValorPagado(double valorPagado) {
         this.valorPagado = valorPagado;
     }
+
     public List<DetRecepPrest> getDetalles() {
         return detalles;
     }
+
     public void setDetalles(List<DetRecepPrest> detalles) {
         this.detalles = detalles;
     }
@@ -99,16 +138,16 @@ public class RecepPrest {
         }
     }
 
-    public void recepcion(EstRecepPrest estado)
+    public void cambiarEstado(EstRecepPrest estado)
     {
         if(estados!=null)
         estados.add(estado);
     }
 
-    public boolean estadoActual()
+    public int estadoActual()
     {
         int len = estados.size();
-        return estados.get(len-1).isEstado();
+        return estados.get(len-1).getEstado();
     }
 
     

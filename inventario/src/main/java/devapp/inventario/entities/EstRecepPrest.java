@@ -24,7 +24,7 @@ public class EstRecepPrest
     private RecepPrest recepPrest;
 
     @Id
-    private boolean estado;
+    private int estado;
 
     @JoinColumn(name="idEmpleado",nullable = false)
     @ManyToOne(cascade = {CascadeType.MERGE})
@@ -35,24 +35,26 @@ public class EstRecepPrest
     public EstRecepPrest() {
     }
 
-    public RecepPrest getRecepPrest() {
-        return recepPrest;
-    }
-    public EstRecepPrest(RecepPrest recepPrest, boolean estado, Empleado empleado, Date fecha) {
+    public EstRecepPrest(RecepPrest recepPrest, int estado, Empleado empleado) {
         this.recepPrest = recepPrest;
         this.estado = estado;
         this.empleado = empleado;
-        this.fecha = fecha;
+        this.fecha = new Date();
+    }
+
+    public RecepPrest getRecepPrest() {
+        return recepPrest;
     }
 
     public void setRecepPrest(RecepPrest recepPrest) {
         this.recepPrest = recepPrest;
     }
-    public boolean isEstado() {
+
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
 
@@ -72,9 +74,4 @@ public class EstRecepPrest
         this.fecha = fecha;
     }
 
-   
-    
-    
-
-    
 }

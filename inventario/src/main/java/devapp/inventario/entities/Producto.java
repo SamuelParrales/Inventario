@@ -27,7 +27,9 @@ public class Producto
     private String nombre;
     private String descripcion;
     private double valorUnitario;
-    private int cant;
+    private int cantDisponible;
+    private double valorPrestacion;
+    private int cantPrestada;
     
 
     @JoinColumn(name="idCategoria")
@@ -48,14 +50,21 @@ public class Producto
     public Producto() {
     }
 
-    public Producto(String nombre, String descripcion, double valorUnitario, int cant, Categoria categoria) {
+
+
+    public Producto(String nombre, String descripcion, double valorUnitario, int cantDisponible, double valorPrestacion,
+            Categoria categoria) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.valorUnitario = valorUnitario;
-        this.cant = cant;
+        this.cantDisponible = cantDisponible;
+        this.valorPrestacion = valorPrestacion;
         this.categoria = categoria;
-        this.estado=1;
+        this.cantPrestada = 0;
+        this.estado = 1;
     }
+
+
 
     public int getId() {
         return id;
@@ -89,12 +98,28 @@ public class Producto
         this.valorUnitario = valorUnitario;
     }
 
-    public int getCant() {
-        return cant;
+    public int getCantDisponible() {
+        return cantDisponible;
     }
 
-    public void setCant(int cant) {
-        this.cant = cant;
+    public void setCantDisponible(int cantDisponible) {
+        this.cantDisponible = cantDisponible;
+    }
+
+    public double getValorPrestacion() {
+        return valorPrestacion;
+    }
+
+    public void setValorPrestacion(double valorPrestacion) {
+        this.valorPrestacion = valorPrestacion;
+    }
+
+    public int getCantPrestada() {
+        return cantPrestada;
+    }
+
+    public void setCantPrestada(int cantPrestada) {
+        this.cantPrestada = cantPrestada;
     }
 
     public Categoria getCategoria() {

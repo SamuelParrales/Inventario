@@ -1,7 +1,6 @@
 package devapp.inventario;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -55,7 +54,7 @@ public class InventarioApplication implements CommandLineRunner{
 		Categoria categoria  = new Categoria("Vidrios","Vidrierias");
 		categoria = categoriaRepo.save(categoria);
 
-		Producto producto = new Producto("A", "B", 2.0, 2, categoria);
+		Producto producto = new Producto("Aguardiente", "Rico rico", 1.5, 1, 2, categoria);
 		producto = productoRepo.save(producto);
 
 
@@ -68,7 +67,7 @@ public class InventarioApplication implements CommandLineRunner{
 		
 			//Probando edicion de la categoria y producto
 		categoria.setDescripcion("Ya no hay hoy");
-		producto.setCant(15);
+		producto.setCantDisponible(15);
 		// categoriaRepo.save(categoria);
 		// productoRepo.save(producto);
 
@@ -86,7 +85,8 @@ public class InventarioApplication implements CommandLineRunner{
 
 		//*******************Probando ManyToMany de Producto a Proveedor */
 		
-		Producto product = new Producto("Vaso", "de agua", 2.0, 2, categoria);
+		Producto product = new Producto("Vaso", "Copa de vino", 1.75, 2, 1, categoria);
+	
 		product.setProveedores(proveedores);
 
 		productoRepo.save(product);
@@ -125,14 +125,14 @@ public class InventarioApplication implements CommandLineRunner{
 		
 		List<DetRecepPrest> detalles = new ArrayList<DetRecepPrest>();
 		RecepPrest recepPrest = new RecepPrest();
-		EstRecepPrest estado = new EstRecepPrest(recepPrest, true, empleado, new Date());
+		EstRecepPrest estado = new EstRecepPrest(recepPrest, 4, empleado);
 		
 		detalles.add(new DetRecepPrest(recepPrest,product,5,20));
 		detalles.add(new DetRecepPrest(recepPrest,producto,5,10));
 
 		recepPrest.setCliente(cliente);
 		recepPrest.setValorPagado(30);
-		recepPrest.setValorTotal(30);
+		recepPrest.setTotalPrestacion(30);
 		recepPrest.setDetalles(detalles);
 		recepPrest.prestacion(estado);
 		recepPrestRepo.save(recepPrest);
@@ -144,10 +144,10 @@ public class InventarioApplication implements CommandLineRunner{
 		{
 			System.out.println(d.getProducto().getNombre());
 		}
-		estado = new EstRecepPrest(recepPrest, false, empleado, new Date());
+		estado = new EstRecepPrest(recepPrest, 0, empleado);
 			//Realizando recepcion
 
-		rP.recepcion(estado);
+		rP.cambiarEstado(estado);
 
 		System.out.println(rP.estadoActual());
 		//Borrando  prestacion
