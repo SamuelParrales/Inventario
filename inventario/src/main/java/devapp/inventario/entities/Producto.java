@@ -1,129 +1,129 @@
 package devapp.inventario.entities;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="producto")
-public class Producto {
-	
-	public Producto()
-	{
-		
-	}
-	
-	
-	public Producto(String nombre, String descripcion, float valorunitario, int cantidad, Set<Proveedores> proveedores,
-			Categoria categoria) {
-		super();
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.valorunitario = valorunitario;
-		this.cantidad = cantidad;
-		this.proveedores = proveedores;
-		this.categoria = categoria;
-	}
+@Table(name = "PRODUCTO")
+public class Producto 
+{
 
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="idProducto")
+    private int id;
+    private String nombre;
+    private String descripcion;
+    private double valorUnitario;
+    private int cant;
+    
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int idproducto;
-	private String nombre;
-	private String descripcion;
-	private float valorunitario;
-	private int cantidad;
-	
-	@ManyToMany(mappedBy = "productos")
-	private Set<Proveedores> proveedores;
-	
-	@JoinColumn(name="idcategoria")
-	@ManyToOne(cascade = CascadeType.MERGE)		//Hija de cliente
-	private Categoria categoria;
-	
+    @JoinColumn(name="idCategoria")
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    private Categoria categoria;
 
-	public String getNombre() {
-		return nombre;
-	}
+    
+	@JoinTable(
+	  name = "producto_prov", 
+	  joinColumns = @JoinColumn(name = "idProducto"), 
+	  inverseJoinColumns = @JoinColumn(name = "idProveedor"))
+    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST},fetch = FetchType.EAGER)
+    private List<Proveedor> proveedores;
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    private int estado;
 
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
-	public float getValorunitario() {
-		return valorunitario;
-	}
-
-	public void setValorunitario(float valorunitario) {
-		this.valorunitario = valorunitario;
-	}
-
-	public int getCantidad() {
-		return cantidad;
-	}
-
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
-
-	public int getIdproducto() {
-		return idproducto;
-	}
-
-
-
-	public Set<Proveedores> getProveedores() {
-		return proveedores;
-	}
-
-	public void setProveedores(Set<Proveedores> proveedores) {
-		this.proveedores = proveedores;
-	}
-
-
-	public Categoria getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
-
-	public void addProveedor(Proveedores proveedor) {
-        this.proveedores.add(proveedor);
-        proveedor.getProductos().add(this);
-    }
-    public void removeProducto(Proveedores proveedor) {
-        this.proveedores.remove(proveedor);
-        proveedor.getProductos().remove(this);
+    //**************Metodos********************* */
+    public Producto() {
     }
 
+    public Producto(String nombre, String descripcion, double valorUnitario, int cant, Categoria categoria) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.valorUnitario = valorUnitario;
+        this.cant = cant;
+        this.categoria = categoria;
+        this.estado=1;
+    }
 
-	@Override
-	public String toString() {
-		return "Producto [idproducto=" + idproducto + ", nombre=" + nombre + ", descripcion=" + descripcion
-				+ ", valorunitario=" + valorunitario + ", cantidad=" + cantidad + ", proveedores=" 
-				+ ", categoria=" + categoria.getId() + "]";
-	}
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	
-	
-	
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public double getValorUnitario() {
+        return valorUnitario;
+    }
+
+    public void setValorUnitario(double valorUnitario) {
+        this.valorUnitario = valorUnitario;
+    }
+
+    public int getCant() {
+        return cant;
+    }
+
+    public void setCant(int cant) {
+        this.cant = cant;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+    
+    public List<Proveedor> getProveedores() {
+        return proveedores;
+    }
+
+    public void setProveedores(List<Proveedor> proveedores) {
+        this.proveedores = proveedores;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    
+
+    
 }
+
+

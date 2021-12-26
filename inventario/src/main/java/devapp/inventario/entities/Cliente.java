@@ -1,80 +1,104 @@
 package devapp.inventario.entities;
 
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-//
+
 @Entity
-@Table(name="cliente")
+@Table(name = "CLIENTE")
 public class Cliente {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int idcliente;
-	
-	private String ci;
-	private String nombre;
-	private String apellido;
-	private String correo;
-	private String password;
-	
-	public Cliente(String ci, String nombre, String apellido, String correo, String password) {
-		super();
-		this.ci = ci;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.correo = correo;
-		this.password = password;
-	}
-	public Cliente()
-	{
-		
-	}
-	
-	public String getCorreo() {
-		return correo;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idCliente")
+    private int id;
+    private String ci;
+    private String nombres;
+    private String apellidos;
+    private String correo;
+    private String password;
+    private int estado;
+    
+    public Cliente() {
+    }
 
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
+    public Cliente(String ci, String nombres, String apellidos, String correo, String password) {
+        this.ci = ci;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.correo = correo;
+        this.password = password;
+        this.estado=1;
+    }
 
-	public int getIdcliente() {
-		return idcliente;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getCi() {
-		return ci;
-	}
-	public void setCi(String ci) {
-		this.ci = ci;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public String getApellido() {
-		return apellido;
-	}
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	@Override
-	public String toString() {
-		        return String.format("Cliente[id=%d,ci='%s', nombre='%s', apellido='%s', correo='%s',  passwor='%s']",
-		        		 idcliente,ci, nombre, apellido,correo,password);
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCi() {
+        return ci;
+    }
+
+    public void setCi(String ci) {
+        this.ci = ci;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente [apellidos=" + apellidos + ", ci=" + ci + ", correo=" + correo + ", id=" + id + ", nombres="
+                + nombres + ", password=" + password + "]";
+    }
+
+    
+
+    
+
+
+
 }
-
