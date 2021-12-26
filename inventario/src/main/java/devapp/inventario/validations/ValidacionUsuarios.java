@@ -94,6 +94,20 @@ public class ValidacionUsuarios {
 	    }
 		return false;
 	}
+
+	public boolean ValidarPassword(String pass) {
+		password=pass;
+		boolean bandera=false;
+		Pattern pat = Pattern.compile("^(?=.*\\d)(?=.*[\\u0021-\\u003c-\\u0040])(?=.*[A-Z])(?=.*[a-z])\\S{8,16}$");
+		Matcher matcher = pat.matcher(password);
+		int num= password.length();
+		if (num>7 && num<17) {
+			if (matcher.find()) {
+				bandera=true;
+			}
+		}
+		return bandera;
+	}
 	
 	
 }

@@ -41,4 +41,12 @@ class ValidacionUsuariosTest {
 		assertEquals(true,result);
 	}
 
+	@Test
+	void testValidarPassword() {
+		System.out.println("Validar Password");
+		ValidacionUsuarios val = new ValidacionUsuarios();
+		boolean result = val.ValidarPassword("hoLo(%&a*/7899o");
+		assertEquals(true,result);
+	}
+
 }
