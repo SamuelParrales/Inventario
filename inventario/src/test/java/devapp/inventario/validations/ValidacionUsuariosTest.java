@@ -33,4 +33,12 @@ class ValidacionUsuariosTest {
 		assertEquals(true,result);
 	}
 
+	@Test
+	void testValidarCI() {
+		System.out.println("Validar CI");
+		ValidacionUsuarios val = new ValidacionUsuarios();
+		boolean result = val.ValidarCI("1315478162");
+		assertEquals(true,result);
+	}
+
 }
