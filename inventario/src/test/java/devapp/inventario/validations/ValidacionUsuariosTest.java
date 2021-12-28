@@ -47,6 +47,17 @@ class ValidacionUsuariosTest {
 		ValidacionUsuarios val = new ValidacionUsuarios();
 		boolean result = val.ValidarPassword("hoLo(%&a*/7899o");
 		assertEquals(true,result);
+		//La contraseña debe tener al entre 8 y 16 caracteres
+		//, al menos un dígito, al menos una minúscula, al menos una mayúscula y 
+		//al menos un caracter no alfanumérico.
+	}
+
+	@Test
+	void testValidarTelefono() {
+		System.out.println("Validar Telefono");
+		ValidacionUsuarios val = new ValidacionUsuarios();
+		boolean result = val.ValidarTelefono("087407849");
+		assertEquals(false,result);
 	}
 
 }

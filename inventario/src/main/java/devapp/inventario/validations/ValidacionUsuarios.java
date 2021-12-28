@@ -108,6 +108,34 @@ public class ValidacionUsuarios {
 		}
 		return bandera;
 	}
+
+	public boolean ValidarTelefono(String tel) {
+		boolean bandera = false;
+		this.telefono=tel;
+		Pattern pat=Pattern.compile("^([0-9])\\S{8,9}$");
+		Matcher matcher = pat.matcher(telefono);
+			if (matcher.find()) {
+				if (this.ValidarCodidoDiscado(telefono)) bandera = true;
+			}
+		return bandera;
+	}
+	
+	private boolean ValidarCodidoDiscado(String tel) {
+		   boolean bandera = false;
+			String code = tel.substring(0,2);
+				if (tel.length()==9) {
+				   if (code.equals("02") || code.equals("03") 
+						   || code.equals("04") || code.equals("05") || code.equals("06")
+						   || code.equals("07")) {
+					   bandera = true;
+				   }
+				}
+				if (tel.length()==10) {
+					if (code.equals("09")) bandera = true;
+				}
+		   return bandera;
+	}
+   
 	
 	
 }
