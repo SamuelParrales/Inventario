@@ -56,6 +56,12 @@ public class EstRecepPrest
 
     public void setEstado(int estado) {
         this.estado = estado;
+//         5: Reservación (Debe cancelar el 50% como minimo)
+        // 4: Cancelación
+        // 3: Prestación (Debe cancelar el 100%)
+        // 2: Vencido (Por si se pasa de la fecha)
+        // 1: Compensación (para compensar las perdidas)
+        // 0: Recepcionado
     }
 
     public Empleado getEmpleado() {
