@@ -1,0 +1,36 @@
+:root
+{
+    --main-green: #198754;
+    --text-btn: rgba(204, 204, 204, 0.55);
+}
+
+
+.nav-item
+{
+    transition: all .1s linear;
+    border-radius: 10px;
+}
+
+.nav-item:hover
+{
+    background: var(--main-green);
+    transform: scale(1.05);
+    
+}
+
+.navbar
+{
+    /* background-color: rgba(8, 8, 8, 0.102); */
+    border-radius: 10px;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.212), rgba(8, 8, 8, 0.335));
+}
+
+.seccion-principal
+{
+ 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+

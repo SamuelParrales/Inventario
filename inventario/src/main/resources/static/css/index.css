@@ -1,0 +1,90 @@
+:root 
+{
+    --main-green: #198754;
+    --second-gray: rgb(152, 143, 129);
+    --background: rgb(24, 26, 27);
+}
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body
+{
+    background: var(--background);
+    color: var(--second-gray);
+}
+
+p
+{
+    text-align: justify;
+}
+.landing-page
+{
+    font-family: cursive;
+    overflow: hidden;
+
+}
+
+.landing-page .text
+{
+    
+    text-align: justify;
+}
+.landing-page .text h1
+{
+    font-size: 3em;
+    color: var(--main-green);
+}
+.landing-page .text h2
+{
+    font-size: 2em;
+    color:  var(--second-gray)
+}
+.landing-page img
+{
+    width: 100%;
+    border-radius:2px;
+}
+
+.landing-page .poligono
+{
+    
+    background: var(--main-green);
+    bottom: 0;
+    left: 0;
+    border-width: 11vh 0 0 100vw;
+    border-style: solid;
+    border-color: transparent transparent transparent var(--background);
+}
+
+#acerca-de
+{
+    overflow: hidden;
+}
+#acerca-de .poligono
+{
+    background: var(--main-green);
+    height: 2px;
+    width: 100%;
+}
+
+#contactos a
+{
+    color: var(--second-gray);
+    text-decoration: none;
+    font-size: 20px;
+    transition: all .1s linear;
+    border-radius: 10px;
+}
+
+#contactos a:hover
+{
+    color: var(--main-green);
+}
+
+#contactos .redes-sociales a
+{
+    font-size: 50px;
+}
