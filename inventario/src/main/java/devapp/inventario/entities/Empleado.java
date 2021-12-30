@@ -22,6 +22,8 @@ public class Empleado
     private String apellidos;
     private String correo;
     private String password;
+    private int estado;
+
     public Empleado() {
     }
     public Empleado(String ci, String tipo, String nombres, String apellidos, String correo, String password) {
@@ -31,6 +33,7 @@ public class Empleado
         this.apellidos = apellidos;
         this.correo = correo;
         this.password = password;
+        this.estado = 1;
     }
     public int getId() {
         return id;
@@ -74,9 +77,10 @@ public class Empleado
     public void setPassword(String password) {
         this.password = password;
     }
-  
-    
-
-
-    
+    public int getEstado() {
+        return estado;
+    }
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
 }
