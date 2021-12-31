@@ -56,11 +56,11 @@ public class CategoriaService {
 		to.setDescripcion(from.getDescripcion());
 	}
 	
-	/*public Categoria createCategoria(Categoria categoria) throws Exception{ //VERIFICAR si existe una categoria con ese nombre para crear categoria
+	public Categoria createCategoria(Categoria categoria) throws Exception{ //VERIFICAR si existe una categoria con ese nombre para crear categoria
 		if(checkNombre(categoria)) {
 			categoria = categoriaRepository.save(categoria);
 		}
 		return categoria;
-	}*/
+	}
 
 }

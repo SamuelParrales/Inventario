@@ -61,12 +61,12 @@ public class ClienteService {
 		to.setEstado(from.getEstado());
 	}
 	
-	/*public Cliente createCliente(Cliente cliente) throws Exception{ //VERIFICAR si existe una cuenta con ese correo para crear cliente
+	public Cliente createCliente(Cliente cliente) throws Exception{ //VERIFICAR si existe una cuenta con ese correo para crear cliente
 		if(checkCorreo(cliente)) {
 			cliente = clienteRepository.save(cliente);
 		}
 		return cliente;
-	}*/
+	}
 	
 	/*public boolean deleteCliente(int id) { //como borrar logicamente
 		try {
