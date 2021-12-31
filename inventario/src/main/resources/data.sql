@@ -1,0 +1,3 @@
+insert into Empleado(NOMBRES,APELLIDOS,CI,CORREO,ESTADO,PASSWORD,TIPO)
+Values
+('SISTEMA', '', '','',1,'','SISTEMA');

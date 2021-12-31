@@ -146,7 +146,19 @@ public class Producto
         this.estado = estado;
     }
 
-    
+    // Metodos adicionales
+
+    public boolean prestar(int cantPrestada)
+    {
+        if(cantPrestada>cantDisponible)
+            return false;
+        
+        this.cantPrestada = cantPrestada;
+        this.cantDisponible-=cantPrestada;
+        return true;
+
+
+    }
 
     
 }

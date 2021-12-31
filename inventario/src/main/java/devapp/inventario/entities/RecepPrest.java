@@ -39,6 +39,8 @@ public class RecepPrest {
     @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST, CascadeType.REMOVE},mappedBy = "recepPrest")
     List<EstRecepPrest> estados;
 
+    private String direccionEntrega;
+    private String garantia;
     public RecepPrest()
     {
         this.totalPerdida=0;
@@ -148,6 +150,22 @@ public class RecepPrest {
     {
         int len = estados.size();
         return estados.get(len-1).getEstado();
+    }
+
+    public String getDireccionEntrega() {
+        return direccionEntrega;
+    }
+
+    public void setDireccionEntrega(String direccionEntrega) {
+        this.direccionEntrega = direccionEntrega;
+    }
+
+    public String getGarantia() {
+        return garantia;
+    }
+
+    public void setGarantia(String garantia) {
+        this.garantia = garantia;
     }
 
     

@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import devapp.inventario.entities.compositepk.DetRecepPrestPk;
 
 @Entity
@@ -44,6 +46,7 @@ public class DetRecepPrest
         this.totalPerdida = 0;
     }
 
+    @JsonBackReference
     public RecepPrest getRecepPrest() {
         return recepPrest;
     }
