@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import devapp.inventario.entities.compositepk.EstRecepPrestPk;
 
 @Entity
@@ -41,7 +43,7 @@ public class EstRecepPrest
         this.empleado = empleado;
         this.fecha = new Date();
     }
-
+    @JsonBackReference
     public RecepPrest getRecepPrest() {
         return recepPrest;
     }

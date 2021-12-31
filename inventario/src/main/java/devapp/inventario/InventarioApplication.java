@@ -54,7 +54,7 @@ public class InventarioApplication implements CommandLineRunner{
 		Categoria categoria  = new Categoria("Vidrios","Vidrierias");
 		categoria = categoriaRepo.save(categoria);
 
-		Producto producto = new Producto("Aguardiente", "Rico rico", 1.5, 1, 2, categoria);
+		Producto producto = new Producto("Aguardiente", "Rico rico", 1.5, 15, 2, categoria);
 		producto = productoRepo.save(producto);
 
 
@@ -85,7 +85,7 @@ public class InventarioApplication implements CommandLineRunner{
 
 		//*******************Probando ManyToMany de Producto a Proveedor */
 		
-		Producto product = new Producto("Vaso", "Copa de vino", 1.75, 2, 1, categoria);
+		Producto product = new Producto("Vaso", "Copa de vino", 1.75, 10, 2, categoria);
 	
 		product.setProveedores(proveedores);
 
