@@ -19,9 +19,9 @@ public class EmpleadoService {
 		return (ArrayList<Empleado>) empleadoRepository.findAll();
 	}
 	
-	public Empleado saveEmpleado(Empleado empleado) {
+	/*public Empleado saveEmpleado(Empleado empleado) {
 		return empleadoRepository.save(empleado);
-	}
+	}*/
 	
 	public Empleado getById(int id) throws Exception{
 		return empleadoRepository.findById(id).orElseThrow(()-> new Exception("Usuario no encontrado"));

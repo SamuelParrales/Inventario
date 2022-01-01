@@ -18,9 +18,9 @@ public class ClienteService {
 		return (ArrayList<Cliente>) clienteRepository.findAll();
 	}
 	
-	public Cliente saveCliente(Cliente cliente) {
+	/*public Cliente saveCliente(Cliente cliente) {
 		return clienteRepository.save(cliente);
-	}
+	}*/
 	
 	public Cliente getById(int id) throws Exception{
 		return clienteRepository.findById(id).orElseThrow(()-> new Exception("Usuario no encontrado"));
