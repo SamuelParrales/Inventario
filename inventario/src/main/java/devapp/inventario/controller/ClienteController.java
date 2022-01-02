@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import devapp.inventario.entities.Cliente;
 import devapp.inventario.services.ClienteService;
 
-@Controller
+//@Controller
 public class ClienteController {
     @Autowired
     ClienteService clienteService;

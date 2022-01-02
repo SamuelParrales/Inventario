@@ -14,9 +14,9 @@ import devapp.inventario.entities.Categoria;
 import devapp.inventario.services.CategoriaService;
 
 
-@Controller
+//@Controller
 public class CategoriaController {
-
+    
     @Autowired
     CategoriaService categoriaService;
 
