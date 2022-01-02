@@ -27,8 +27,7 @@ public class RecepPrest {
     @JoinColumn(name = "idCliente")
     @ManyToOne
     private Cliente cliente;
-    private String direccion;
-    private Date fechaEntrega;
+    private Date fechaCaducida;
     private double totalPrestacion;
     private double totalPerdida;
     private double valorPagado;
@@ -46,17 +45,23 @@ public class RecepPrest {
         this.totalPerdida=0;
     }
 
-    public RecepPrest(Cliente cliente, String direccion, Date fechaEntrega, double totalPrestacion,
-            double valorPagado, List<DetRecepPrest> detalles, List<EstRecepPrest> estados) {
+  
+
+    public RecepPrest(long id, Cliente cliente, Date fechaCaducida, double totalPrestacion,
+            double valorPagado, List<DetRecepPrest> detalles, List<EstRecepPrest> estados,
+            String direccionEntrega) {
+        this.id = id;
         this.cliente = cliente;
-        this.direccion = direccion;
-        this.fechaEntrega = fechaEntrega;
+        this.fechaCaducida = fechaCaducida;
         this.totalPrestacion = totalPrestacion;
         this.totalPerdida = 0;
         this.valorPagado = valorPagado;
         this.detalles = detalles;
         this.estados = estados;
+        this.direccionEntrega = direccionEntrega;
     }
+
+
 
     public long getId() {
         return id;
@@ -74,21 +79,16 @@ public class RecepPrest {
         this.cliente = cliente;
     }
 
-    public String getDireccion() {
-        return direccion;
+
+    public Date getFechaCaducida() {
+        return fechaCaducida;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setFechaCaducida(Date fechaCaducida) {
+        this.fechaCaducida = fechaCaducida;
     }
 
-    public Date getFechaEntrega() {
-        return fechaEntrega;
-    }
 
-    public void setFechaEntrega(Date fechaEntrega) {
-        this.fechaEntrega = fechaEntrega;
-    }
 
     public double getTotalPrestacion() {
         return totalPrestacion;

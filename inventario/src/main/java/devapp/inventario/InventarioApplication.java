@@ -148,6 +148,7 @@ public class InventarioApplication implements CommandLineRunner{
 			//Realizando recepcion
 
 		rP.cambiarEstado(estado);
+		
 
 		System.out.println(rP.estadoActual());
 		//Borrando  prestacion

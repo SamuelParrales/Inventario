@@ -160,6 +160,12 @@ public class Producto
 
     }
 
+    public void devolver(int cant)
+    {
+        this.cantPrestada-=cant;
+        this.cantDisponible +=cant;
+    }
+
     
 }
 
