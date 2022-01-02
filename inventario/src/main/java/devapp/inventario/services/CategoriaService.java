@@ -13,8 +13,15 @@ import devapp.inventario.repositories.CategoriaRepository;
 public class CategoriaService {
 	@Autowired
 	CategoriaRepository categoriaRepository;
-	
-	public ArrayList<Categoria> getCategorias(){
+
+
+	public CategoriaService(){}
+	//constructor necesario para el test
+	public CategoriaService(CategoriaRepository categoriaRepository) {
+		this.categoriaRepository = categoriaRepository;
+    }
+
+    public ArrayList<Categoria> getCategorias(){
 		return (ArrayList<Categoria>) categoriaRepository.findAll();
 	}
 	

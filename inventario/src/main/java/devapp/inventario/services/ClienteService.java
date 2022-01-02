@@ -13,8 +13,15 @@ import devapp.inventario.repositories.ClienteRepository;
 public class ClienteService {
 	@Autowired
 	ClienteRepository clienteRepository;
+
+	public ClienteService(){ } //constructor vacio
 	
-	public ArrayList<Cliente> getClientes(){
+	//constructor necesario para el test
+	public ClienteService(ClienteRepository clienteRepository) {
+		this.clienteRepository = clienteRepository;
+    }
+
+    public ArrayList<Cliente> getClientes(){
 		return (ArrayList<Cliente>) clienteRepository.findAll();
 	}
 	
@@ -27,19 +34,20 @@ public class ClienteService {
 	}
 	
 	public boolean checkCorreo(Cliente cliente) throws Exception {
+		boolean bandera= false;
 		Optional<Cliente> clienteFound = clienteRepository.findByCorreo(cliente.getCorreo());
 		if(clienteFound.isPresent()) {
-			throw new Exception("Ya existe una cuenta con este correo vinculado");
-			
+			bandera = true;
+			//throw new Exception("Ya existe una cuenta con este correo vinculado");
 		}
-		return true;
+		return bandera;
 	}
 	
 	public Cliente updateCliente(Cliente fromCliente) throws Exception{
 		Cliente toCliente = getById(fromCliente.getId());
 		mapCliente(fromCliente,toCliente);
 		clienteRepository.save(toCliente);
-		return null;
+		return toCliente;
 		
 	}
 	

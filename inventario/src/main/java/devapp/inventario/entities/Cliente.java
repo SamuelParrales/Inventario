@@ -21,7 +21,17 @@ public class Cliente {
     private String password;
     private int estado;
     
-    public Cliente() {
+    public Cliente() {}
+
+    //constructor necesario para el test
+    public Cliente(int id,String ci, String nombres, String apellidos, String correo, String password) {
+        this.id=id;
+        this.ci = ci;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.correo = correo;
+        this.password = password;
+        this.estado=1;
     }
 
     public Cliente(String ci, String nombres, String apellidos, String correo, String password) {
