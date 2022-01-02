@@ -19,22 +19,22 @@ public class EmpleadoService {
 		return (ArrayList<Empleado>) empleadoRepository.findAll();
 	}
 	
-	public Empleado saveEmpleado(Empleado empleado) {
+	/*public Empleado saveEmpleado(Empleado empleado) {
 		return empleadoRepository.save(empleado);
-	}
+	}*/
 	
 	public Empleado getById(int id) throws Exception{
 		return empleadoRepository.findById(id).orElseThrow(()-> new Exception("Usuario no encontrado"));
 	}
 	
-	public boolean deleteEmpleado(int id) {
+	/*public boolean deleteEmpleado(int id) {
 		try {
 			empleadoRepository.deleteById(id);
 			return true;
 		}catch(Exception err){
 			return false;
 		}
-	}
+	}*/
 	
 	public boolean checkCorreo(Empleado empleado) throws Exception {
 		Optional<Empleado> empleadoFound = empleadoRepository.findByCorreo(empleado.getCorreo());
@@ -60,12 +60,22 @@ public class EmpleadoService {
 		to.setPassword(from.getPassword());
 	}
 	
-	/*public Empleado createEmpleado(Empleado empleado) throws Exception{ //VERIFICAR si existe una cuenta con ese correo para crear empleado
+	public Empleado createEmpleado(Empleado empleado) throws Exception{ //VERIFICAR si existe una cuenta con ese correo para crear empleado
 		if(checkCorreo(empleado)) {
 			empleado = empleadoRepository.save(empleado);
 		}
 		return empleado;
-	}*/
+	}
 
+	public Empleado deleteEmpleadoLogico(Empleado fromEmpleado) throws Exception {
+		Empleado toEmpleado = getById(fromEmpleado.getId());
+		changeEstado(fromEmpleado,toEmpleado);
+		empleadoRepository.save(toEmpleado);
+		return null;
+	}
+
+	protected void changeEstado(Empleado from, Empleado to) {
+		to.setEstado(from.getEstado());
+	}
 
 }

@@ -18,9 +18,9 @@ public class CategoriaService {
 		return (ArrayList<Categoria>) categoriaRepository.findAll();
 	}
 	
-	public Categoria saveCategoria(Categoria categoria) {
+	/*public Categoria saveCategoria(Categoria categoria) {
 		return categoriaRepository.save(categoria);
-	}
+	}*/
 	
 	public Categoria getById(int id) throws Exception{
 		return categoriaRepository.findById(id).orElseThrow(()-> new Exception("Categoria no encontrada"));
@@ -48,7 +48,6 @@ public class CategoriaService {
 		mapCategoria(fromCategoria,toCategoria);
 		categoriaRepository.save(toCategoria);
 		return null;
-		
 	}
 	
 	protected void mapCategoria(Categoria from, Categoria to) {
@@ -56,11 +55,11 @@ public class CategoriaService {
 		to.setDescripcion(from.getDescripcion());
 	}
 	
-	/*public Categoria createCategoria(Categoria categoria) throws Exception{ //VERIFICAR si existe una categoria con ese nombre para crear categoria
+	public Categoria createCategoria(Categoria categoria) throws Exception{ //VERIFICAR si existe una categoria con ese nombre para crear categoria
 		if(checkNombre(categoria)) {
 			categoria = categoriaRepository.save(categoria);
 		}
 		return categoria;
-	}*/
+	}
 
 }
