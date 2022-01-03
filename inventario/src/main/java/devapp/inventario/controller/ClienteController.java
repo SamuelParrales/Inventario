@@ -1,130 +1,57 @@
 package devapp.inventario.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import devapp.inventario.entities.Cliente;
 import devapp.inventario.services.ClienteService;
+import devapp.inventario.services.RecordNotFoundException;
 
-//@Controller
+@RestController
+@RequestMapping("/cliente")
 public class ClienteController {
-    @Autowired
-    ClienteService clienteService;
+	@Autowired
+	ClienteService service;
+	
+	@GetMapping("/get/all")
+	public ResponseEntity<List<Cliente>> getAll() {
+		List<Cliente> list = service.getAll();
+		return new ResponseEntity<List<Cliente>>(list, new HttpHeaders(), HttpStatus.OK);
+	}
 
+	@GetMapping("/get/{id}")
+	public ResponseEntity<Cliente> getClienteById(@PathVariable("id") int id) throws RecordNotFoundException {
+		Cliente entity = service.findById(id);
+		return new ResponseEntity<Cliente>(entity, new HttpHeaders(), HttpStatus.OK);
+	}
 
-    @GetMapping("/")
-    public String index(){
-        return "index";
-    }
+	@PostMapping("/create")
+	public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente){
+		service.createCliente(cliente);
+		return new ResponseEntity<Cliente>(cliente, new HttpHeaders(), HttpStatus.OK);
+	}
 
-    @GetMapping("/clienteForm")
-    public String clienteForm(Model model){
-        model.addAttribute("clienteForm", new Cliente());
-        model.addAttribute("clienteList", clienteService.getClientes());
-        model.addAttribute("listTab", "active");
-        return "cliente-form/user-view";
-    }
+	@PutMapping("/update")
+	public ResponseEntity<Cliente> updateCliente(@RequestBody Cliente cliente) throws RecordNotFoundException{
+		service.updateCliente(cliente);
+		return new ResponseEntity<Cliente>(cliente, new HttpHeaders(), HttpStatus.OK);
+	}
 
-    @PostMapping("/clienteForm")
-    public String createCliente(@ModelAttribute("clienteForm")Cliente cliente, BindingResult result,ModelMap model){
-        if(result.hasErrors()){
-            model.addAttribute("clienteForm", cliente);
-            model.addAttribute("formTab", "active");
-        }else{
-            try {
-                clienteService.createCliente(cliente);
-                model.addAttribute("clienteForm", new Cliente());
-                model.addAttribute("listTab", "active");
-            } catch (Exception e) {
-                model.addAttribute("errorMessage",e.getMessage());
-                model.addAttribute("clienteForm", cliente);
-                model.addAttribute("formTab", "active");
-            } 
-        }
-        model.addAttribute("categoriaList", clienteService.getClientes());
-        return "cliente-form/user-view";
-    }
-    
-    @GetMapping("/editCliente/{id}")
-    public String getEditClienteForm(Model model, @PathVariable(name = "id") int id)throws Exception{
-        Cliente clienteToEdit = clienteService.getById(id);
-        model.addAttribute("clienteForm", clienteToEdit);
-        model.addAttribute("clienteList", clienteService.getClientes());
-        model.addAttribute("formTab", "active");
-        model.addAttribute("editMode", "true");
-
-        return "cliente-form/user-view";
-    }
-
-    @PostMapping("/editCliente")
-    public String postEditClienteForm(@ModelAttribute("clienteForm")Cliente cliente, BindingResult result,ModelMap model){
-        if(result.hasErrors()){
-            model.addAttribute("clienteForm", cliente);
-            model.addAttribute("formTab", "active");
-            model.addAttribute("editMode", "true");
-        }else{
-            try {
-                clienteService.updateCliente(cliente);
-                model.addAttribute("clienteForm", cliente);
-                model.addAttribute("listTab", "active");
-            } catch (Exception e) {
-                model.addAttribute("errorMessage",e.getMessage());
-                model.addAttribute("clienteForm", cliente);
-                model.addAttribute("formTab", "active");
-                model.addAttribute("editMode", "true");
-            } 
-        }
-        model.addAttribute("clienteList", clienteService.getClientes());
-        return "cliente-form/user-view";
-    }
-
-    @GetMapping("/editCliente/cancel")
-    public String cancelEditCliente(ModelMap model){
-        return "redirect:/clienteForm";
-    }
-
-    @GetMapping("/deleteCliente/{id}")
-    public String getDeleteClienteForm(Model model, @PathVariable(name = "id") int id)throws Exception{
-        Cliente clienteToDelete = clienteService.getById(id);
-        model.addAttribute("clienteForm", clienteToDelete);
-        model.addAttribute("clienteList", clienteService.getClientes());
-        model.addAttribute("formTab", "active");
-        model.addAttribute("editMode", "true");
-
-        return "cliente-form/user-view";
-    }
-
-    @PostMapping("/deleteCliente")
-    public String postDeleteClienteForm(@ModelAttribute("clienteForm")Cliente cliente, BindingResult result,ModelMap model){
-        if(result.hasErrors()){
-            model.addAttribute("clienteForm", cliente);
-            model.addAttribute("formTab", "active");
-            model.addAttribute("editMode", "true");
-        }else{
-            try {
-                clienteService.deleteClienteLogico(cliente);
-                model.addAttribute("clienteForm", cliente);
-                model.addAttribute("listTab", "active");
-            } catch (Exception e) {
-                model.addAttribute("errorMessage",e.getMessage());
-                model.addAttribute("clienteForm", cliente);
-                model.addAttribute("formTab", "active");
-                model.addAttribute("editMode", "true");
-            } 
-        }
-        model.addAttribute("clienteList", clienteService.getClientes());
-        return "cliente-form/user-view";
-    }
-
-    @GetMapping("/deleteCliente/cancel")
-    public String cancelDeleteCliente(ModelMap model){
-        return "redirect:/clienteForm";
-    }
-}
+	@DeleteMapping("/delete/{id}")
+	public HttpStatus deleteClienteById(@PathVariable("id") int id) throws RecordNotFoundException {
+		service.deleteClienteById(id);
+		return HttpStatus.OK;
+	}
+}				

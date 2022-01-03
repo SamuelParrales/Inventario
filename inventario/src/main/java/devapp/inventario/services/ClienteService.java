@@ -1,6 +1,7 @@
 package devapp.inventario.services;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,78 +12,49 @@ import devapp.inventario.repositories.ClienteRepository;
 
 @Service
 public class ClienteService {
+
 	@Autowired
-	ClienteRepository clienteRepository;
+	ClienteRepository repo;
 
-	public ClienteService(){ } //constructor vacio
-	
-	//constructor necesario para el test
-	public ClienteService(ClienteRepository clienteRepository) {
-		this.clienteRepository = clienteRepository;
-    }
+	public List<Cliente> getAll(){
+		List<Cliente> clienteList = (List<Cliente>) repo.findAll();
+		if(clienteList.size() > 0) {
+			return clienteList;
+		} else {
+			return new ArrayList<Cliente>();
+		}
+	}
+     		
+	public Cliente findById(int id) throws RecordNotFoundException{
+		Optional<Cliente> cliente = repo.findById(id);
+		if(cliente.isPresent()) {
+			return cliente.get();
+		} else {
+			throw new RecordNotFoundException("Record does not exist for the given Id");
+		}
+	}
 
-    public ArrayList<Cliente> getClientes(){
-		return (ArrayList<Cliente>) clienteRepository.findAll();
+	public Cliente createCliente(Cliente cliente){
+		return repo.save(cliente);
 	}
+
+	public Cliente updateCliente(Cliente cliente) throws RecordNotFoundException {
+		Optional<Cliente> clienteTemp = repo.findById(cliente.getId());
 	
-	/*public Cliente saveCliente(Cliente cliente) {
-		return clienteRepository.save(cliente);
-	}*/
-	
-	public Cliente getById(int id) throws Exception{
-		return clienteRepository.findById(id).orElseThrow(()-> new Exception("Usuario no encontrado"));
-	}
-	
-	public boolean checkCorreo(Cliente cliente) throws Exception {
-		boolean bandera= false;
-		Optional<Cliente> clienteFound = clienteRepository.findByCorreo(cliente.getCorreo());
-		if(clienteFound.isPresent()) {
-			bandera = true;
-			//throw new Exception("Ya existe una cuenta con este correo vinculado");
+		if(clienteTemp.isPresent()){
+			return repo.save(cliente);
+		} else {
+			throw new RecordNotFoundException("Record does not exist for the given Id");
 		}
-		return bandera;
 	}
-	
-	public Cliente updateCliente(Cliente fromCliente) throws Exception{
-		Cliente toCliente = getById(fromCliente.getId());
-		mapCliente(fromCliente,toCliente);
-		clienteRepository.save(toCliente);
-		return toCliente;
-		
-	}
-	
-	protected void mapCliente(Cliente from, Cliente to) {
-		to.setCi(from.getCi());
-		to.setNombres(from.getNombres());
-		to.setApellidos(from.getApellidos());
-		to.setPassword(from.getPassword());
-	}
-	
-	public Cliente deleteClienteLogico(Cliente fromCliente) throws Exception {
-		Cliente toCliente = getById(fromCliente.getId());
-		changeEstado(fromCliente,toCliente);
-		clienteRepository.save(toCliente);
-		return null;
-	}
-	
-	protected void changeEstado(Cliente from, Cliente to) {
-		to.setEstado(from.getEstado());
-	}
-	
-	public Cliente createCliente(Cliente cliente) throws Exception{ //VERIFICAR si existe una cuenta con ese correo para crear cliente
-		if(checkCorreo(cliente)) {
-			cliente = clienteRepository.save(cliente);
+
+	public void deleteClienteById(int id) throws RecordNotFoundException{
+		Optional<Cliente> cliente = repo.findById(id);
+		if(cliente.isPresent()) {
+		repo.deleteById(id);
+		} else {
+			throw new RecordNotFoundException("Record does not exist for the given Id");
 		}
-		return cliente;
-	}
-	
-	/*public boolean deleteCliente(int id) { //como borrar logicamente
-		try {
-			clienteRepository.deleteById(id);
-			return true;
-		}catch(Exception err){
-			return false;
-		}
-	}*/
+	}		
 
 }
