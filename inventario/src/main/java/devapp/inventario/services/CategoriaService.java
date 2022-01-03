@@ -1,6 +1,7 @@
 package devapp.inventario.services;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,61 +13,47 @@ import devapp.inventario.repositories.CategoriaRepository;
 @Service
 public class CategoriaService {
 	@Autowired
-	CategoriaRepository categoriaRepository;
+	CategoriaRepository repo;
 
-
-	public CategoriaService(){}
-	//constructor necesario para el test
-	public CategoriaService(CategoriaRepository categoriaRepository) {
-		this.categoriaRepository = categoriaRepository;
-    }
-
-    public ArrayList<Categoria> getCategorias(){
-		return (ArrayList<Categoria>) categoriaRepository.findAll();
-	}
-	
-	/*public Categoria saveCategoria(Categoria categoria) {
-		return categoriaRepository.save(categoria);
-	}*/
-	
-	public Categoria getById(int id) throws Exception{
-		return categoriaRepository.findById(id).orElseThrow(()-> new Exception("Categoria no encontrada"));
-	}
-	
-	public boolean deleteCategoria(int id) {
-		try {
-			categoriaRepository.deleteById(id);
-			return true;
-		}catch(Exception err){
-			return false;
+	public List<Categoria> getAll(){
+		List<Categoria> categoriaList = (List<Categoria>) repo.findAll();
+		if(categoriaList.size() > 0) {
+			return categoriaList;
+		} else {
+			return new ArrayList<Categoria>();
 		}
 	}
-	
-	public boolean checkNombre(Categoria categoria) throws Exception {
-		Optional<Categoria> categoriaFound = categoriaRepository.findByNombre(categoria.getNombre());
-		if(categoriaFound.isPresent()) {
-			throw new Exception("Ya existe una categoria con ese nombre");
+     		
+	public Categoria findByIdCategoria(int idCategoria) throws RecordNotFoundException{
+		Optional<Categoria> categoria = repo.findById(idCategoria);
+		if(categoria.isPresent()) {
+			return categoria.get();
+		} else {
+			throw new RecordNotFoundException("Record does not exist for the given Id");
 		}
-		return true;
 	}
-	
-	public Categoria updateCategoria(Categoria fromCategoria) throws Exception{
-		Categoria toCategoria = getById(fromCategoria.getId());
-		mapCategoria(fromCategoria,toCategoria);
-		categoriaRepository.save(toCategoria);
-		return null;
+
+	public Categoria createCategoria(Categoria categoria){
+		return repo.save(categoria);
 	}
+
+	public Categoria updateCategoria(Categoria categoria) throws RecordNotFoundException {
+		Optional<Categoria> categoriaTemp = repo.findById(categoria.getId());
 	
-	protected void mapCategoria(Categoria from, Categoria to) {
-		to.setNombre(from.getNombre());
-		to.setDescripcion(from.getDescripcion());
-	}
-	
-	public Categoria createCategoria(Categoria categoria) throws Exception{ //VERIFICAR si existe una categoria con ese nombre para crear categoria
-		if(checkNombre(categoria)) {
-			categoria = categoriaRepository.save(categoria);
+		if(categoriaTemp.isPresent()){
+			return repo.save(categoria);
+		} else {
+			throw new RecordNotFoundException("Record does not exist for the given Id");
 		}
-		return categoria;
 	}
+
+	public void deleteCategoriaByIdCategoria(int idCategoria) throws RecordNotFoundException{
+		Optional<Categoria> categoria = repo.findById(idCategoria);
+		if(categoria.isPresent()) {
+		repo.deleteById(idCategoria);
+		} else {
+			throw new RecordNotFoundException("Record does not exist for the given Id");
+		}
+	}	
 
 }
