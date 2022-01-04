@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import devapp.inventario.dto.PrestacionEmplDto;
 import devapp.inventario.entities.Empleado;
+import devapp.inventario.entities.RecepPrest;
 import devapp.inventario.services.EmpleadoService;
+import devapp.inventario.services.RecepPrestService;
 import devapp.inventario.services.RecordNotFoundException;
 
 @RestController
@@ -24,6 +28,9 @@ import devapp.inventario.services.RecordNotFoundException;
 public class EmpleadoController {
 	@Autowired
 	EmpleadoService service;
+
+	@Autowired
+	RecepPrestService recepPrestService;
 	
 	@GetMapping("/get/all")
 	public ResponseEntity<List<Empleado>> getAll() {
@@ -54,5 +61,42 @@ public class EmpleadoController {
 		service.deleteEmpleadoById(id);
 		return HttpStatus.OK;
 	}
+
+	///*************Reservaciones de los empleados */
+
+	@PostMapping(path = "/{idE}/prestacion/")
+    public RecepPrest savePrestacion(@PathVariable("idE") int idEmpleado,
+        @RequestBody PrestacionEmplDto save)
+    {
+    
+        return recepPrestService.savePrestacion(save,idEmpleado);
+    }
+	//Para modificar el estado de la reservacion
+	@PutMapping(path ="/{idE}/reservacion/{idR}")
+    public RecepPrest updateReservacion( @PathVariable("idE") int idEmpleado,
+    @PathVariable("idR") long idR,
+	@RequestParam(required = false,defaultValue = "update") String action,
+	@RequestBody(required = false) PrestacionEmplDto prestacionDto)
+    {
+		if(action.equals("cancel"))
+			return recepPrestService.cancelReservacionEmpl(idR, idEmpleado);
+
+		if(action.equals("update"))
+		{
+			if(prestacionDto!=null)
+			return recepPrestService.actualizarReservacionEmpl(prestacionDto, idR,idEmpleado);
+		}
+		return null;
+    }
+
+
+
+	// @PutMapping(path ="/{idE}/reservacion/{idR}")
+	// public RecepPrest cancelReservacion
+	// (
+
+	// )
+
+	
 }				
 

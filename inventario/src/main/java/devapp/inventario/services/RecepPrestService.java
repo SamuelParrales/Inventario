@@ -261,7 +261,7 @@ public class RecepPrestService {
         //Boolean continuaReservacion = prestacionDto.isReservacion();
 
         
-        if(lastEstado!=5)
+        if(lastEstado!=5)//5:Reservacion
            return null;
         
         double valorPagado = prestacionDto.getValorPagado();
@@ -339,6 +339,9 @@ public class RecepPrestService {
             return null;
         }
 
+        int lastEstado = reservacion.estadoActual();
+        if(lastEstado!=5)   //5: Reservacion
+            return null;
         
         double valorPagado = reservacionDto.getValorPagado();
         List<DetRecepPrest> detalles = reservacion.getDetalles();

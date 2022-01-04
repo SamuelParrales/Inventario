@@ -27,21 +27,7 @@ public class RecepPrestController {
     //     return recepPrestService.obtenerRecepPrest();
     // }
         //******************Para el cliente */
-    @PostMapping(path = "/cliente/{idC}/reservacion/")
-    public RecepPrest saveReservacion(@PathVariable("idC") int idCliente,
-        @RequestBody ReservacionClientDto save)
-    {
-        return recepPrestService.saveReservacionCliente(save,idCliente);
-    }
     
-    @PutMapping(path =  "/cliente/{idC}/reservacion/{idR}")
-    public RecepPrest updateClientReservacion(@PathVariable("idC") int idCliente,
-        @PathVariable("idR") long idReser,
-        @RequestBody ReservacionClientDto reservacionDto)
-    {
-        //id: Id de la reservacion
-        return recepPrestService.actualizarReservacionClient(reservacionDto, idReser,idCliente);
-    }
 
     @PutMapping("/cancelar")
     public RecepPrest cancelar(@RequestParam long idRecepPrest, 
@@ -52,21 +38,9 @@ public class RecepPrestController {
     }
 
     //Para los empleados
-    @PostMapping(path = "/empleado/{idE}/prestacion/")
-    public RecepPrest savePrestacion(@PathVariable("idE") int idEmpleado,
-        @RequestBody PrestacionEmplDto save)
-    {
-    
-        return recepPrestService.savePrestacion(save,idEmpleado);
-    }
 
-    @PutMapping(path ="/empleado/{idE}/reservacion/{idR}")
-    public RecepPrest updateReservacion( @PathVariable("idE") int idEmpleado,
-        @PathVariable("idR") long idR,@RequestBody PrestacionEmplDto prestacionDto)
-    {
-      
-        return recepPrestService.actualizarReservacionEmpl(prestacionDto, idR,idEmpleado);
-    }
+
+
 
     //Aun no definido bien
     @GetMapping( path = "/{id}")

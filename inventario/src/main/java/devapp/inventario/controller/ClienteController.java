@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import devapp.inventario.dto.ReservacionClientDto;
 import devapp.inventario.entities.Cliente;
+import devapp.inventario.entities.RecepPrest;
 import devapp.inventario.services.ClienteService;
+import devapp.inventario.services.RecepPrestService;
 import devapp.inventario.services.RecordNotFoundException;
 
 @RestController
@@ -24,6 +28,9 @@ import devapp.inventario.services.RecordNotFoundException;
 public class ClienteController {
 	@Autowired
 	ClienteService service;
+	
+	@Autowired
+    RecepPrestService recepPrestService;
 	
 	@GetMapping("/get/all")
 	public ResponseEntity<List<Cliente>> getAll() {
@@ -54,4 +61,34 @@ public class ClienteController {
 		service.deleteClienteById(id);
 		return HttpStatus.OK;
 	}
+
+
+	/***************Para las reservaciones */
+
+	@PostMapping(path = "/{idC}/reservacion/")
+    public RecepPrest saveReservacion(@PathVariable("idC") int idCliente,
+        @RequestBody ReservacionClientDto save)
+    {
+        return recepPrestService.saveReservacionCliente(save,idCliente);
+    }
+    
+    @PutMapping(path =  "/{idC}/reservacion/{idR}")
+    public RecepPrest updateClientReservacion(@PathVariable("idC") int idCliente,
+    @PathVariable("idR") Long idReser,
+	@RequestParam(required = false,defaultValue = "update") String action,
+    @RequestBody(required = false) ReservacionClientDto reservacionDto)
+    {
+		System.out.println(action);
+		if(action.equals("cancel"))
+			return recepPrestService.cancelReservacionClient(idReser, idCliente);
+
+		if(action.equals("update"))
+		{
+			if(reservacionDto!=null)
+				return recepPrestService.actualizarReservacionClient(reservacionDto, idReser,idCliente);
+		}
+		
+		return null;
+    }
+	
 }				
