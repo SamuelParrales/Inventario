@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import devapp.inventario.dto.PrestacionEmplDto;
-import devapp.inventario.dto.ReservacionClientDto;
 import devapp.inventario.entities.RecepPrest;
 import devapp.inventario.services.RecepPrestService;
 
 @RestController
-@RequestMapping("/RECEPPREST")
+@RequestMapping("/recepprest")
 
 public class RecepPrestController {
     @Autowired
@@ -29,16 +28,35 @@ public class RecepPrestController {
         //******************Para el cliente */
     
 
-    @PutMapping("/cancelar")
-    public RecepPrest cancelar(@RequestParam long idRecepPrest, 
-    @RequestParam int idEmpleado)
+
+
+	///*************Para que los empleados puedan realizar reservaciones */
+	@PostMapping()
+    public RecepPrest savePrestacion(
+    @RequestParam int idEmpleado,
+    @RequestBody PrestacionEmplDto save)
     {
-
-        return recepPrestService.cancelReservacionEmpl(idRecepPrest, idEmpleado);
+    
+        return recepPrestService.savePrestacion(save,idEmpleado);
     }
+	//Para modificar el estado de la reservacion
+	@PutMapping(path ="/{idR}")
+    public RecepPrest updateReservacion( 
+    @PathVariable("idR") long idR,
+    @RequestParam() Integer idEmpleado,
+	@RequestParam(required = false,defaultValue = "update") String action,
+	@RequestBody(required = false) PrestacionEmplDto prestacionDto)
+    {
+		if(action.equals("cancel"))
+			return recepPrestService.cancelReservacionEmpl(idR, idEmpleado);
 
-    //Para los empleados
-
+		if(action.equals("update"))
+		{
+			if(prestacionDto!=null)
+			return recepPrestService.actualizarReservacionEmpl(prestacionDto, idR,idEmpleado);
+		}
+		return null;
+    }
 
 
 

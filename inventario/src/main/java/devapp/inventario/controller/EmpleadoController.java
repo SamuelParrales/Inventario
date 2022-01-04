@@ -62,32 +62,7 @@ public class EmpleadoController {
 		return HttpStatus.OK;
 	}
 
-	///*************Reservaciones de los empleados */
 
-	@PostMapping(path = "/{idE}/prestacion/")
-    public RecepPrest savePrestacion(@PathVariable("idE") int idEmpleado,
-        @RequestBody PrestacionEmplDto save)
-    {
-    
-        return recepPrestService.savePrestacion(save,idEmpleado);
-    }
-	//Para modificar el estado de la reservacion
-	@PutMapping(path ="/{idE}/reservacion/{idR}")
-    public RecepPrest updateReservacion( @PathVariable("idE") int idEmpleado,
-    @PathVariable("idR") long idR,
-	@RequestParam(required = false,defaultValue = "update") String action,
-	@RequestBody(required = false) PrestacionEmplDto prestacionDto)
-    {
-		if(action.equals("cancel"))
-			return recepPrestService.cancelReservacionEmpl(idR, idEmpleado);
-
-		if(action.equals("update"))
-		{
-			if(prestacionDto!=null)
-			return recepPrestService.actualizarReservacionEmpl(prestacionDto, idR,idEmpleado);
-		}
-		return null;
-    }
 
 
 

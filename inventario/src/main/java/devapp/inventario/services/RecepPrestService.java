@@ -56,6 +56,17 @@ public class RecepPrestService {
         double totalprestacion;
         RecepPrest reservacion = addDetalles(reservacionDto.getProductos(),null);
         Date fechaCaducida;
+        Empleado empleado;
+        Cliente cliente;
+        try
+        {
+            empleado = empleadoRepo.findById(idEmpleado).get();
+            cliente = clienteRepo.findById(idCliente).get();
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
         if(reservacion==null)
             return null;
 
@@ -68,8 +79,7 @@ public class RecepPrestService {
 
         fechaCaducida = expiresFrom(3); //La reservacion expira en 3 dias
         
-        Empleado empleado = empleadoRepo.findById(idEmpleado).get();
-        Cliente cliente = clienteRepo.findById(idCliente).get();
+
             
         EstRecepPrest estado = new EstRecepPrest(reservacion, est, empleado);
     
@@ -455,11 +465,7 @@ public class RecepPrestService {
         
         List<DetRecepPrest> detalles = recepPrest.getDetalles();
             //Se devuelven los productos 
-        for (DetRecepPrest detalle:detalles)
-        {
-            int cantPrestDet = detalle.getCantidadPrestada();
-            detalle.getProducto().devolver(cantPrestDet);
-        }    
+        devolverProductos(recepPrest);
         
         //Se borran todos los detalles
         detalles.removeAll(detalles);
@@ -524,8 +530,5 @@ public class RecepPrestService {
         calendar.add(Calendar.DAY_OF_YEAR, dias);  
         
         return calendar.getTime(); 
-    }
-
-
-    
+    }    
 }
