@@ -6,7 +6,6 @@ public class PrestacionEmplDto
 {
     private List<ProductoPresDto> productos;
     private Double valorPagado;
-    private Integer idEmpleado;
     private Integer idCliente;
     private String dirEntrega;
     private String garantia;
@@ -15,11 +14,10 @@ public class PrestacionEmplDto
     
     public PrestacionEmplDto() {
     }
-    public PrestacionEmplDto(List<ProductoPresDto> productos, Double valorPagado, Integer idEmpleado, Integer idCliente,
+    public PrestacionEmplDto(List<ProductoPresDto> productos, Double valorPagado, Integer idCliente,
             String dirEntrega, String garantia, Long fechaCaducida, boolean reservacion) {
         this.productos = productos;
         this.valorPagado = valorPagado;
-        this.idEmpleado = idEmpleado;
         this.idCliente = idCliente;
         this.dirEntrega = dirEntrega;
         this.garantia = garantia;
@@ -40,14 +38,6 @@ public class PrestacionEmplDto
 
     public void setValorPagado(Double valorPagado) {
         this.valorPagado = valorPagado;
-    }
-
-    public Integer getIdEmpleado() {
-        return idEmpleado;
-    }
-
-    public void setIdEmpleado(Integer idEmpleado) {
-        this.idEmpleado = idEmpleado;
     }
 
     public Integer getIdCliente() {

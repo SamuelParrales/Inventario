@@ -32,7 +32,7 @@ public class RecepPrest {
     private double totalPerdida;
     private double valorPagado;
 
-    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE}, mappedBy = "recepPrest",fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST}, mappedBy = "recepPrest",orphanRemoval = true, fetch = FetchType.EAGER)
     List<DetRecepPrest> detalles;
 
     @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST, CascadeType.REMOVE},mappedBy = "recepPrest")
@@ -130,27 +130,6 @@ public class RecepPrest {
         this.estados = estados;
     }
 
-    //**************************Metodos extras para la prestacion y recepcion */
-    public void prestacion(EstRecepPrest estado)
-    {
-        if(estados==null)
-        {
-            estados = new ArrayList<EstRecepPrest>();
-            estados.add(estado);
-        }
-    }
-
-    public void cambiarEstado(EstRecepPrest estado)
-    {
-        if(estados!=null)
-        estados.add(estado);
-    }
-
-    public int estadoActual()
-    {
-        int len = estados.size();
-        return estados.get(len-1).getEstado();
-    }
 
     public String getDireccionEntrega() {
         return direccionEntrega;
@@ -170,7 +149,34 @@ public class RecepPrest {
 
     
 
+        //**************************Metodos extras para la prestacion y recepcion */
+        public void prestacion(EstRecepPrest estado)
+        {
+            if(estados==null)
+            {
+                estados = new ArrayList<EstRecepPrest>();
+                estados.add(estado);
+            }
+        }
     
+        public void cambiarEstado(EstRecepPrest estado)
+        {
+            if(estados!=null)
+            estados.add(estado);
+        }
+    
+        public int estadoActual()
+        {
+            int len = estados.size();
+            return estados.get(len-1).getEstado();
+        }
+
+        
+        public void removeDetalle(DetRecepPrest det)
+        {
+            detalles.remove(det);
+            det.setRecepPrest(null);
+        }
 
 
     

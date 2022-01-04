@@ -1,9 +1,5 @@
 package devapp.inventario.controller;
 
-
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,16 +26,21 @@ public class RecepPrestController {
     // public ArrayList<RecepPrest> obtenerRecepPrest(){
     //     return recepPrestService.obtenerRecepPrest();
     // }
-
-    @PostMapping("/reservacion")
-    public RecepPrest saveReservacion(@RequestBody ReservacionClientDto save)
+        //******************Para el cliente */
+    @PostMapping(path = "/cliente/{idC}/reservacion/")
+    public RecepPrest saveReservacion(@PathVariable("idC") int idCliente,
+        @RequestBody ReservacionClientDto save)
     {
-        return recepPrestService.saveReservacionCliente(save);
+        return recepPrestService.saveReservacionCliente(save,idCliente);
     }
-    @PostMapping("/prestacion")
-    public RecepPrest savePrestacion(@RequestBody PrestacionEmplDto save)
+    
+    @PutMapping(path =  "/cliente/{idC}/reservacion/{idR}")
+    public RecepPrest updateClientReservacion(@PathVariable("idC") int idCliente,
+        @PathVariable("idR") long idReser,
+        @RequestBody ReservacionClientDto reservacionDto)
     {
-        return recepPrestService.savePrestacionEmpleado(save);
+        //id: Id de la reservacion
+        return recepPrestService.actualizarReservacionClient(reservacionDto, idReser,idCliente);
     }
 
     @PutMapping("/cancelar")
@@ -47,9 +48,27 @@ public class RecepPrestController {
     @RequestParam int idEmpleado)
     {
 
-        return recepPrestService.cancelReservacion(idRecepPrest, idEmpleado);
+        return recepPrestService.cancelReservacionEmpl(idRecepPrest, idEmpleado);
     }
 
+    //Para los empleados
+    @PostMapping(path = "/empleado/{idE}/prestacion/")
+    public RecepPrest savePrestacion(@PathVariable("idE") int idEmpleado,
+        @RequestBody PrestacionEmplDto save)
+    {
+    
+        return recepPrestService.savePrestacion(save,idEmpleado);
+    }
+
+    @PutMapping(path ="/empleado/{idE}/reservacion/{idR}")
+    public RecepPrest updateReservacion( @PathVariable("idE") int idEmpleado,
+        @PathVariable("idR") long idR,@RequestBody PrestacionEmplDto prestacionDto)
+    {
+      
+        return recepPrestService.actualizarReservacionEmpl(prestacionDto, idR,idEmpleado);
+    }
+
+    //Aun no definido bien
     @GetMapping( path = "/{id}")
     public RecepPrest obtenerRecepPrest(@PathVariable("id") long id)
     {

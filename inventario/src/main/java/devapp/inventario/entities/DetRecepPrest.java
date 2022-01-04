@@ -1,5 +1,6 @@
 package devapp.inventario.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 
 import javax.persistence.Id;
@@ -18,8 +19,8 @@ import devapp.inventario.entities.compositepk.DetRecepPrestPk;
 public class DetRecepPrest 
 {
     @Id
-    @JoinColumn(name = "idRecpPrest",nullable = false)
-    @ManyToOne
+    @JoinColumn(name = "idRecpPrest")
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private RecepPrest recepPrest;
 
     @Id

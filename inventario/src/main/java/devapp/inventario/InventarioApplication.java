@@ -21,6 +21,7 @@ import devapp.inventario.entities.Proveedor;
 import devapp.inventario.entities.RecepPrest;
 import devapp.inventario.repositories.CategoriaRepository;
 import devapp.inventario.repositories.ClienteRepository;
+import devapp.inventario.repositories.DetRecepPrestRepository;
 import devapp.inventario.repositories.EmpleadoRepository;
 import devapp.inventario.repositories.ProductoRepository;
 import devapp.inventario.repositories.ProveedorRepository;
@@ -42,6 +43,8 @@ public class InventarioApplication implements CommandLineRunner{
 	RecepPrestRepository recepPrestRepo;
 	@Autowired
 	EmpleadoRepository empleadoRepo;
+	@Autowired
+	DetRecepPrestRepository detallesRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(InventarioApplication.class, args);
@@ -140,10 +143,24 @@ public class InventarioApplication implements CommandLineRunner{
 		// Consultando prestacion
 		RecepPrest rP = recepPrestRepo.findById((long) 1).get();
 
+		List<DetRecepPrest> detallesEliminar = new ArrayList<DetRecepPrest>();
 		for(DetRecepPrest d:rP.getDetalles())
 		{
 			System.out.println(d.getProducto().getNombre());
+			
 		}
+		List<DetRecepPrest> d = rP.getDetalles();
+		d.removeAll(d);
+		d = new ArrayList<DetRecepPrest>();
+		d.add(new DetRecepPrest(recepPrest,producto,5,10));
+
+
+		
+
+		
+
+		
+		
 		estado = new EstRecepPrest(recepPrest, 0, empleado);
 			//Realizando recepcion
 
@@ -153,7 +170,7 @@ public class InventarioApplication implements CommandLineRunner{
 		System.out.println(rP.estadoActual());
 		//Borrando  prestacion
 
-		// recepPrestRepo.delete(recepPrest);
+		
 	}
 
 }
