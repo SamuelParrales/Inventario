@@ -1,125 +1,58 @@
 package devapp.inventario.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import devapp.inventario.entities.Empleado;
 import devapp.inventario.services.EmpleadoService;
+import devapp.inventario.services.RecordNotFoundException;
 
-//@Controller
+@RestController
+@RequestMapping("/empleado")
 public class EmpleadoController {
-    @Autowired
-    EmpleadoService empleadoService;
+	@Autowired
+	EmpleadoService service;
+	
+	@GetMapping("/get/all")
+	public ResponseEntity<List<Empleado>> getAll() {
+		List<Empleado> list = service.getAll();
+		return new ResponseEntity<List<Empleado>>(list, new HttpHeaders(), HttpStatus.OK);
+	}
 
+	@GetMapping("/get/{id}")
+	public ResponseEntity<Empleado> getEmpleadoById(@PathVariable("id") int id) throws RecordNotFoundException {
+		Empleado entity = service.findById(id);
+		return new ResponseEntity<Empleado>(entity, new HttpHeaders(), HttpStatus.OK);
+	}
 
-    @GetMapping("/")
-    public String index(){
-        return "index";
-    }
+	@PostMapping("/create")
+	public ResponseEntity<Empleado> createEmpleado(@RequestBody Empleado empleado){
+		service.createEmpleado(empleado);
+		return new ResponseEntity<Empleado>(empleado, new HttpHeaders(), HttpStatus.OK);
+	}
 
-    @GetMapping("/empleadoForm")
-    public String clienteForm(Model model){
-        model.addAttribute("empleadoForm", new Empleado());
-        model.addAttribute("empleadoList", empleadoService.getEmpleados());
-        model.addAttribute("listTab", "active");
-        return "empleado-form/user-view";
-    }
+	@PutMapping("/update")
+	public ResponseEntity<Empleado> updateEmpleado(@RequestBody Empleado empleado) throws RecordNotFoundException{
+		service.updateEmpleado(empleado);
+		return new ResponseEntity<Empleado>(empleado, new HttpHeaders(), HttpStatus.OK);
+	}
 
-    @PostMapping("/empleadoForm")
-    public String createEmpleado(@ModelAttribute("empleadoForm")Empleado empleado, BindingResult result,ModelMap model){
-        if(result.hasErrors()){
-            model.addAttribute("empleadoForm", empleado);
-            model.addAttribute("formTab", "active");
-        }else{
-            try {
-                empleadoService.createEmpleado(empleado);
-                model.addAttribute("empleadoForm", new Empleado());
-                model.addAttribute("listTab", "active");
-            } catch (Exception e) {
-                model.addAttribute("errorMessage",e.getMessage());
-                model.addAttribute("empleadoForm", empleado);
-                model.addAttribute("formTab", "active");
-            } 
-        }
-        model.addAttribute("categoriaList", empleadoService.getEmpleados());
-        return "empleado-form/user-view";
-    }
-    
-    @GetMapping("/editEmpleado/{id}")
-    public String getEditEmpleadoForm(Model model, @PathVariable(name = "id") int id)throws Exception{
-        Empleado empleadoToEdit = empleadoService.getById(id);
-        model.addAttribute("empleadoForm", empleadoToEdit);
-        model.addAttribute("empleadoList", empleadoService.getEmpleados());
-        model.addAttribute("formTab", "active");
-        model.addAttribute("editMode", "true");
+	@DeleteMapping("/delete/{id}")
+	public HttpStatus deleteEmpleadoById(@PathVariable("id") int id) throws RecordNotFoundException {
+		service.deleteEmpleadoById(id);
+		return HttpStatus.OK;
+	}
+}				
 
-        return "empleado-form/user-view";
-    }
-
-    @PostMapping("/editEmpleado")
-    public String postEditEmpleadoForm(@ModelAttribute("empleadoForm")Empleado empleado, BindingResult result,ModelMap model){
-        if(result.hasErrors()){
-            model.addAttribute("empleadoForm", empleado);
-            model.addAttribute("formTab", "active");
-            model.addAttribute("editMode", "true");
-        }else{
-            try {
-                empleadoService.updateEmpleado(empleado);
-                model.addAttribute("empleadoForm", empleado);
-                model.addAttribute("listTab", "active");
-            } catch (Exception e) {
-                model.addAttribute("errorMessage",e.getMessage());
-                model.addAttribute("empleadoForm", empleado);
-                model.addAttribute("formTab", "active");
-                model.addAttribute("editMode", "true");
-            } 
-        }
-        model.addAttribute("empleadoList", empleadoService.getEmpleados());
-        return "empleado-form/user-view";
-    }
-
-    @GetMapping("/editEmpleado/cancel")
-    public String cancelEditEmpleado(ModelMap model){
-        return "redirect:/empleadoForm";
-    }
-
-    @GetMapping("/deleteEmpleado/{id}")
-    public String getDeleteEmpleadoForm(Model model, @PathVariable(name = "id") int id)throws Exception{
-        Empleado empleadoToDelete = empleadoService.getById(id);
-        model.addAttribute("empleadoForm", empleadoToDelete);
-        model.addAttribute("empleadoList", empleadoService.getEmpleados());
-        model.addAttribute("formTab", "active");
-        model.addAttribute("editMode", "true");
-
-        return "empleado-form/user-view";
-    }
-
-    @PostMapping("/deleteEmpleado")
-    public String postDeleteEmpleadoForm(@ModelAttribute("empleadoForm")Empleado empleado, BindingResult result,ModelMap model){
-        if(result.hasErrors()){
-            model.addAttribute("empleadoForm", empleado);
-            model.addAttribute("formTab", "active");
-            model.addAttribute("editMode", "true");
-        }else{
-            try {
-                empleadoService.deleteEmpleadoLogico(empleado);
-                model.addAttribute("empleadoForm", empleado);
-                model.addAttribute("listTab", "active");
-            } catch (Exception e) {
-                model.addAttribute("errorMessage",e.getMessage());
-                model.addAttribute("empleadoForm", empleado);
-                model.addAttribute("formTab", "active");
-                model.addAttribute("editMode", "true");
-            } 
-        }
-        model.addAttribute("empleadoList", empleadoService.getEmpleados());
-        return "cliente-form/user-view";
-    }
-}

@@ -1,105 +1,58 @@
 package devapp.inventario.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import devapp.inventario.entities.Categoria;
 import devapp.inventario.services.CategoriaService;
+import devapp.inventario.services.RecordNotFoundException;
 
 
-//@Controller
+@RestController
+@RequestMapping("/categoria")
 public class CategoriaController {
-    
-    @Autowired
-    CategoriaService categoriaService;
+	@Autowired
+	CategoriaService service;
+	
+	@GetMapping("/get/all")
+	public ResponseEntity<List<Categoria>> getAll() {
+		List<Categoria> list = service.getAll();
+		return new ResponseEntity<List<Categoria>>(list, new HttpHeaders(), HttpStatus.OK);
+	}
 
+	@GetMapping("/get/{id}")
+	public ResponseEntity<Categoria> getCategoriaByIdCategoria(@PathVariable("id") int idCategoria) throws RecordNotFoundException {
+		Categoria entity = service.findByIdCategoria(idCategoria);
+		return new ResponseEntity<Categoria>(entity, new HttpHeaders(), HttpStatus.OK);
+	}
 
-    @GetMapping("/")
-    public String index(){
-        return "index";
-    }
+	@PostMapping("/create")
+	public ResponseEntity<Categoria> createCategoria(@RequestBody Categoria categoria){
+		service.createCategoria(categoria);
+		return new ResponseEntity<Categoria>(categoria, new HttpHeaders(), HttpStatus.OK);
+	}
 
-    @GetMapping("/categoriaForm")
-    public String categoriaForm(Model model){
-        model.addAttribute("categoriaForm", new Categoria());
-        model.addAttribute("categoriaList", categoriaService.getCategorias());
-        model.addAttribute("listTab", "active");
-        return "categoria-form/user-view";
-    }
+	@PutMapping("/update")
+	public ResponseEntity<Categoria> updateCategoria(@RequestBody Categoria categoria) throws RecordNotFoundException{
+		service.updateCategoria(categoria);
+		return new ResponseEntity<Categoria>(categoria, new HttpHeaders(), HttpStatus.OK);
+	}
 
-    @PostMapping("/categoriaForm")
-    public String createCategoria(@ModelAttribute("categoriaForm")Categoria categoria, BindingResult result,ModelMap model){
-        if(result.hasErrors()){
-            model.addAttribute("categoriaForm", categoria);
-            model.addAttribute("formTab", "active");
-        }else{
-            try {
-                categoriaService.createCategoria(categoria);
-                model.addAttribute("categoriaForm", new Categoria());
-                model.addAttribute("listTab", "active");
-            } catch (Exception e) {
-                model.addAttribute("errorMessage",e.getMessage());
-                model.addAttribute("categoriaForm", categoria);
-                model.addAttribute("formTab", "active");
-            } 
-        }
-        model.addAttribute("categoriaList", categoriaService.getCategorias());
-        return "categoria-form/user-view";
-    }
-    
-    @GetMapping("/editCategoria/{id}")
-    public String getEditCategoriaForm(Model model, @PathVariable(name = "id") int id)throws Exception{
-        Categoria categoriaToEdit = categoriaService.getById(id);
-        model.addAttribute("categoriaForm", categoriaToEdit);
-        model.addAttribute("categoriaList", categoriaService.getCategorias());
-        model.addAttribute("formTab", "active");
-        model.addAttribute("editMode", "true");
-
-        return "categoria-form/user-view";
-    }
-
-    @PostMapping("/editCategoria")
-    public String postEditCategoriaForm(@ModelAttribute("categoriaForm")Categoria categoria, BindingResult result,ModelMap model){
-        if(result.hasErrors()){
-            model.addAttribute("categoriaForm", categoria);
-            model.addAttribute("formTab", "active");
-            model.addAttribute("editMode", "true");
-        }else{
-            try {
-                categoriaService.updateCategoria(categoria);
-                model.addAttribute("categoriaForm", categoria);
-                model.addAttribute("listTab", "active");
-            } catch (Exception e) {
-                model.addAttribute("errorMessage",e.getMessage());
-                model.addAttribute("categoriaForm", categoria);
-                model.addAttribute("formTab", "active");
-                model.addAttribute("editMode", "true");
-            } 
-        }
-        model.addAttribute("categoriaList", categoriaService.getCategorias());
-        return "categoria-form/user-view";
-    }
-
-    @GetMapping("/editCategoria/cancel")
-    public String cancelEditCategoria(ModelMap model){
-        return "redirect:/categoriaForm";
-    }
-
-    @GetMapping("/deleteCategoria/{id}")
-    public String deleteCategoria(Model model, @PathVariable(name="id")int id){
-        try {
-            categoriaService.deleteCategoria(id);
-        } catch (Exception e) {
-            model.addAttribute("listErrorMessage", e.getMessage());
-        }
-
-        return categoriaForm(model);
-    }
-}
+	@DeleteMapping("/delete/{id}")
+	public HttpStatus deleteCategoriaByIdCategoria(@PathVariable("id") int idCategoria) throws RecordNotFoundException {
+		service.deleteCategoriaByIdCategoria(idCategoria);
+		return HttpStatus.OK;
+	}
+}				
