@@ -23,7 +23,6 @@ import devapp.inventario.repositories.ClienteRepository;
 import devapp.inventario.repositories.EmpleadoRepository;
 import devapp.inventario.repositories.ProductoRepository;
 import devapp.inventario.repositories.RecepPrestRepository;
-import net.bytebuddy.asm.Advice.AssignReturned.ToArguments.ToArgument;
 
 @Service
 public class RecepPrestService {
@@ -40,15 +39,33 @@ public class RecepPrestService {
 
     @Autowired
     ClienteRepository clienteRepo;
-
+///******************************************Metodos para obtener recepPrest
     public ArrayList<RecepPrest> obtenerRecepPrest(){
         return (ArrayList<RecepPrest>)recepPrestRepo.findAll();
     }
 
-    public RecepPrest getById(long id){
-        return recepPrestRepo.findById(id).get(); 
+    public RecepPrest getById(long id)
+    {
+        RecepPrest recepPrest;
+        try
+        {
+            recepPrest =recepPrestRepo.findById(id).get();
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
+        
+        if(recepPrestIsExpired(recepPrest))
+        {
+            expireRecepPrest(recepPrest); //Entonces le cambia el estado a expirado
+        }
+
+        return  recepPrest;
     }
-                        //Para generar un reservacion por parte del cliente
+
+
+    //**************************Metodos para generar reservaciones, prestacioes, recepciones y cancelaciones;
     public RecepPrest saveReservacionCliente(ReservacionClientDto reservacionDto,int idCliente)
     {
         int est = 5; //5:Reservacion
@@ -197,6 +214,13 @@ public class RecepPrestService {
         {
             return null;
         }
+
+        //Pregunta si ha expirado 
+        if(recepPrestIsExpired(reservacion))
+        {
+            expireRecepPrest(reservacion); //Entonces le cambia el estado a expirado
+        }
+
         int lastEstado = reservacion.estadoActual();
         if(lastEstado==5)
         {
@@ -229,6 +253,12 @@ public class RecepPrestService {
         {
             return null;
         }
+        //Pregunta si ha expirado 
+        if(recepPrestIsExpired(reservacion))
+        {
+            expireRecepPrest(reservacion); //Entonces le cambia el estado a expirado
+        }
+
         int lastEstado = reservacion.estadoActual();
 
         if(lastEstado==5)
@@ -267,6 +297,12 @@ public class RecepPrestService {
         catch(Exception e)
         {
             return null;
+        }
+        
+        //Pregunta si ha expirado 
+        if(recepPrestIsExpired(reservacion))
+        {
+            expireRecepPrest(reservacion); //Entonces le cambia el estado a expirado
         }
 
         int lastEstado = reservacion.estadoActual();
@@ -351,6 +387,11 @@ public class RecepPrestService {
             return null;
         }
 
+                //Pregunta si ha expirado 
+        if(recepPrestIsExpired(reservacion))
+        {
+                    expireRecepPrest(reservacion); //Entonces le cambia el estado a expirado
+        }
         int lastEstado = reservacion.estadoActual();
         if(lastEstado!=5)   //5: Reservacion
             return null;
@@ -380,6 +421,7 @@ public class RecepPrestService {
     public RecepPrest recepcionar(RecepcionDto recepcionDto,Long idPrestacion, 
     Integer idEmpleado)
     {
+        
         List<ProductoPresDto> productosDto = recepcionDto.getProductos();
         if(idPrestacion==null)
             return null;
@@ -398,30 +440,36 @@ public class RecepPrestService {
             prestacion = recepPrestRepo.findById(idPrestacion).get();
             empleado = empleadoRepo.findById(idEmpleado).get();
             detalles = prestacion.getDetalles();
-            estadoActual = prestacion.estadoActual();
+            
             
         }
         catch(Exception e)
         {
             return null;
         }
+                                            //Pregunta si ha expirado 
+        if(recepPrestIsExpired(prestacion))
+        {
+            expireRecepPrest(prestacion); //Entonces le cambia el estado a expirado
+        }
         
+        estadoActual = prestacion.estadoActual();
         if(estadoActual!=3&&estadoActual!=2&&estadoActual!=1)    //Para recepcionar debe estar prestado o caducado o en compensacion
             return null;
 
         if(estadoActual==2) //Si esta caducado 
         {   //Entoces debe haber sido despachado 
-            if(!prestacion.poseeElEstado(3)) //3: Despchado/prestado
-                return null;
+            if(!prestacion.poseeElEstado(3)) // estado 3: Despcahado/prestado
+                return null;            //Si no fue despachado entonces no se hace nada 
         }
         
         if(prestacion.getTotalPerdida()>0)
             esCompensacion=true;
         if(productosDto!=null)
         {
+            calcularPerdidas(productosDto, prestacion);
             if(canBeReceivedProdu(productosDto, detalles,esCompensacion))  
             {//Si se pueden recepcionar productos
-                guardarPerdidas(productosDto, prestacion);
                 devolverProductos(prestacion);
             }
         }
@@ -431,10 +479,10 @@ public class RecepPrestService {
         if(prestacion.getTotalPerdida()>0) 
         {//Si todavia hay perdidas el resto se puede pagar en efectivo
             Double total = prestacion.getTotalPerdida()+prestacion.getTotalPrestacion();
-            System.out.println(newValorPagado+"<="+total);
+         
             if(newValorPagado<=total)  
             {
-                System.out.println("Linea 435******");
+        
                 prestacion.setValorPagado(newValorPagado );
             }
                 
@@ -442,7 +490,7 @@ public class RecepPrestService {
         else
         {//Sino hay perdida y el nuevo valor pagado es menor que el anterio entonces no
             if(newValorPagado<prestacion.getValorPagado())
-                return null;
+                return recepPrestRepo.save(prestacion);
         }
         
         //Se crea el estado
@@ -454,13 +502,17 @@ public class RecepPrestService {
             if(valorPagado==total)
             {
                 newEstado = new EstRecepPrest(prestacion, 0, empleado);//0:Recepcionado
+                guardarPerdidas(prestacion);
                 prestacion.getEstados().add(newEstado);
             }
         }
         else
         {
             if(valorPagado==total)
+            {
+                guardarPerdidas(prestacion);
                 newEstado = new EstRecepPrest(prestacion, 0, empleado);//0:Recepcionado
+            }
             else
             {
                 newEstado = new EstRecepPrest(prestacion, 1, empleado);//1: En espera de compensación
@@ -470,7 +522,37 @@ public class RecepPrestService {
         
         return recepPrestRepo.save(prestacion);
     }
-    //***************************************************Metodos auxiliares
+
+
+
+    private boolean expireRecepPrest(RecepPrest recepPrest)
+    {
+
+        int lastEstado = recepPrest.estadoActual();
+        if(lastEstado!=5&&lastEstado!=3)
+            return false;
+            
+
+        Empleado empleado = empleadoRepo.findById(1).get();
+        EstRecepPrest newEstado = new EstRecepPrest(recepPrest, 2, empleado);//2: Caducado
+        newEstado.setFecha(recepPrest.getFechaCaducida()); 
+        recepPrest.getEstados().add(newEstado);
+        return true;
+    }
+
+    private boolean recepPrestIsExpired(RecepPrest recepPrest)
+    {
+        Date fechaActual = new Date();
+        Date fechaRecepPrest = recepPrest.getFechaCaducida();
+
+        if(fechaRecepPrest.before(fechaActual))
+            return true;
+
+        return false;
+
+    }
+
+    //***********************************************************************Metodos auxiliares
     private void devolverProductos(RecepPrest recepPrest)
     {
         List<DetRecepPrest> detalles = recepPrest.getDetalles();
@@ -482,11 +564,41 @@ public class RecepPrestService {
         }
     }
 
-    private RecepPrest guardarPerdidas(List<ProductoPresDto> productosDto,
+    private RecepPrest guardarPerdidas(RecepPrest recepPrest)
+    {
+        List<DetRecepPrest> detalles = recepPrest.getDetalles();
+        
+        for(DetRecepPrest detalle: detalles)
+        {
+            Producto producto = detalle.getProducto();
+            int cantPerdida = detalle.getCantidadPerdida();
+            int cantPrestada = producto.getCantPrestada();
+            producto.setCantPrestada(cantPrestada-cantPerdida);
+        }
+        return recepPrest;
+    }
+
+    private RecepPrest calcularPerdidas(List<ProductoPresDto> productosDto,
     RecepPrest recepPrest)
     {
         List<DetRecepPrest> detalles = recepPrest.getDetalles();
         double totalPerdida = 0;
+       
+        if(productosDto.size()==0)//Perdió todo y no envió nada
+        {
+            for(DetRecepPrest detalle: detalles)
+            {
+                int cantPerdida = detalle.getCantidadPrestada();
+                detalle.setCantidadPerdida(cantPerdida);
+                totalPerdida += cantPerdida*detalle.getProducto().getValorUnitario();
+            }
+            recepPrest.setTotalPerdida(totalPerdida);
+            return recepPrest;
+        }
+
+
+        
+
         for(DetRecepPrest detalle: detalles)
         {
             Producto producto = detalle.getProducto();
@@ -504,7 +616,7 @@ public class RecepPrestService {
                 }
             } 
         }
-        System.out.println(totalPerdida);
+    
         recepPrest.setTotalPerdida(totalPerdida);
         return recepPrest;
     }
@@ -552,6 +664,9 @@ public class RecepPrestService {
 
         return true;    //Si se puede recepcionar
     }
+
+
+
     private RecepPrest addDetalles(List<ProductoPresDto> productosDto,RecepPrest recepPrest)
     {
         if(productosDto.size()<1)
@@ -691,4 +806,5 @@ public class RecepPrestService {
         
         return calendar.getTime(); 
     }    
+
 }
