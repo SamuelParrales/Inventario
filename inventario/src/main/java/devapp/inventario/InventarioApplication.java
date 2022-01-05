@@ -124,44 +124,8 @@ public class InventarioApplication implements CommandLineRunner{
 		//Insertando Empleado
 		Empleado empleado = new Empleado("09832", "despachador", "Huho","s", "sada@asfa.com", "12345");
 		empleado = empleadoRepo.save(empleado);
-		//Insertando prestacion
-		
-		List<DetRecepPrest> detalles = new ArrayList<DetRecepPrest>();
-		RecepPrest recepPrest = new RecepPrest();
-		EstRecepPrest estado = new EstRecepPrest(recepPrest, 4, empleado);
-		
-		detalles.add(new DetRecepPrest(recepPrest,product,5,20));
-		detalles.add(new DetRecepPrest(recepPrest,producto,5,10));
 
-		recepPrest.setCliente(cliente);
-		recepPrest.setValorPagado(30);
-		recepPrest.setTotalPrestacion(30);
-		recepPrest.setDetalles(detalles);
-		recepPrest.prestacion(estado);
-		recepPrestRepo.save(recepPrest);
-
-		// Consultando prestacion
-		RecepPrest rP = recepPrestRepo.findById((long) 1).get();
-
-		//List<DetRecepPrest> detallesEliminar = new ArrayList<DetRecepPrest>();
-		for(DetRecepPrest d:rP.getDetalles())
-		{
-			System.out.println(d.getProducto().getNombre());
-			
-		}
-		List<DetRecepPrest> d = rP.getDetalles();
-		d.removeAll(d);
-		d = new ArrayList<DetRecepPrest>();
-		d.add(new DetRecepPrest(recepPrest,producto,5,10));
-		
-		estado = new EstRecepPrest(recepPrest, 0, empleado);
-			//Realizando recepcion
-
-		rP.cambiarEstado(estado);
-		
-
-		System.out.println(rP.estadoActual());
-		//Borrando  prestacion
+	
 
 		
 	}
