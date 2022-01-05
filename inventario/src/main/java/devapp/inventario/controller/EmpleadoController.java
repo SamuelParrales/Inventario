@@ -13,12 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import devapp.inventario.dto.PrestacionEmplDto;
 import devapp.inventario.entities.Empleado;
-import devapp.inventario.entities.RecepPrest;
 import devapp.inventario.services.EmpleadoService;
 import devapp.inventario.services.RecepPrestService;
 import devapp.inventario.services.RecordNotFoundException;
@@ -61,11 +57,6 @@ public class EmpleadoController {
 		service.deleteEmpleadoById(id);
 		return HttpStatus.OK;
 	}
-
-
-
-
-
 	// @PutMapping(path ="/{idE}/reservacion/{idR}")
 	// public RecepPrest cancelReservacion
 	// (

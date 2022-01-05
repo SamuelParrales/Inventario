@@ -33,9 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     @Autowired
 	public void configure(AuthenticationManagerBuilder auth) 
 		throws Exception{
-
 	    auth.userDetailsService(this.userDetailsService).passwordEncoder(BCrypt);
-			
 		}
     
     @Override
@@ -43,10 +41,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         http.authorizeRequests()
         .antMatchers("/h2-console/").authenticated().and().httpBasic().and()
         .antMatcher("/h2-console/").authorizeRequests().anyRequest().permitAll();
-
-
     }
-
-
-
 }

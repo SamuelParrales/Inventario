@@ -143,7 +143,7 @@ public class InventarioApplication implements CommandLineRunner{
 		// Consultando prestacion
 		RecepPrest rP = recepPrestRepo.findById((long) 1).get();
 
-		List<DetRecepPrest> detallesEliminar = new ArrayList<DetRecepPrest>();
+		//List<DetRecepPrest> detallesEliminar = new ArrayList<DetRecepPrest>();
 		for(DetRecepPrest d:rP.getDetalles())
 		{
 			System.out.println(d.getProducto().getNombre());
