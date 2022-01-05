@@ -153,13 +153,6 @@ public class InventarioApplication implements CommandLineRunner{
 		d.removeAll(d);
 		d = new ArrayList<DetRecepPrest>();
 		d.add(new DetRecepPrest(recepPrest,producto,5,10));
-
-
-		
-
-		
-
-		
 		
 		estado = new EstRecepPrest(recepPrest, 0, empleado);
 			//Realizando recepcion

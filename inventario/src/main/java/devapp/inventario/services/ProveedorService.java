@@ -1,6 +1,7 @@
 package devapp.inventario.services;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,27 +12,49 @@ import devapp.inventario.repositories.ProveedorRepository;
 
 @Service
 public class ProveedorService {
-    @Autowired
-    ProveedorRepository proveedorRepository;
 
-    public ArrayList<Proveedor>obtenerProveedor(){
-        return (ArrayList<Proveedor>)proveedorRepository.findAll();
-    }
-    
-    public Proveedor guardarProveedor(Proveedor proveedor){
-        return proveedorRepository.save(proveedor);
-    }
+	@Autowired
+	ProveedorRepository repo;
 
-    public Optional<Proveedor> obtenerProveedorId(Integer id){
-        return proveedorRepository.findById(id); 
-    }
+	public List<Proveedor> getAll(){
+		List<Proveedor> proveedorList = (List<Proveedor>) repo.findAll();
+		if(proveedorList.size() > 0) {
+			return proveedorList;
+		} else {
+			return new ArrayList<Proveedor>();
+		}
+	}
+     		
+	public Proveedor findById(int id) throws RecordNotFoundException{
+		Optional<Proveedor> proveedor = repo.findById(id);
+		if(proveedor.isPresent()) {
+			return proveedor.get();
+		} else {
+			throw new RecordNotFoundException("Record does not exist for the given Id");
+		}
+	}
 
-    public boolean eliminarProveedor(Integer id){
-        try {
-            proveedorRepository.deleteById(id);
-            return true;
-        } catch (Exception err) {
-            return false;
-        }
-    }
+	public Proveedor createProveedor(Proveedor proveedor){
+		return repo.save(proveedor);
+	}
+
+	public Proveedor updateProveedor(Proveedor proveedor) throws RecordNotFoundException {
+		Optional<Proveedor> proveedorTemp = repo.findById(proveedor.getId());
+	
+		if(proveedorTemp.isPresent()){
+			return repo.save(proveedor);
+		} else {
+			throw new RecordNotFoundException("Record does not exist for the given Id");
+		}
+	}
+
+	public void deleteProveedorById(int id) throws RecordNotFoundException{
+		Optional<Proveedor> proveedor = repo.findById(id);
+		if(proveedor.isPresent()) {
+		repo.deleteById(id);
+		} else {
+			throw new RecordNotFoundException("Record does not exist for the given Id");
+		}
+	}		
+
 }
