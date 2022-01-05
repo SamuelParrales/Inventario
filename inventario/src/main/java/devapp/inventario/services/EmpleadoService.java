@@ -56,7 +56,12 @@ public class EmpleadoService {
 		} else {
 			throw new RecordNotFoundException("Record does not exist for the given Id");
 		}
-	}		
+	}
+	
+	public Iterable<Empleado> DeleteLogic(int estado){
+		Iterable<Empleado> StateActive= repo.findAllByEstado(estado);
+		return StateActive; 
+	}
 
 }
 

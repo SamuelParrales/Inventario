@@ -55,6 +55,11 @@ public class ProveedorService {
 		} else {
 			throw new RecordNotFoundException("Record does not exist for the given Id");
 		}
-	}		
+	}	
+	
+	public Iterable<Proveedor> DeleteLogic(int estado){
+		Iterable<Proveedor> StateActive= repo.findAllByEstado(estado);
+		return StateActive; 
+	}
 
 }
