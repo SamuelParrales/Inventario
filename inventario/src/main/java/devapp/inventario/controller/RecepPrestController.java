@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import devapp.inventario.dto.PrestacionEmplDto;
+import devapp.inventario.dto.RecepcionDto;
 import devapp.inventario.entities.RecepPrest;
 import devapp.inventario.services.RecepPrestService;
 
@@ -42,14 +43,15 @@ public class RecepPrestController {
 	//Para modificar el estado de la reservacion
 	@PutMapping(path ="/{idR}")
     public RecepPrest updateReservacion( 
-    @PathVariable("idR") long idR,
-    @RequestParam() Integer idEmpleado,
-	@RequestParam(required = false,defaultValue = "update") String action,
-	@RequestBody(required = false) PrestacionEmplDto prestacionDto)
+        @PathVariable("idR") long idR,
+        @RequestParam() Integer idEmpleado,
+	    @RequestParam(required = false,defaultValue = "update") String action,
+	    @RequestBody(required = false) PrestacionEmplDto prestacionDto)
     {
 		if(action.equals("cancel"))
 			return recepPrestService.cancelReservacionEmpl(idR, idEmpleado);
 
+        
 		if(action.equals("update"))
 		{
 			if(prestacionDto!=null)
@@ -59,7 +61,22 @@ public class RecepPrestController {
     }
 
 
-
+    @PutMapping(path = "/prestacion/{idP}")
+    public RecepPrest recepcionar(
+        @PathVariable("idP") long idP,
+        @RequestParam() Integer idEmpleado,
+	    @RequestParam(required = false,defaultValue = "update") String action,
+	    @RequestBody(required = false) RecepcionDto recepcionDto)
+    {
+        
+        if(action.equals("update"))
+        {
+            
+            return recepPrestService.recepcionar(recepcionDto, idP, idEmpleado);
+        }
+            
+        return null;
+    }
     //Aun no definido bien
     @GetMapping( path = "/{id}")
     public RecepPrest obtenerRecepPrest(@PathVariable("id") long id)

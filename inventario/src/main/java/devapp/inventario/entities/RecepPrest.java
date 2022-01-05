@@ -171,13 +171,13 @@ public class RecepPrest {
             return estados.get(len-1).getEstado();
         }
 
-        
-        public void removeDetalle(DetRecepPrest det)
+        public boolean poseeElEstado(int est)
         {
-            detalles.remove(det);
-            det.setRecepPrest(null);
+            for(EstRecepPrest estado: estados)
+            {
+                if(estado.getEstado()==est)
+                    return true;
+            }
+            return false;
         }
-
-
-    
 }

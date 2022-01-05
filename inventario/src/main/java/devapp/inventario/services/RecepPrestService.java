@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import devapp.inventario.dto.ProductoPresDto;
+import devapp.inventario.dto.RecepcionDto;
 import devapp.inventario.dto.ReservacionClientDto;
 import devapp.inventario.dto.PrestacionEmplDto;
 import devapp.inventario.entities.Cliente;
@@ -22,6 +23,7 @@ import devapp.inventario.repositories.ClienteRepository;
 import devapp.inventario.repositories.EmpleadoRepository;
 import devapp.inventario.repositories.ProductoRepository;
 import devapp.inventario.repositories.RecepPrestRepository;
+import net.bytebuddy.asm.Advice.AssignReturned.ToArguments.ToArgument;
 
 @Service
 public class RecepPrestService {
@@ -375,12 +377,100 @@ public class RecepPrestService {
         return recepPrestRepo.save(reservacion);
     }
     
-    public RecepPrest recepcionar()
+    public RecepPrest recepcionar(RecepcionDto recepcionDto,Long idPrestacion, 
+    Integer idEmpleado)
     {
+        List<ProductoPresDto> productosDto = recepcionDto.getProductos();
+        if(idPrestacion==null)
+            return null;
+        
 
-        return null;
+
+        RecepPrest prestacion;
+        Empleado empleado;
+        int estadoActual;
+        List<DetRecepPrest> detalles;
+        Boolean esCompensacion = false;
+        
+        
+        try
+        {
+            prestacion = recepPrestRepo.findById(idPrestacion).get();
+            empleado = empleadoRepo.findById(idEmpleado).get();
+            detalles = prestacion.getDetalles();
+            estadoActual = prestacion.estadoActual();
+            
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
+        
+        if(estadoActual!=3&&estadoActual!=2&&estadoActual!=1)    //Para recepcionar debe estar prestado o caducado o en compensacion
+            return null;
+
+        if(estadoActual==2) //Si esta caducado 
+        {   //Entoces debe haber sido despachado 
+            if(!prestacion.poseeElEstado(3)) //3: Despchado/prestado
+                return null;
+        }
+        
+        if(prestacion.getTotalPerdida()>0)
+            esCompensacion=true;
+        if(productosDto!=null)
+        {
+            if(canBeReceivedProdu(productosDto, detalles,esCompensacion))  
+            {//Si se pueden recepcionar productos
+                guardarPerdidas(productosDto, prestacion);
+                devolverProductos(prestacion);
+            }
+        }
+
+        Double newValorPagado = recepcionDto.getValorPagado();
+        
+        if(prestacion.getTotalPerdida()>0) 
+        {//Si todavia hay perdidas el resto se puede pagar en efectivo
+            Double total = prestacion.getTotalPerdida()+prestacion.getTotalPrestacion();
+            System.out.println(newValorPagado+"<="+total);
+            if(newValorPagado<=total)  
+            {
+                System.out.println("Linea 435******");
+                prestacion.setValorPagado(newValorPagado );
+            }
+                
+        }
+        else
+        {//Sino hay perdida y el nuevo valor pagado es menor que el anterio entonces no
+            if(newValorPagado<prestacion.getValorPagado())
+                return null;
+        }
+        
+        //Se crea el estado
+        EstRecepPrest newEstado;
+        double valorPagado = prestacion.getValorPagado(); 
+        double total = prestacion.getTotalPrestacion()+prestacion.getTotalPerdida();
+        if(esCompensacion)
+        {
+            if(valorPagado==total)
+            {
+                newEstado = new EstRecepPrest(prestacion, 0, empleado);//0:Recepcionado
+                prestacion.getEstados().add(newEstado);
+            }
+        }
+        else
+        {
+            if(valorPagado==total)
+                newEstado = new EstRecepPrest(prestacion, 0, empleado);//0:Recepcionado
+            else
+            {
+                newEstado = new EstRecepPrest(prestacion, 1, empleado);//1: En espera de compensación
+            }
+            prestacion.getEstados().add(newEstado);
+        }
+        
+        return recepPrestRepo.save(prestacion);
     }
-    //***********************************************Metodos auxiliares
+    //***************************************************Metodos auxiliares
     private void devolverProductos(RecepPrest recepPrest)
     {
         List<DetRecepPrest> detalles = recepPrest.getDetalles();
@@ -392,6 +482,76 @@ public class RecepPrestService {
         }
     }
 
+    private RecepPrest guardarPerdidas(List<ProductoPresDto> productosDto,
+    RecepPrest recepPrest)
+    {
+        List<DetRecepPrest> detalles = recepPrest.getDetalles();
+        double totalPerdida = 0;
+        for(DetRecepPrest detalle: detalles)
+        {
+            Producto producto = detalle.getProducto();
+            for(ProductoPresDto produDto: productosDto)
+            {
+                if(producto.getId()==produDto.getId())
+                {
+                    int cantPerdida = produDto.getCant();
+                    double valorProducto = producto.getValorUnitario();
+                    double totalDetPerdida = cantPerdida*valorProducto;
+                    totalPerdida+=totalDetPerdida;
+                    detalle.setCantidadPerdida(cantPerdida);
+                    detalle.setTotalPerdida(totalDetPerdida);
+                    break;
+                }
+            } 
+        }
+        System.out.println(totalPerdida);
+        recepPrest.setTotalPerdida(totalPerdida);
+        return recepPrest;
+    }
+
+    private boolean canBeReceivedProdu(List<ProductoPresDto> productosDto,
+    List<DetRecepPrest> detalles,boolean compensando)
+    {
+        if(detalles.size()<1)
+            return false;
+
+        if(productosDto.size()!=detalles.size())
+            return false;
+
+        int cont=0; //Contador de coincidencia
+        int cantTotalDevolver =0;
+        for(ProductoPresDto produ:productosDto)
+        {
+            if(produ.getCant()<0)
+                return false;
+            for(DetRecepPrest det:detalles)
+            {
+                if(produ.getId()==det.getProducto().getId())
+                {
+                    cont++;//Encuentra coincidencia
+                    cantTotalDevolver=produ.getCant();
+                    if(compensando==true)
+                    {
+                        if(produ.getCant()>det.getCantidadPerdida())
+                            return false;
+                    }
+                    else
+                    {
+                        if(produ.getCant()>det.getCantidadPrestada()) //Si la cantidad que devuelve es superior no se puede
+                            return false;
+                    }
+                    break;
+                }
+                    
+            }
+        }
+        if(cantTotalDevolver==0) //Sino se devuelve nada, entonces falso
+            return false;
+        if(cont!=detalles.size()) //No se encontraron las mismas coincidencias
+        return false;
+
+        return true;    //Si se puede recepcionar
+    }
     private RecepPrest addDetalles(List<ProductoPresDto> productosDto,RecepPrest recepPrest)
     {
         if(productosDto.size()<1)
@@ -412,7 +572,7 @@ public class RecepPrestService {
         for(ProductoPresDto produ: productosDto) 
         {
             int id = produ.getId();
-            int cantPrestada= produ.getCantPrestada();
+            int cantPrestada= produ.getCant();
             double totalDetalle;
             Producto producto = productoRepo.findById(id).get();
 
@@ -437,7 +597,7 @@ public class RecepPrestService {
         for(ProductoPresDto produ: productosDto)
         {
             int id = produ.getId();
-            int cantPrestada= produ.getCantPrestada();
+            int cantPrestada= produ.getCant();
             Producto producto = productoRepo.findById(id).get();
 
             if(producto.getCantDisponible()<cantPrestada)
@@ -483,7 +643,7 @@ public class RecepPrestService {
         for(ProductoPresDto produ: productosDto)
         {
             int id = produ.getId();
-            int cantPrestada= produ.getCantPrestada();
+            int cantPrestada= produ.getCant();
             Producto producto = productoRepo.findById(id).get();
             Boolean seEncuentra = false;
             

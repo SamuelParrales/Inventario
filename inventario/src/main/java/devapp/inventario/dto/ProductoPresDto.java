@@ -2,25 +2,29 @@ package devapp.inventario.dto;
 
 public class ProductoPresDto {
     private int id;
-    private int cantPrestada;
+    private int cant;
     
     public ProductoPresDto() {
     }
-    public ProductoPresDto(int id, int cantPrestada) {
+ 
+    public ProductoPresDto(int id, int cant) {
         this.id = id;
-        this.cantPrestada = cantPrestada;
+        this.cant = cant;
     }
+
     public int getId() {
         return id;
     }
     public void setId(int id) {
         this.id = id;
     }
-    public int getCantPrestada() {
-        return cantPrestada;
+
+    public int getCant() {
+        return cant;
     }
-    public void setCantPrestada(int cantPrestada) {
-        this.cantPrestada = cantPrestada;
+
+    public void setCant(int cant) {
+        this.cant = cant;
     }
 
 }
