@@ -19,7 +19,4 @@ class InventarioApplicationTests {
 
 		// assertThat(findBynombre).extracting(Cliente::getNombre).containsOnly(cliente.getNombre());
 	}
-
-	
-
 }
