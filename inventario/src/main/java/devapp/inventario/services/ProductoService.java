@@ -46,38 +46,6 @@ public class ProductoService {
 	}
 
 	public Producto createProducto(ProductoDto producto){
-	
-
-		/*Producto producTemp = new Producto();
-		producTemp.setId(producto.getId());
-		producTemp.setCantDisponible(producto.getCantDisponible());
-		producTemp.setCantPrestada(0);
-		producTemp.setNombre(producto.getNombre());
-		producTemp.setDescripcion(producto.getDescripcion());
-		producTemp.setValorPrestacion(producto.getValorPrestacion());
-		producTemp.setValorUnitario(producto.getValorUnitario());
-		producTemp.setEstado(producto.getEstado());*/
-
-		/*List<Proveedor> proveedores = new ArrayList<Proveedor>();
-		List<Integer> idProvedores = producto.getIdProveedores();
-		for (Integer i : idProvedores) {
-			Optional<Proveedor> proveedor = Optional.empty();
-			proveedor = proveedorRepository.findById(i);
-			if (proveedor.isPresent()){
-				Proveedor prov = new Proveedor();
-				prov = proveedor.get();
-				proveedores.add(prov);
-			}
-		
-		}
-		producTemp.setProveedores(proveedores);*/
-		/*Optional <Categoria> categoriaTemp= Optional.empty();
-		categoriaTemp=categoriaRepository.findById(producto.getIdCategoria());
-		if (categoriaTemp.isPresent()){
-			Categoria categoria = new Categoria();
-			categoria = categoriaTemp.get();
-			producTemp.setCategoria(categoria);
-		}*/
 		Producto producTemp = this.mapearProducto(producto);
 		return repo.save(producTemp);
 	}
