@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import devapp.inventario.entities.Empleado;
 import devapp.inventario.services.EmpleadoService;
@@ -57,12 +58,11 @@ public class EmpleadoController {
 		service.deleteEmpleadoById(id);
 		return HttpStatus.OK;
 	}
-	// @PutMapping(path ="/{idE}/reservacion/{idR}")
-	// public RecepPrest cancelReservacion
-	// (
-
-	// )
-
 	
+	@GetMapping("/state")
+	public ResponseEntity<Iterable<Empleado>> getStateActiveProducts(@RequestParam("estado") int estado){
+		Iterable<Empleado> StateActive =service.DeleteLogic(estado);
+		return new ResponseEntity<Iterable<Empleado>>(StateActive, new HttpHeaders(), HttpStatus.OK);
+	}
 }				
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import devapp.inventario.dto.ProductoDto;
@@ -55,6 +56,12 @@ public class ProductoController {
 	public HttpStatus deleteProductoById(@PathVariable("id") int id) throws RecordNotFoundException {
 		service.deleteProductoById(id);
 		return HttpStatus.OK;
+	}
+
+	@GetMapping("/state")
+	public ResponseEntity<Iterable<Producto>> getStateActiveProducts(@RequestParam("estado") int estado){
+		Iterable<Producto> StateActive =service.DeleteLogic(estado);
+		return new ResponseEntity<Iterable<Producto>>(StateActive, new HttpHeaders(), HttpStatus.OK);
 	}
 }				
 

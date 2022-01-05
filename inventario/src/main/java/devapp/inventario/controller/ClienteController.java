@@ -90,5 +90,11 @@ public class ClienteController {
 		
 		return null;
     }
+
+	@GetMapping("/state")
+	public ResponseEntity<Iterable<Cliente>> getStateActiveProducts(@RequestParam("estado") int estado){
+		Iterable<Cliente> StateActive =service.DeleteLogic(estado);
+		return new ResponseEntity<Iterable<Cliente>>(StateActive, new HttpHeaders(), HttpStatus.OK);
+	}
 	
 }				

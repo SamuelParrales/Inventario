@@ -112,4 +112,9 @@ public class ProductoService {
 		return categoria;
 	}
 
+	public Iterable<Producto> DeleteLogic(int estado){
+		Iterable<Producto> StateActive= repo.findAllByEstado(estado);
+		return StateActive; 
+	}
+
 }
