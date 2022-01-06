@@ -30,3 +30,15 @@ insert into cliente(APELLIDOS,CI,CORREO,ESTADO,NOMBRES,PASSWORD)
 VALUES
 ('CONSUMIDOR','','',1,'FINAL',''),
 ('Parrales','131547816-2','parrales.samuel@hotmail.com',1,'Samuel','$2a$10$4we/faCq5nDlUiU2C7Dtp..y9Fgq/mlweQBmtu9EGoB70BB06YQwK');
+
+
+insert into proveedor(correo,direccion,estado,nombre,telefono) 
+values('','',1,'SIN ESPECIFICAR','');
+
+insert into PRODUCTO_PROV (id_producto,id_proveedor)
+values
+(1,1),
+(2,1),
+(3,1),
+(4,1);
+
