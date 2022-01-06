@@ -3,13 +3,11 @@ package devapp.inventario.dto;
 import java.util.List;
 
 public class ProductoDto {
-    private int id;
     private String nombre;
     private String descripcion;
     private double valorUnitario;
     private int cantDisponible;
     private double valorPrestacion;
-    private int cantPrestada;
     private int idCategoria;
     private List<Integer> idProveedores;
     private int estado;
@@ -18,27 +16,19 @@ public class ProductoDto {
     }
 
     public ProductoDto(int id, String nombre, String descripcion, double valorUnitario, int cantDisponible,
-            double valorPrestacion, int cantPrestada, int idCategoria, List<Integer> idProveedores, 
+            double valorPrestacion, int idCategoria, List<Integer> idProveedores, 
             int estado) {
-        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.valorUnitario = valorUnitario;
         this.cantDisponible = cantDisponible;
         this.valorPrestacion = valorPrestacion;
-        this.cantPrestada = cantPrestada;
         this.idCategoria = idCategoria;
         this.idProveedores = idProveedores;
         this.estado = estado;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getNombre() {
         return nombre;
@@ -80,13 +70,6 @@ public class ProductoDto {
         this.valorPrestacion = valorPrestacion;
     }
 
-    public int getCantPrestada() {
-        return cantPrestada;
-    }
-
-    public void setCantPrestada(int cantPrestada) {
-        this.cantPrestada = cantPrestada;
-    }
 
     public List<Integer> getIdProveedores() {
         return idProveedores;

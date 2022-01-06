@@ -71,7 +71,6 @@ public class ProductoService {
 
 	private Producto mapearProducto(ProductoDto producto){
 		Producto producTemp = new Producto();
-		producTemp.setId(producto.getId());
 		producTemp.setCantDisponible(producto.getCantDisponible());
 		producTemp.setCantPrestada(0);
 		producTemp.setNombre(producto.getNombre());

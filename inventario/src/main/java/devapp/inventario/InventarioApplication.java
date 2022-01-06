@@ -13,12 +13,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import devapp.inventario.entities.Categoria;
 import devapp.inventario.entities.Cliente;
-import devapp.inventario.entities.DetRecepPrest;
 import devapp.inventario.entities.Empleado;
-import devapp.inventario.entities.EstRecepPrest;
 import devapp.inventario.entities.Producto;
 import devapp.inventario.entities.Proveedor;
-import devapp.inventario.entities.RecepPrest;
 import devapp.inventario.repositories.CategoriaRepository;
 import devapp.inventario.repositories.ClienteRepository;
 import devapp.inventario.repositories.DetRecepPrestRepository;
@@ -126,7 +123,7 @@ public class InventarioApplication implements CommandLineRunner{
 		empleado = empleadoRepo.save(empleado);
 
 	
-
+	
 		
 	}
 
