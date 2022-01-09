@@ -9,9 +9,12 @@ values ('sin especificar', 'sin especificar'),
 ('utensillos','todo de utensillos'),
 ('objetos eventos', 'necesario en eventos');
 
+insert into producto(CANT_DISPONIBLE,CANT_PRESTADA ,DESCRIPCION ,ESTADO ,NOMBRE ,VALOR_PRESTACION ,VALOR_UNITARIO,ID_CATEGORIA,IMG)
+values 
+(3,0,'esto es un vaso',1,'vaso',0.5,0.75,1,'b274bbad81804211bf9baed3d2d63e9b');
+
 insert into producto(CANT_DISPONIBLE,CANT_PRESTADA ,DESCRIPCION ,ESTADO ,NOMBRE ,VALOR_PRESTACION ,VALOR_UNITARIO,ID_CATEGORIA)
 values 
-(3,0,'esto es un vaso',1,'vaso',0.5,0.75,1),
 (3,0,'cuchara de plastico',1,'cuchara',0.5,0.60,2),
 (5,0,'mesa de 2x2',1,'mesa',5,10,1),
 (3,0,'cubierto acero inoxidable',1,'cubierto',0.5,0.75,1),

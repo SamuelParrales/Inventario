@@ -1,4 +1,4 @@
-package devapp.inventario.controller;
+package devapp.inventario.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

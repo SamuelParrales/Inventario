@@ -1,4 +1,4 @@
-package devapp.inventario.controller;
+package devapp.inventario.restcontroller;
 
 import java.util.List;
 
@@ -27,13 +27,13 @@ public class ProductoController {
 	@Autowired
 	ProductoService service;
 	
-	@GetMapping("/get/all")
+	@GetMapping("/all")
 	public ResponseEntity<List<Producto>> getAll() {
 		List<Producto> list = service.getAll();
 		return new ResponseEntity<List<Producto>>(list, new HttpHeaders(), HttpStatus.OK);
 	}
 
-	@GetMapping("/get/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Producto> getProductoById(@PathVariable("id") int id) throws RecordNotFoundException {
 		Producto entity = service.findById(id);
 		return new ResponseEntity<Producto>(entity, new HttpHeaders(), HttpStatus.OK);
@@ -63,5 +63,6 @@ public class ProductoController {
 		Iterable<Producto> StateActive =service.DeleteLogic(estado);
 		return new ResponseEntity<Iterable<Producto>>(StateActive, new HttpHeaders(), HttpStatus.OK);
 	}
+
 }				
 

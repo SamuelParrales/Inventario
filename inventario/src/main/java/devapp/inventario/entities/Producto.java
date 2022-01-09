@@ -1,6 +1,7 @@
 package devapp.inventario.entities;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,6 +31,7 @@ public class Producto
     private int cantDisponible;
     private double valorPrestacion;
     private int cantPrestada;
+    private UUID img;
     
 
     @JoinColumn(name="idCategoria")
@@ -166,6 +168,13 @@ public class Producto
         this.cantDisponible +=cant;
     }
 
+    public UUID getImg() {
+        return img;
+    }
+
+    public void setImg(UUID img) {
+        this.img = img;
+    }
     
 }
 

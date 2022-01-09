@@ -13,13 +13,11 @@
     <!-- Index -->
     <link href="css/index.css" rel="stylesheet">
     
-    <!-- Script que permite incluir contenido de otros achivos html -->
-    <script src="js/include-html.min.js"></script>
 </head>
 <!--Cuerpo -->
 <body>
     <!-- Navegación --> 
-    <div data-include="components/nav.html"></div>
+    <div th:replace="/components/nav.html"></div>
 
     <!-- Secciones -->
     <section class="landing-page container-xxl ">
@@ -74,7 +72,7 @@
     </section>
 
     <!-- Footer -->
-    <div data-include="components/footer.html"></div>
+    <div th:replace="/components/footer.html"></div>
     <!-- Bootstrap -->
     <script src="/js/bootstrap.bundle.min.js"></script>
 </body>

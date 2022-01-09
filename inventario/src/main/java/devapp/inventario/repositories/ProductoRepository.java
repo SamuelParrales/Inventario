@@ -28,11 +28,12 @@ public interface ProductoRepository  extends PagingAndSortingRepository<Producto
     //Consultas usando jpa
     public List<Producto> findAllByEstado(int estado);
     public List<Producto> findAllByEstadoAndCategoria_nombre(int estado,String categoria);
-
+    public Long countByCategoria_nombre(String nombre);
         //Para la paginacion
     public List<Producto> findAllByEstado(int estado,Pageable p); 
     public List<Producto> findAllByEstadoAndCategoria_nombre(int estado,String categoria,Pageable p);
     public List<Producto> findAllByProveedores(Proveedor proveedor,Pageable p);//Falta probar
 
+//
 
 }

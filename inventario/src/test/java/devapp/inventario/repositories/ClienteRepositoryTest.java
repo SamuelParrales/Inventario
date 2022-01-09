@@ -21,8 +21,8 @@ public class ClienteRepositoryTest {
     @Test
     public void testFilterByNombresOrApellidos()
     {
-        Pageable p = PageRequest.of(2, 2);
-        List<Cliente> clientes = clienteRepo.filterByNombresOrApellidos("o", p);
+        Pageable p = PageRequest.of(0, 2);
+        List<Cliente> clientes = clienteRepo.filterByNombresOrApellidos("e", p);
         assertNotNull(clientes);
         assertTrue(clientes.size()>0);
     }

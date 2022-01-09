@@ -1,0 +1,22 @@
+:root
+{
+    --main-green: #198754;
+    --text-btn: rgba(204, 204, 204, 0.55);
+}
+
+input[type=number]
+{
+    width: 70px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0);
+    margin-top: 0px;
+    border-color: var(--text-btn);
+    border-radius: 10px;
+}
+
+.products
+{
+    background-image: linear-gradient( 135deg, #92FFC0 10%, #002661 100%);
+    border-radius: 20px;
+    
+}

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import devapp.inventario.dto.ProductoDto;
@@ -14,19 +16,21 @@ import devapp.inventario.entities.Proveedor;
 import devapp.inventario.repositories.CategoriaRepository;
 import devapp.inventario.repositories.ProductoRepository;
 import devapp.inventario.repositories.ProveedorRepository;
+import net.bytebuddy.asm.Advice.Return;
 
 @Service
 public class ProductoService {
 
 	@Autowired
-	ProductoRepository repo;
+	private ProductoRepository repo;
 
 	@Autowired
-	ProveedorRepository proveedorRepository;
+	private ProveedorRepository proveedorRepository;
 
 	@Autowired
-	CategoriaRepository categoriaRepository;
+	private CategoriaRepository categoriaRepository;
 
+	private int tamPagina =  12;
 	public List<Producto> getAll(){
 		List<Producto> productoList = (List<Producto>) repo.findAll();
 		if(productoList.size() > 0) {
@@ -115,5 +119,39 @@ public class ProductoService {
 		Iterable<Producto> StateActive= repo.findAllByEstado(estado);
 		return StateActive; 
 	}
+
+	public int cantPaginacion(String categoria)
+	{
+		long cantInstancias;
+		if(categoria.equals("all"))
+			cantInstancias= repo.count();
+		else
+		{
+			cantInstancias = repo.countByCategoria_nombre(categoria);
+		}
+		double cantPagina = ((double) cantInstancias/(double) tamPagina);
+	
+		int cantPaginaRex = (int) Math.ceil(cantPagina);
+		if(cantPaginaRex<cantPagina)
+			return cantPaginaRex+1;
+
+		return cantPaginaRex;
+	}
+
+	public List<Producto> paginacion(int n)
+	{
+		n=n-1;
+		Pageable p = PageRequest.of(n, tamPagina);
+		return repo.findAllByEstado(1,p);
+	}
+
+	public List<Producto> paginacion(int n, String categoria)
+	{
+		n=n-1;
+		Pageable p = PageRequest.of(n, tamPagina);
+		return repo.findAllByEstadoAndCategoria_nombre(1, categoria,p);
+	}
+	
+
 
 }

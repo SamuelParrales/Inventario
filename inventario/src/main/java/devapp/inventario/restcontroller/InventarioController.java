@@ -1,4 +1,4 @@
-package devapp.inventario.controller;
+package devapp.inventario.restcontroller;
 
 import java.util.UUID;
 
