@@ -64,4 +64,29 @@ public class ProductoRepositoryTest {
         assertTrue(productos.size()==2);
     }
 
+    @Test 
+    void testCountFilterByNombre()
+    {
+     
+        Long cant = productoRepo.countFilterByNombre("v");
+        assertNotNull(cant);
+        assertTrue(cant>0);
+    }
+    
+    @Test
+    public void testCountFilterByNombreFindCategoria_Id()
+    {
+        Long cant = productoRepo.countFilterByNombreFindCategoria_Id("a", 2);
+        assertNotNull(cant);
+        assertTrue(cant>0);
+    }
+
+    @Test
+    public void filterByNombreFindCategoria_Id()
+    {
+        Pageable p = PageRequest.of(0, 2);
+        List<Producto> productos = productoRepo.filterByNombreFindCategoria_Id("a", 2, p);
+        assertNotNull(productos);
+        assertTrue(productos.size()>0);
+    }
 }

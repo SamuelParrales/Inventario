@@ -55,8 +55,10 @@ function insertProducto(data)
     }
     d.querySelector('.products').appendChild($fragment);
     
-}
+}   
 
+if(textSearch!=='')
+    document.getElementById('search').value = textSearch;
 crearPaginacion(cantPagina);
 insertProducto(productos);
 

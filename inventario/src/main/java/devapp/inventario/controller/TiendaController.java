@@ -23,37 +23,23 @@ public class TiendaController
 	@Autowired
 	private CategoriaService categoriaService;
 
-    @GetMapping()
-	public String tienda(Model model) 
-	{
-		
-		model.addAttribute("productos",productoService.paginacion(1)); 
-		model.addAttribute("cantPagina", productoService.cantPaginacion("all"));
-		model.addAttribute("categorias", categoriaService.getAll().listIterator(1));
-		model.addAttribute("pageActive", 1);
-		return "tienda";
-	}
-
-	@GetMapping("/page/{pag}")
+	@GetMapping(value =  {"/page/{pag}"})
 	public String tiendaPag(
 	@PathVariable("pag") int pag, 
-	@RequestParam(required = false,defaultValue = "all") String categoria ,
+	@RequestParam(required = false,defaultValue = "all") String categoria,
+	@RequestParam(required = false,defaultValue = "") String search,
 	Model model) 
 	{
-		model.addAttribute("cantPagina", productoService.cantPaginacion(categoria));
-		model.addAttribute("pageActive", pag);
+	
+		model.addAttribute("pageActive", pag); //Envia el numero de la pagina actual
 		model.addAttribute("categorias", categoriaService.getAll().listIterator(1));
-		if(categoria.equals("all"))
-		{
+		model.addAttribute("cantPagina", productoService.cantPag(categoria,search));
+		model.addAttribute("search", search);
+		if(search.equals(""))
+			model.addAttribute("productos",productoService.pag(pag,categoria));
+		else
+			model.addAttribute("productos",productoService.pag(pag,categoria,search));
 			
-			
-			model.addAttribute("productos",productoService.paginacion(pag));
-			return "tienda.html";
-		}
-			
-		
-		model.addAttribute("productos",productoService.paginacion(pag,categoria));
-		
 		return "tienda.html";
 	}
 }

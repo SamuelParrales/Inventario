@@ -120,17 +120,29 @@ public class ProductoService {
 		return StateActive; 
 	}
 
-	public int cantPaginacion(String categoria)
+	public int cantPag(String nombreCateg,String search)	//Permite obtener la cantidad de paginas
 	{
-		long cantInstancias;
-		if(categoria.equals("all"))
-			cantInstancias= repo.count();
+		
+		long cantInstancias;		//Cantidad de filas
+		if(nombreCateg.equals("all"))
+		{
+			if(search.equals(""))	//Sino envió nada para buscar
+				cantInstancias= repo.countByEstado(1);//Muestra todos los que estan activo
+			else
+				cantInstancias= repo.countFilterByNombre(search);	//Caso contrario filtra por lo que se esta buscando
+		}
 		else
 		{
-			cantInstancias = repo.countByCategoria_nombre(categoria);
+			Categoria categoria = categoriaRepository.findByNombre(nombreCateg);
+			if(search.equals("")) //Sino envió nada para buscar
+				cantInstancias= repo.countByEstadoAndCategoria(1, categoria); //Muestra todo de acuerdo con la categoria
+			else
+				cantInstancias= repo.countFilterByNombreFindCategoria_Id(search, categoria.getId()); //Muestra todo de aceurdo con la palabra search y la categoria
+
 		}
+
+
 		double cantPagina = ((double) cantInstancias/(double) tamPagina);
-	
 		int cantPaginaRex = (int) Math.ceil(cantPagina);
 		if(cantPaginaRex<cantPagina)
 			return cantPaginaRex+1;
@@ -138,20 +150,26 @@ public class ProductoService {
 		return cantPaginaRex;
 	}
 
-	public List<Producto> paginacion(int n)
-	{
-		n=n-1;
-		Pageable p = PageRequest.of(n, tamPagina);
-		return repo.findAllByEstado(1,p);
-	}
 
-	public List<Producto> paginacion(int n, String categoria)
+	public List<Producto> pag(int n, String categoria)
 	{
 		n=n-1;
 		Pageable p = PageRequest.of(n, tamPagina);
+
+		if(categoria.equals("all"))
+			return repo.findAllByEstado(1,p);
+		
 		return repo.findAllByEstadoAndCategoria_nombre(1, categoria,p);
 	}
-	
+	public List<Producto> pag(int n, String nombrecateg,String search)
+	{
 
+		n=n-1;
+		Pageable p = PageRequest.of(n, tamPagina);
+		Categoria categoria = categoriaRepository.findByNombre(nombrecateg);
+		if(nombrecateg.equals("all"))
+			return repo.filterByNombre(search, p);
 
+		return repo.filterByNombreFindCategoria_Id(search, categoria.getId(), p);
+	}
 }

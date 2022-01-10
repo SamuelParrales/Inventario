@@ -12,7 +12,7 @@
     <link href="/css/all.min.css" rel="stylesheet">
     <!-- Index -->
     <link href="/css/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/tienda.css">
+    <link  href="/css/tienda.css" rel="stylesheet">
 
     
 </head>
@@ -25,8 +25,8 @@
 <!-- Busqueda -->
     <div class="nav-busqueda row justify-content-center mt-2 mb-2">
       <nav class="col-10 col-sm-10 col-md-6 col-lg-4 col-xxl-3">
-        <div class="d-flex">
-          <input class="form-control me-0" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex">
+          <input id="search" name="search" class="form-control me-0" type="search" placeholder="Buscar"  aria-label="Search">
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle dropdown-toggle-split" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             </button>
@@ -35,8 +35,8 @@
               <li th:each="c:${categorias}"><a th:text="${c.nombre}" class="dropdown-item" th:href="'/tienda/page/1?categoria='+${c.getNombre()}"></a></li>
             </ul>
           </div>
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </div>
+          <button class="btn btn-outline-success" type="submit" ><i class="fas fa-search"></i></button>
+        </form>
         
       </nav>
 
@@ -84,8 +84,8 @@
           <div class="card-footer">
               <div class="mb-2">
                   <p class="descrip-product text-center m-0">aqui va una descripcion</p>
-                  <span>Valor Prestación: <span class="val-prest-product d-inline">10$</span></span><br>
-                  <span>Disponible :<span class="cal-dis-product d-inline">20</span></span><br>
+                  <span>Valor Prestación: $<span class="val-prest-product d-inline">10$</span></span><br>
+                  <span>Disponible: <span class="cal-dis-product d-inline">20</span></span><br>
               </div>
               <div class="row justify-content-center">
                   
@@ -109,7 +109,9 @@
         const productos = /*[[${productos}]]*/ 'default';
         
         const pagActive = /*[[${pageActive}]]*/ 'default';
-        console.log(productos)
+        
+        const textSearch = /*[[${search}]]*/ 'default';
+        console.log(textSearch);
     /*]]>*/
     </script>
 
