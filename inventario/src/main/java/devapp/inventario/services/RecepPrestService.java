@@ -77,6 +77,7 @@ public class RecepPrestService {
         Date fechaCaducida;
         Empleado empleado;
         Cliente cliente;
+        
         try
         {
             empleado = empleadoRepo.findById(idEmpleado).get();
@@ -137,7 +138,7 @@ public class RecepPrestService {
         if(idEmpleado==1)   //El sistema no puede realizar prestacion
             return null;
         
-        
+
         
         RecepPrest prestacion = addDetalles(prestacionDTO.getProductos(),null); //Genera la reservacion con los detalles dentro
         if(prestacion==null)
@@ -149,9 +150,10 @@ public class RecepPrestService {
         if(valorPagado<totalprestacion/2||valorPagado>totalprestacion) //Debe pagar al menos el 50% y no debe ser mayor al total
             return null;
 
-            
+        
+      
         if(prestacionDTO.isReservacion())
-            est = 5;    //5: Reservacion
+            est = 5;    //5: Reservacion   
         else
         {
             if(idEmpleado==1)//idEmpleado=1; es el sistema
@@ -174,8 +176,9 @@ public class RecepPrestService {
             garantia =valVacio;
             est = 5; //5: Reservacion
         }
-
-  
+   
+        if(valorPagado<totalprestacion)
+            est = 5;
         //Obtencion del empleado y cliente
 
         
@@ -285,6 +288,7 @@ public class RecepPrestService {
         if(idEmpleado==1) //El empleado 1 es el sistema y no puede realizar despachos
             return null;
         
+
         RecepPrest reservacion;
         Empleado empleado;
         Cliente cliente;
@@ -298,28 +302,29 @@ public class RecepPrestService {
         {
             return null;
         }
-        
+     
         //Pregunta si ha expirado 
         if(recepPrestIsExpired(reservacion))
         {
             expireRecepPrest(reservacion); //Entonces le cambia el estado a expirado
         }
-
+        
         int lastEstado = reservacion.estadoActual();
         //Boolean continuaReservacion = prestacionDto.isReservacion();
 
-        
+
         if(lastEstado!=5)//5:Reservacion
            return null;
-        
+      
         double valorPagado = prestacionDto.getValorPagado();
                 //Actualizar datos de la reservacion
                 //Actualizar detalles
+         
         if(!updateDetalles(prestacionDto.getProductos(), reservacion,valorPagado))
         {
             return null;
         }
-       
+         
         
  
             //Actualizar datso generales

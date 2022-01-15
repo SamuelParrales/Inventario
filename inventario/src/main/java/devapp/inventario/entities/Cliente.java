@@ -18,21 +18,25 @@ public class Cliente {
     private String nombres;
     private String apellidos;
     private String correo;
+    private String celular;
     private String password;
     private int estado;
     
     public Cliente() {}
 
-    //constructor necesario para el test
-    public Cliente(int id,String ci, String nombres, String apellidos, String correo, String password) {
-        this.id=id;
+
+    public Cliente(int id, String ci, String nombres, String apellidos, String correo, String celular,
+            String password) {
+        this.id = id;
         this.ci = ci;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.correo = correo;
+        this.celular = celular;
         this.password = password;
         this.estado=1;
     }
+
 
     public Cliente(String ci, String nombres, String apellidos, String correo, String password) {
         this.ci = ci;
@@ -98,6 +102,17 @@ public class Cliente {
     public void setEstado(int estado) {
         this.estado = estado;
     }
+
+    
+    public String getCelular() {
+        return celular;
+    }
+
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
 
     @Override
     public String toString() {

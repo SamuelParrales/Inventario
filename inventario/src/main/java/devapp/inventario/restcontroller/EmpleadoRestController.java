@@ -21,8 +21,8 @@ import devapp.inventario.services.RecepPrestService;
 import devapp.inventario.services.RecordNotFoundException;
 
 @RestController
-@RequestMapping("/empleado")
-public class EmpleadoController {
+@RequestMapping("/api/v1/empleado")
+public class EmpleadoRestController {
 	@Autowired
 	EmpleadoService service;
 

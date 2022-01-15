@@ -21,8 +21,8 @@ import devapp.inventario.services.RecordNotFoundException;
 
 
 @RestController
-@RequestMapping("/categoria")
-public class CategoriaController {
+@RequestMapping("/api/v1categoria")
+public class CategoriaRestController {
 	@Autowired
 	CategoriaService service;
 	

@@ -1,0 +1,150 @@
+<div class="container-xxl">
+    <div  class="form-check">
+        <input id="check-consufinal" class="form-check-input" type="checkbox" value="">
+        <label class="form-check-label" for="flexCheckIndeterminate">
+          Consumidor Final
+        </label>
+    </div>
+    
+    <form id="form-cliente" class="row g-3 mt-1">
+        <div class="col-md-2">
+            <label  class="form-label">CI</label>
+            <div class="input-group">
+              <input name="ci-cliente" type="text" class="form-control" required>
+            </div>
+            <div class="col-12 mt-1">
+                <button id="btn-search-client" class="btn btn-primary">Buscar</button>
+            </div>
+        </div>
+        <fieldset disabled class="col-12 col-md-10 row">
+            <div class="col-6" >
+                <label  class="form-label">Nombres</label>
+                <input id="nombres-cliente" type="text" class="form-control" required>
+            </div>
+            <div class="col-6">
+                <label  class="form-label">Apellidos</label>
+                <input id="apellidos-cliente" type="text" class="form-control"  required>
+            </div>
+            <div class="col-6">
+                <label  class="form-label">Celular</label>
+                <input id="celular-cliente" type="text" class="form-control" required>
+            </div>
+            <div class="col-6">
+                <label  class="form-label">Correo</label>
+                <input id="correo-cliente" type="text" class="form-control"  required>
+            </div>
+        </fieldset>
+    </form>
+    
+
+
+    <div class="row mt-2">
+                <!-- Buscador de productos -->
+        <div class="col-md-4">
+            <div class="row justify-content-center">
+                <div id="product" class=" card col-8" >
+                    <div class="text-center">
+                        <img  width="200" height="180" class= "rounded">
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="nombre-product card-title">Nombre Producto</h5>
+                        <p class="descrip-product card-text">Aqui va una descripcion</p>
+                        <span>Valor Prestación: $<span class="val-prest-product d-inline">10$</span></span><br>
+                        <span>Disponible: <span class="cal-dis-product d-inline">20</span></span><br>
+                    </div>
+                    <div  class="row justify-content-center">
+                        <a class="btn btn-outline-success col-3" href="" ><i class="fas fa-cart-plus"></i></a>
+                        <div class="col-4">
+                            <input class="pt-1 pb-1" type="number" min="1" value="1">
+                        </div> 
+                    </div>
+                </div>
+                <form class="d-flex col-md-12">
+                    <input  name="search-product" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button id="btn-search-product" class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                    <select id="select-product-search" class="select-product-search" name="select-product-search">
+                        <option value="1">Código</option>
+                        <option value="2">Nombre</option>
+                    </select>
+                </form>
+                <div class="products">
+                  <table class="table-product table table-hover table-light">
+                    <thead class="table-dark">
+                      <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripción</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Aqui van las busquedas de productos -->
+                    </tbody>
+                  </table>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- Detalles de productos -->
+        <form class="col-md-8">
+            <div class="col-12 input-group mb-2">
+                <span class="input-group-text ">Dirección entrega</span>
+                <input id="direccion" type="text" class="form-control" aria-describedby="basic-addon3">
+
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" >Garantia</span>
+                <input id="garantia" type="text" class="form-control" aria-describedby="basic-addon3">
+                <span class="input-group-text">Fecha</span>
+                <input id="fecha" class="form-control" type="date">
+            </div>  
+            <table class="table-detalles table table-bordered table-light">
+                <thead class="table-dark">
+                  <tr>
+                    <th class="indice" scope="col">#</th>
+                    <th class="nombre" scope="col">Nombre</th>
+                    <th class="cant" scope="col">Cant</th>
+                    <th class="valor" scope="col">Valor</th>
+                    <th class="total" scope="col">Total</th>
+                    <th class="borrar" scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Aqui van los detalles -->
+
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="3"></td>
+                    <td >Total $</td>
+                    <td id="total" class="text-center">0</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"></td>
+                    <td>Pago $</td>
+                    <td class="text-center"><input id="pago" value="0.00" min="0.00" max="0.00" step="0.01" type="number"/></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"></td>
+                    <td>Saldo $</td>
+                    <td id="saldo" class="text-center">0.00</td>
+                    <td></td>
+                  </tr>
+                </tfoot>
+              </table>
+              <div class="offset-8 row">
+                <div class="form-check col-5">
+                  <input id="check-reservacion" class="form-check-input" type="checkbox" value="">
+                  <label class="form-check-label" for="check-reservacion">
+                    Reservación
+                  </label>
+                </div>
+                <a id="enviar" class="btn btn-primary col-5" >Enviar</a>
+              </div>
+
+        </form>
+        
+    </div>
+
+</div>

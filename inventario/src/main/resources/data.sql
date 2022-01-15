@@ -29,10 +29,10 @@ values
 (20,0,'repostero',1,'repostero grande',6,10,2);
 
 
-insert into cliente(APELLIDOS,CI,CORREO,ESTADO,NOMBRES,PASSWORD)
+insert into cliente(APELLIDOS,CI,CORREO,ESTADO,NOMBRES,PASSWORD,CELULAR)
 VALUES
-('CONSUMIDOR','','',1,'FINAL',''),
-('Parrales','131547816-2','parrales.samuel@hotmail.com',1,'Samuel','$2a$10$4we/faCq5nDlUiU2C7Dtp..y9Fgq/mlweQBmtu9EGoB70BB06YQwK');
+('CONSUMIDOR','','',1,'FINAL','',''),
+('Parrales','1315478162','parrales.samuel@hotmail.com',1,'Samuel','$2a$10$4we/faCq5nDlUiU2C7Dtp..y9Fgq/mlweQBmtu9EGoB70BB06YQwK','0983670287');
 
 
 insert into proveedor(correo,direccion,estado,nombre,telefono) 

@@ -24,23 +24,30 @@ import devapp.inventario.services.RecepPrestService;
 import devapp.inventario.services.RecordNotFoundException;
 
 @RestController
-@RequestMapping("/cliente")
-public class ClienteController {
+@RequestMapping("/api/v1/cliente")
+public class ClienteRestController {
 	@Autowired
 	ClienteService service;
 	
 	@Autowired
     RecepPrestService recepPrestService;
 	
-	@GetMapping("/get/all")
+	@GetMapping("/all")
 	public ResponseEntity<List<Cliente>> getAll() {
 		List<Cliente> list = service.getAll();
 		return new ResponseEntity<List<Cliente>>(list, new HttpHeaders(), HttpStatus.OK);
 	}
 
-	@GetMapping("/get/{id}")
-	public ResponseEntity<Cliente> getClienteById(@PathVariable("id") int id) throws RecordNotFoundException {
+	@GetMapping("/{id}")
+	public ResponseEntity<Cliente> getClienteById(
+		@PathVariable("id") int id) throws RecordNotFoundException {
 		Cliente entity = service.findById(id);
+		return new ResponseEntity<Cliente>(entity, new HttpHeaders(), HttpStatus.OK);
+	}
+	@GetMapping("/ci/{ci}")
+	public ResponseEntity<Cliente> getClienteCi(@PathVariable("ci") String ci)
+	{
+		Cliente entity = service.getByCi(ci);
 		return new ResponseEntity<Cliente>(entity, new HttpHeaders(), HttpStatus.OK);
 	}
 

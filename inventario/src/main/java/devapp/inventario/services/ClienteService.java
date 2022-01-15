@@ -62,4 +62,9 @@ public class ClienteService {
 		return StateActive; 
 	}
 
+	public Cliente getByCi(String ci)
+	{
+		return repo.findByCi(ci);
+	}
+
 }

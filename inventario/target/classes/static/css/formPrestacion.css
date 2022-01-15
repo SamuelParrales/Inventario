@@ -1,0 +1,83 @@
+:root
+{
+    --main-green: #198754;
+    --text-btn: rgba(204, 204, 204, 0.55);
+}
+
+input[type=number]
+{
+    width: 70px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0);
+    margin-top: 0px;
+    border-color: var(--text-btn);
+    border-radius: 10px;
+}
+
+tfoot input[type=number]
+{
+
+    width: 100%;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0);
+    margin-top: 0px;
+    border-color: rgba(255, 255, 255, 0);
+    border-radius: 10px;
+    
+}
+tfoot input[type=number]::-webkit-inner-spin-button,
+tfoot input[type=number]::-webkit-outer-spin-button
+{
+    -webkit-appearance: none; 
+}
+#product/*Card dond se muestra el producto*/
+{
+    border-radius: 20px;
+   
+}
+
+.products
+{
+    overflow: auto;
+    height: 400px;
+}
+
+.table-product tbody tr
+{
+    cursor: pointer;
+}
+
+/* Tabla donde van los detalles de los productos */
+.table-detalles .indice
+{
+    width: 3%;
+}
+
+.table-detalles .nombre
+{
+    width: 50%;
+}
+.table-detalles .cant
+{
+    width: 10%;
+}
+.table-detalles .valor
+{
+    width: 8%;
+}
+.table-detalles .total
+{
+    width: 12%;
+}
+.table-detalles .borrar
+{
+    width: 3%;
+}
+
+
+/* Falta transformar a responsive */
+.table-detalles .nombre-over-flow
+{
+    width: 450px;
+    overflow: auto;
+}

@@ -22,14 +22,14 @@ import devapp.inventario.services.ProductoService;
 import devapp.inventario.services.RecordNotFoundException;
 
 @RestController
-@RequestMapping("/producto")
-public class ProductoController {
+@RequestMapping("/api/v1/producto")
+public class ProductoRestController {
 	@Autowired
 	ProductoService service;
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<Producto>> getAll() {
-		List<Producto> list = service.getAll();
+	public ResponseEntity<List<Producto>> getAll(@RequestParam String search) {
+		List<Producto> list = service.searchN(search, 15);//Devuelve 15 productos que hagan match
 		return new ResponseEntity<List<Producto>>(list, new HttpHeaders(), HttpStatus.OK);
 	}
 

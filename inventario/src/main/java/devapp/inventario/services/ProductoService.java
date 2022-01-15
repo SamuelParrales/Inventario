@@ -172,4 +172,13 @@ public class ProductoService {
 
 		return repo.filterByNombreFindCategoria_Id(search, categoria.getId(), p);
 	}
+
+	public List<Producto> searchN(String search,int n)
+	{
+		if(n<1)
+			return null;
+		
+		Pageable p = PageRequest.of(0, n);
+		return repo.filterByNombre(search, p);
+	}
 }

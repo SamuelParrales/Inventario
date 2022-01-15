@@ -118,7 +118,7 @@ public class InventarioApplication implements CommandLineRunner{
 			//Modificando el cliente
 		cliente.setNombres("rosa");
 
-		//Insertando Empleado
+		//Insertando Empleadoo
 		Empleado empleado = new Empleado("09832", "despachador", "Huho","s", "sada@asfa.com", "12345");
 		empleado = empleadoRepo.save(empleado);
 

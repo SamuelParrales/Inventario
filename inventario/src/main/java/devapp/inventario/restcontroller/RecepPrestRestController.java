@@ -1,6 +1,9 @@
 package devapp.inventario.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +17,12 @@ import devapp.inventario.dto.PrestacionEmplDto;
 import devapp.inventario.dto.RecepcionDto;
 import devapp.inventario.entities.RecepPrest;
 import devapp.inventario.services.RecepPrestService;
+import devapp.inventario.services.RecordNotFoundException;
 
 @RestController
-@RequestMapping("/recepprest")
+@RequestMapping("/api/v1/recepprest")
 
-public class RecepPrestController {
+public class RecepPrestRestController {
     @Autowired
     RecepPrestService recepPrestService;
     
@@ -33,12 +37,18 @@ public class RecepPrestController {
 
 	///*************Para que los empleados puedan realizar reservaciones */
 	@PostMapping()
-    public RecepPrest savePrestacion(
-    @RequestParam int idEmpleado,
-    @RequestBody PrestacionEmplDto save)
+    public ResponseEntity<RecepPrest> savePrestacion(
+    @RequestBody PrestacionEmplDto save) throws RecordNotFoundException
     {
-    
-        return recepPrestService.savePrestacion(save,idEmpleado);
+        Integer idEmpleado = save.getIdEmpleado(); 
+        RecepPrest recepPrest = recepPrestService.savePrestacion(save,idEmpleado);
+        
+        if(recepPrest!=null)
+            return new ResponseEntity<RecepPrest>(recepPrest, new HttpHeaders(), HttpStatus.OK);
+        else
+        return new ResponseEntity<RecepPrest>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+
+        
     }
 	//Para modificar el estado de la reservacion
 	@PutMapping(path ="/{idR}")
