@@ -20,11 +20,11 @@
 <body>
     <div th:replace="/components/nav.html"></div>
     <div id="logreg-forms">
-        <form class="form-signin">
+        <form class="form-signin" th:action="@{index}">
             <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Iniciar Sesión</h1>
 
             <div class="input-group">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Correo Electrónico" required="" autofocus="">
+              <input type="text" id="inputEmail" class="form-control" placeholder="Correo Electrónico" required="" autofocus="">
             </div>
 
             <div class="input-group">
