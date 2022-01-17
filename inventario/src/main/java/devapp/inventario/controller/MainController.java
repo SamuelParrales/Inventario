@@ -15,7 +15,8 @@ public class MainController
 	{
         return "index.html";
     }
-    @GetMapping("index.html")
+
+    @GetMapping("index")
 	public String indexhtml(Model model) 
 	{
         return "index.html";
