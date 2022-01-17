@@ -109,7 +109,7 @@ public class InventarioApplication implements CommandLineRunner{
 
 
 
-			//Probando cliente
+			//Probando cliente 
 
 		Cliente cliente = new Cliente("1309027579", "elsa", "natorio","elsa@hotmail.com", "12345");
 

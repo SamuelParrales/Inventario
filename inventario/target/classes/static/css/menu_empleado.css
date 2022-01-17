@@ -1,0 +1,79 @@
+
+:root 
+{
+    --main-green: #198754;
+    --second-green: #31aa72;
+    --second-gray: rgb(152, 143, 129);
+    --background: rgb(24, 26, 27);
+}
+body
+{
+    background-color: var(--background);
+}
+#menu-empleado
+{
+    background-image: linear-gradient( 135deg, #e1e4e2 10%, #909bac 100%);;
+}
+.opciones-empleado 
+{
+
+    border-left: 1px solid rgba(255,255,255,0.2);
+    border-right: 1px solid rgba(0,0,0,0.2);
+    background: linear-gradient(to top, rgb(187, 183, 183), rgb(114, 111, 111));
+    
+}
+.opciones-empleado a
+{
+    list-style: none;
+    border-right: 1px solid rgba(255,255,255,0.2);
+    border-left: 1px solid rgba(0,0,0,0.2);
+    border-top: 1px solid rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    transition: all 0.3s ease-in-out;
+    height: 80px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(24, 24, 24);
+}
+
+.opciones-empleado span
+{
+    display: block;
+    padding: 0px auto;
+
+    text-align: center;
+    
+    font-family: sans-serif;
+    text-shadow: 1.2px 1.2px rgb(151, 151, 151);
+       
+}
+.opciones-empleado a:hover
+{
+   
+    background: rgb(151, 151, 151);
+    color: rgb(70, 70, 70);
+}
+
+.submenu
+{
+    display: none;
+    
+}
+.back
+{
+    width: 50px;
+    height: 50px;
+    font-size: 32px;
+    color:  var(--main-green);
+    transition: all 0.3s ease-in-out;
+}
+.back:hover
+{
+    width: 50px;
+    height: 50px;
+    font-size: 32px;
+    transform: scale(1.1);
+    color:  var(--second-green);
+}

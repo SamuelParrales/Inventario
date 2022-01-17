@@ -1,0 +1,114 @@
+
+    <section class="container container-xxl">
+        <form class="row">
+            <div class="col-xl-4 my-1">
+                <div class="col-5 input-group ">
+                    <span class="input-group-text">ID</span>
+                    <input id="id" disabled type="text" aria-label="Nombres" class="form-control">
+                </div>
+            </div>
+            <div class="col-xl-3 my-1">
+                <div class="input-group col-2">
+                    <span class="input-group-text">Estado</span>
+                    <input id="estado" disabled type="text"  class="form-control">
+                    <a class="btn btn-primary" href="#"><i class="fas fa-info-circle"></i></a>
+                </div>
+            </div>
+            <div class="col-xl-5 my-1">
+                <div class="col-5 input-group ">
+                    <span class="input-group-text">Fecha expiración</span>
+                    <input id="fecha-expiracion" disabled type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-xl-12 my-1">
+                <div class="col-5 input-group ">
+                    <span class="input-group-text">Cliente</span>
+                    <input id="nombre-completo" disabled type="text" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-xl-12 my-1">
+                <div class="col-5 input-group ">
+                    <span class="input-group-text">CI</span>
+                    <input id="ci" disabled type="text" aria-label="Nombres" class="form-control">
+                    <span class="input-group-text">Celular</span>
+                    <input id="celular" disabled type="text" aria-label="Nombres" class="form-control">
+                    <span class="input-group-text">Correo</span>
+                    <input id="correo" disabled type="text" aria-label="Nombres" class="form-control">                                        
+                </div>
+            </div>
+            <div class="col-xl-12 my-1">
+                <div class="col-5 input-group ">
+                    <span class="input-group-text">Dirección entrega</span>
+                    <input id="dir-entrega" disabled type="text" aria-label="Nombres" class="form-control">
+                    <span  class="input-group-text">Garantia</span>
+                    <input id="garantia" disabled type="text" aria-label="Nombres" class="form-control">                                       
+                </div>
+            </div>
+        </form>
+
+
+        <form class="col-xl-12 my-2">
+
+            <table class="table-detalles table table-bordered table-light">
+                <thead class="table-dark">
+                  <tr>
+                    <th class="indice" scope="col">#</th>
+                    <th class="nombre" scope="col">Nombre</th>
+                    <th class="descripcion" scope="col">Descripcion</th>
+                    <th class="cant-p" scope="col">CantP</th>
+                    <th class="valor-p" scope="col">ValorP</th>
+                    <th class="total-pres" scope="col">TotalPres</th>
+                    <th class="cant-d" scope="col">CantD</th>
+                    <th class="valor-u" scope="col">ValorU</th>
+                    <th class="total-per" scope="col">TotalPer</th>
+                    <th class="total" scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Aqui van los detalles -->
+
+
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="8"></td>
+                    <td >Total $</td>
+                    <td id="total" class="text-center">0</td>
+
+                  </tr>
+                  <tr>
+                    <td colspan="8"></td>
+                    <td>Pago $</td>
+                    <td class="text-center"><input id="pago" value="0.00" min="0.00" max="0.00" step="0.01" type="number"></td>
+              
+                  </tr>
+                  <tr>
+                    <td colspan="8"></td>
+                    <td>Saldo $</td>
+                    <td id="saldo" class="text-center">0.00</td>
+                   
+                  </tr>
+                </tfoot>
+              </table>
+              <div class="offset-10 row">
+                <a id="enviar" class="btn btn-primary col-5" >Enviar</a>
+              </div>
+
+        </form>
+        
+    </section>
+    <template id="template-fila">
+      <tr class="fila-det">
+        <th class="i" scope="row">1</th>
+        <td class="nombre-det">A</td>
+        <td class="descripcion-det">Aqui va una descripciosn</td>
+        <td class="cant-p-det">1</td>
+        <td class="valor-p-det">1</td>
+        <td class="total-pres-det">1</td>
+        <td><input class="cant-d-det" value="0" type="number"></td>
+        <td class="valor-u-det">1</td>
+        <td class="total-per-det">1</td>
+        <td class="total-det">1</td>
+      </tr>
+    </template>

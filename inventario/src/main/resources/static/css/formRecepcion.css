@@ -1,0 +1,54 @@
+input[type=number]
+{
+    width: 70px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0);
+    margin-top: 0px;
+    border-color: var(--text-btn);
+    border-radius: 10px;
+}
+.table-detalles
+{
+    font-size: 13px;
+}
+.table-detalles .indice
+{
+    width: 2%;
+}
+
+.table-detalles .nombre
+{
+    width: 20%;
+}
+.table-detalles .descripcion
+{
+    width: 34%;
+}
+.table-detalles .cant-p
+{
+    width: 5%;
+}
+.table-detalles .valor-p
+{
+    width: 5%;
+}
+.table-detalles .total-pres
+{
+    width: 8%;
+}
+.table-detalles .cant-d
+{
+    width: 5%;
+}
+.table-detalles .valor-u
+{
+    width: 5%;
+}
+.table-detalles .total-per
+{
+    width: 8%;
+}
+.tables .total
+{
+    width: 8%;
+}

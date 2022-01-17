@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet"  href="css/menu_empleado.css">
+  <link href="/css/all.min.css" rel="stylesheet">
+  <link href="/css/nav.css" rel="stylesheet">
+  <link href="/css/footer.css" rel="stylesheet" >
+</head>
+<body>
+      <!-- Navegación -->
+  <div th:replace="/components/nav.html"></div>
+  <section id="menu-empleado" class="container container-xxl">
+          <!-- Menú principal-->
+    <div id="menu-principal" class=" vh-100 row justify-content-center align-items-baseline text-center">
+      <a class="back btn  me-auto p-0" href=""><i class="fas fa-arrow-circle-left"></i></a>
+      <h1>Menú Principal</h1>
+      <nav class="opciones-empleado row col-11 col-md-8 col-lg-6 col-xl-5  p-0">
+        <a id="btn-menu-recepprest" class="col-4" href=""><span>Prestaciones / Recepciones</span></a>
+        <a id="btn-menu-clientes" class="col-4" href="#"><span>Clientes</span></a>
+        <a id="btn-menu-productos" class="col-4" href=""><span>Productos</span></a>
+        <a class="col-4" href=""><span>Proveedores</span></a>
+      </nav>
+    </div>
+        <!-- Sub menu Recepciones prestaciones-->
+    <div id="submenu-recep-prest" class="submenu vh-100 row justify-content-center align-items-baseline text-center">
+      <a class="back btn  me-auto p-0" href=""><i class="fas fa-arrow-circle-left"></i></a>
+      <h1>Prestaciones/Recepciones</h1>
+      <nav class="opciones-empleado row col-11 col-md-8 col-lg-6 col-xl-5  p-0">
+        <a class="col-4" href="empleado/prestacion"><span>Reservar / Prestar</span></a>
+        <a class="col-4" href="#"><span>Recepcionar</span></a>
+        <a class="col-4" href=""><span>Reportes</span></a>
+      </nav>
+    </div>
+        <!-- Sub menu Clientes -->
+    <div id="submenu-clientes" class="submenu vh-100 row justify-content-center align-items-baseline text-center">
+      <a class="back btn  me-auto p-0" href=""><i class="fas fa-arrow-circle-left"></i></a>
+      <h1>Clientes</h1>
+      <nav class="opciones-empleado row col-11 col-md-8 col-lg-6 col-xl-5  p-0">
+        <a class="col-4" href=""><span>Añadir</span></a>
+        <a class="col-4" href="#"><span>Eliminar</span></a>
+        <a class="col-4" href=""><span>Reportes</span></a>
+      </nav>
+    </div>
+    <!-- Sub menu producto -->
+    <div id="submenu-productos" class="submenu vh-100 row justify-content-center align-items-baseline text-center">
+      <a class="back btn  me-auto p-0" href=""><i class="fas fa-arrow-circle-left"></i></a>
+      <h1>Productos</h1>
+      <nav class="opciones-empleado row col-11 col-md-8 col-lg-6 col-xl-5  p-0">
+        <a class="col-4" href="#"><span>Añadir</span></a>
+        <a class="col-4" href="#"><span>Eliminar</span></a>
+        <a class="col-4" href="#"><span>Reportes</span></a>
+      </nav>
+    </div>
+  </section>
+
+      <!-- Footer -->
+    <div th:replace="/components/footer.html"></div>
+    <script src="/js/menu_empleado.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

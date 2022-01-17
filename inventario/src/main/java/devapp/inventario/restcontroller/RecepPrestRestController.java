@@ -54,10 +54,10 @@ public class RecepPrestRestController {
 	@PutMapping(path ="/{idR}")
     public RecepPrest updateReservacion( 
         @PathVariable("idR") long idR,
-        @RequestParam() Integer idEmpleado,
 	    @RequestParam(required = false,defaultValue = "update") String action,
 	    @RequestBody(required = false) PrestacionEmplDto prestacionDto)
     {
+        Integer idEmpleado = prestacionDto.getIdEmpleado();
 		if(action.equals("cancel"))
 			return recepPrestService.cancelReservacionEmpl(idR, idEmpleado);
 

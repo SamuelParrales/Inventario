@@ -44,6 +44,11 @@ public class RecepPrestService {
         return (ArrayList<RecepPrest>)recepPrestRepo.findAll();
     }
 
+    public RecepPrest getPrestacionById(Long id)
+    {
+        return recepPrestRepo.findPrestacionById(id);
+    }
+
     public RecepPrest getById(long id)
     {
         RecepPrest recepPrest;
@@ -474,7 +479,7 @@ public class RecepPrestService {
         {
             calcularPerdidas(productosDto, prestacion);
             if(canBeReceivedProdu(productosDto, detalles,esCompensacion))  
-            {//Si se pueden recepcionar productos
+            {//Si se pueden recepcionar producos
                 devolverProductos(prestacion);
             }
         }
