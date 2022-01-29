@@ -27,10 +27,11 @@ public interface RecepPrestRepository extends PagingAndSortingRepository<RecepPr
     List<RecepPrest> findAllByEstados_EmpleadoAndEstados_EstadoOrderByIdDesc(Empleado empleado,int estado, Pageable p);
     
     @Query(value = "SELECT *  FROM RECEPCIÓN_PRESTACIÓN "+
-    "where ID_RECP_PREST=:id and ID_RECP_PREST "+ 
-    "in (SELECT ID_RECEP_PREST FROM ESTADO_RECEP_PREST "+ 
-    "WHERE ESTADO=3) "+ 
-    "in (SELECT ID_RECEP_PREST FROM ESTADO_RECEP_PREST "+ 
-    "WHERE ESTADO!=0)",nativeQuery = true)
+    "where  ID_RECP_PREST =:id "+
+    "and ID_RECP_PREST NOT in (SELECT ID_RECEP_PREST FROM ESTADO_RECEP_PREST "+ 
+    "WHERE ESTADO=0) "+ 
+    "and  ID_RECP_PREST "+  
+    "in (SELECT ID_RECEP_PREST FROM ESTADO_RECEP_PREST "+
+    "WHERE ESTADO=3)",nativeQuery = true)
     RecepPrest findPrestacionById(@Param(value = "id") Long id);
 }
