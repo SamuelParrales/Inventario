@@ -74,11 +74,10 @@ public class RecepPrestRestController {
     @PutMapping(path = "/prestacion/{idP}")
     public RecepPrest recepcionar(
         @PathVariable("idP") long idP,
-        @RequestParam() Integer idEmpleado,
 	    @RequestParam(required = false,defaultValue = "update") String action,
 	    @RequestBody(required = false) RecepcionDto recepcionDto)
     {
-        
+        Integer idEmpleado = recepcionDto.getIdEmpleado();
         if(action.equals("update"))
         {
             
