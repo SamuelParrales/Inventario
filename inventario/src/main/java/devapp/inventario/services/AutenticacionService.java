@@ -22,8 +22,8 @@ public class AutenticacionService implements UserDetailsService{
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Empleado empleadoTemp = empleadoreposository.findByNombres(username);
+    public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
+        Empleado empleadoTemp = empleadoreposository.findByCorreo(correo);
         List<GrantedAuthority> roles = new ArrayList<>();
         roles.add(new SimpleGrantedAuthority("admin"));
         UserDetails userDetails = new User(empleadoTemp.getNombres(),empleadoTemp.getPassword(),roles);
