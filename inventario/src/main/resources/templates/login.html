@@ -20,15 +20,15 @@
 <body>
     <div th:replace="/components/nav.html"></div>
     <div id="logreg-forms">
-        <form class="form-signin" th:action="@{index}">
+        <form class="form-signin" th:action="@{/login}" method="post">
             <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Iniciar Sesión</h1>
 
             <div class="input-group">
-              <input type="text" id="inputEmail" class="form-control" placeholder="Correo Electrónico" required="" autofocus="">
+              <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Correo Electrónico" required="" autofocus="">
             </div>
 
             <div class="input-group">
-              <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required="">
+              <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Contraseña" required="">
             </div>
 
             <div class="input-group">
@@ -39,7 +39,7 @@
             <hr>
             <!-- <p>Don't have an account!</p>  -->
             <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fas fa-user-plus"></i> Obtener una cuenta</button>
-            </form>
+          </form>
 
             <form action="#" class="form-reset">
                 <input type="email" id="resetEmail" class="form-control" placeholder="Correo Electrónico" required="" autofocus="">

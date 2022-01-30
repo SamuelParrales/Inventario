@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import devapp.inventario.services.AutenticacionService;
 
@@ -39,8 +40,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-        .antMatchers("/h2-console/").authenticated().and().formLogin()
-        .loginPage("/login").and()
-        .antMatcher("/h2-console/").authorizeRequests().anyRequest().permitAll();
+        .antMatchers("/h2-console/").authenticated().and()
+        .formLogin()
+            .loginPage("/login")
+            .permitAll()
+            .defaultSuccessUrl("/index")
+            .usernameParameter("email")
+            .passwordParameter("password")
+            .and()
+        .logout()
+            .permitAll()
+            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+            .logoutSuccessUrl("/index");
+      
     }
 }
