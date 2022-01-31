@@ -35,7 +35,7 @@ public class AutenticacionService implements UserDetailsService{
         {
             Cliente cliente = clienteRepo.findByCorreo(correo);
             roles.add(new SimpleGrantedAuthority("ROLE_CLIENTE"));
-            UserDetails userDetails = new User(cliente.getNombres()+" "+cliente.getApellidos(),cliente.getPassword(),roles);
+            UserDetails userDetails = new User(correo,cliente.getPassword(),roles);
             return userDetails;
         }
 
@@ -47,7 +47,8 @@ public class AutenticacionService implements UserDetailsService{
         roles.add(new SimpleGrantedAuthority("ROLE_DESPACHADOR"));
 
 
-        UserDetails userDetails = new User(empleadoTemp.getNombres() +" "+empleadoTemp.getApellidos(),empleadoTemp.getPassword(),roles);
+        UserDetails userDetails = new User(correo,empleadoTemp.getPassword(),roles);
+       
         return userDetails;
     }
     

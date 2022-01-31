@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import devapp.inventario.dto.ReservacionClientDto;
 import devapp.inventario.entities.Cliente;
 import devapp.inventario.entities.RecepPrest;
+import devapp.inventario.repositories.ClienteRepository;
 import devapp.inventario.services.ClienteService;
 import devapp.inventario.services.RecepPrestService;
 import devapp.inventario.services.RecordNotFoundException;
@@ -72,10 +75,29 @@ public class ClienteRestController {
 
 	/***************Para las reservaciones */
 
-	@PostMapping(path = "/{idC}/reservacion/")
-    public RecepPrest saveReservacion(@PathVariable("idC") int idCliente,
+	@PostMapping(path = "/reservacion")
+    public RecepPrest saveReservacion(
         @RequestBody ReservacionClientDto save)
     {
+		int idCliente;
+		try
+		{
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			UserDetails userDetails = null;
+			if (principal instanceof UserDetails) {
+			userDetails = (UserDetails) principal;
+			}
+			String email = userDetails.getUsername();
+			idCliente = service.getByCorreo(email).getId();
+			
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+
+
+
         return recepPrestService.saveReservacionCliente(save,idCliente);
     }
     

@@ -67,4 +67,9 @@ public class ClienteService {
 		return repo.findByCi(ci);
 	}
 
+	public Cliente getByCorreo(String email)
+	{
+		return repo.findByCorreo(email);
+	}
+
 }

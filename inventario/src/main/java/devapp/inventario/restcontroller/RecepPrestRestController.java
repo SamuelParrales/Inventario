@@ -1,9 +1,13 @@
 package devapp.inventario.restcontroller;
 
+import java.io.Console;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +44,14 @@ public class RecepPrestRestController {
     public ResponseEntity<RecepPrest> savePrestacion(
     @RequestBody PrestacionEmplDto save) throws RecordNotFoundException
     {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = null;
+        if (principal instanceof UserDetails) {
+        userDetails = (UserDetails) principal;
+        }
+        String userName = userDetails.getUsername();
+        System.out.print(userName);
+        
         Integer idEmpleado = save.getIdEmpleado(); 
         RecepPrest recepPrest = recepPrestService.savePrestacion(save,idEmpleado);
         

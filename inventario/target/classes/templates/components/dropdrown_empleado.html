@@ -1,7 +1,7 @@
 <ul class="navbar-nav ms-auto me-3">
     <li class=" dropdown">
     <a  sec:authentication="name" class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
-    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
         <li><a class="dropdown-item" href="#"><i class="fab fa-buromobelexperte"></i> Menú</a></li>
         <li><a sec:authorize="hasRole('ADMIN')" class="dropdown-item" href="#"><i class="fas fa-user-shield"></i> Administración</a></li>
         <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog"></i> Perfil</a></li>

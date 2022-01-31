@@ -1,0 +1,20 @@
+:root 
+{
+    --main-green: #198754;
+    --second-gray: rgb(152, 143, 129);
+    --background: rgb(24, 26, 27);
+}
+body
+{
+    background: var(--background);
+    color: var(--second-gray);
+}
+input[type=number]
+{
+    width: 70px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0);
+    margin-top: 0px;
+    border-color: var(--text-btn);
+    border-radius: 10px;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/all.min.css">
+	<link href="/css/nav.css" rel="stylesheet">
+    <link href="/css/footer.css" rel="stylesheet" >
+	<link rel="stylesheet" href="/css/Carrito.css">
+</head>
+<body>
+	    <!-- Navegación --> 
+	<div th:replace="/components/nav.html"></div>
+    <div class="container container-xxl mt-4"> <!-- : class= "container mt-4"  -->
+		<div class="row">
+			<div class="col-12 col-lg-8">
+				<table class="table table-hover table-light">
+					<thead>
+						<tr class="text-center">
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Cant</th>
+                            <th scope="col">Total</th>
+                            <th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					<!--Aqui van los productos  -->
+						
+					</tbody>
+				</table>
+			</div>
+
+			<div class="col-12 col-sm-7 col-lg-4">
+					<div class="card">
+						<div class="card-header">
+							<h3>Generar Reservación</h3>
+						</div>
+						<div class="card-body">
+							<label>Total</label>
+							<input type="text" value="" readonly="" class="form-control total-cart">
+							<label>Pago</label>
+							<input id="pago" type="number" value="" step="0.01"  class="form-control">
+						
+							<label>Saldo</label>
+							<input id="saldo" type="text" value="" readonly="" class="form-control">
+						</div>
+						<div class="card-footer">	
+    						<a href="#" id="btn-comprar" class="btn btn-primary btn-block" aria-disabled="true">Realizar Reservación</a>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+	<template id="plantilla">
+		<tr class="text-center">
+			<th class="indice" scope="row">1</th>
+			<td class="nombre"> Carpa 4x4 fiestas</td>
+			<td class="descripcion">con el logo de espaiderman</td>
+			<td class="valor">6.50</td>
+			<td>
+				<input type="number" class="cant form-control text-center" min="1" width=""> 
+			</td>
+			<td class="total">6.50</td>
+			<td>
+				<a href="#" class="delete"><i class="fas fa-trash-alt"></i></a>
+			</td>
+		</tr>
+	</template>
+	<script src="/js/sweetalert2.all.js"></script>
+	<script src="/js/bootstrap.bundle.min.js"></script>
+	<script src="/js/carrito.js"></script>
+</body>
+</html>
