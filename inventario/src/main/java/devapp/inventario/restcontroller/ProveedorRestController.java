@@ -22,7 +22,7 @@ import devapp.inventario.services.RecordNotFoundException;
 
 @RestController
 @RequestMapping("/api/v1/proveedor")
-public class ProveedorController {
+public class ProveedorRestController {
 	@Autowired
 	ProveedorService service;
 	

@@ -1,7 +1,4 @@
 package devapp.inventario.controller;
-
-import java.io.Console;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +16,6 @@ import devapp.inventario.entities.Cliente;
 import devapp.inventario.entities.RecepPrest;
 import devapp.inventario.repositories.ClienteRepository;
 import devapp.inventario.repositories.RecepPrestRepository;
-import devapp.inventario.services.ClienteService;
 
 @Controller
 @RequestMapping("/cliente")
