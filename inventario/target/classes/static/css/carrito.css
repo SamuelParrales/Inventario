@@ -18,3 +18,9 @@ input[type=number]
     border-color: var(--text-btn);
     border-radius: 10px;
 }
+
+#pago
+{
+    text-align: left;
+    width: 100%;
+}

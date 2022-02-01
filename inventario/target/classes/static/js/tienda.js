@@ -80,7 +80,7 @@ function insertProducto(data)
         {
 
             Swal.fire({
-                title: '¿Esta seguro de realizar esta acción?',
+                title: '¿Esta seguro de añadir este producto al carrito?',
                 text: "Su acción podrá ser modificada más tarde",
                 icon: 'question',
                 iconHtml: '?',

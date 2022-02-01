@@ -165,6 +165,7 @@ d.getElementById('btn-comprar').addEventListener('click',function(e)
 
     Swal.fire({
         title: '¿Esta seguro de realizar esta acción?',
+        text: 'Tenga en cuenta que posee 3 días para acercarse a nuestro local para la recepción o cambiar la fecha de expiración',
         icon: 'question',
         iconHtml: '?',
         confirmButtonText: 'Si',

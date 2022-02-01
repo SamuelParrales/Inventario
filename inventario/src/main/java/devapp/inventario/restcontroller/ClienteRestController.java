@@ -76,8 +76,8 @@ public class ClienteRestController {
 	/***************Para las reservaciones */
 
 	@PostMapping(path = "/reservacion")
-    public RecepPrest saveReservacion(
-        @RequestBody ReservacionClientDto save)
+    public ResponseEntity<RecepPrest> saveReservacion(
+        @RequestBody ReservacionClientDto save) throws RecordNotFoundException
     {
 		int idCliente;
 		try
@@ -97,8 +97,11 @@ public class ClienteRestController {
 		}
 
 
-
-        return recepPrestService.saveReservacionCliente(save,idCliente);
+		RecepPrest recepPrest = recepPrestService.saveReservacionCliente(save,idCliente);
+		if(recepPrest!=null)
+            return new ResponseEntity<RecepPrest>(recepPrest, new HttpHeaders(), HttpStatus.OK);
+        else
+        return new ResponseEntity<RecepPrest>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
     
     @PutMapping(path =  "/{idC}/reservacion/{idR}")

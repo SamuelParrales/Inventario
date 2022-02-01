@@ -1,5 +1,12 @@
-footer
+section
 {
+    min-height: 70vh;
+
+}
+footer 
+{
+    position: relative;   
+    width: 100%;
     color: #fff;
     font-family: sans-serif;
     font-size: 13px;

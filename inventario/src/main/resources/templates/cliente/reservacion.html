@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="stylesheet" href="/css/index.css">
+	<link href="/css/nav.css" rel="stylesheet">
+    <link href="/css/footer.css" rel="stylesheet" >
+
+</head>
+<body>
+    <div th:replace="/components/nav.html"></div>
+    <section class="container container-xxl pb-5">
+        <div class="row">
+            <div class="col-12">
+                <h3>Mis Reservaciones</h3>
+                <table class=" table table-hover table-light table-responsive-md">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Id</th>
+                            <th>Fecha Emisión</th>
+                            <th>Fecha Caducida</th>
+                            <th>Total</th>
+                            <th>Pago</th>
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="r:${reservacion}" class="text-center" style="text-align :center">
+                            <td th:text="${r.getId()}">1</td>
+                            <td th:text="${r.getEstados().get(0).getFecha()}">22/10/22</td>
+                            <td th:text="${r.getFechaCaducida()}">22/10/22</td>
+                            <td th:text="${r.getTotalPrestacion()+r.getTotalPerdida()}">5</td>
+                            <td th:text="${r.getValorPagado()}">5</td>
+                            <td th:switch="${r.estadoActual()}" >
+                                <span th:case="5">Reservado</span>
+                                <span th:case="4">Cancelado</span>
+                                <span th:case="3">Prestado</span>
+                                <span th:case="2">Expirado</span>
+                                <span th:case="1">Compensando</span>
+                                <span th:case="0">Recepcionado</span>
+                            </td> 
+                            <td>
+                                <a th:href="@{/cliente/reservacion/{id}(id=${r.getId()})}" id="btn-detalle"><i class="fas fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    
+        </div>
+    </section>
+        <!-- Footer -->
+        <div th:replace="/components/footer.html"></div>
+        <!-- Bootstrap -->
+        <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
