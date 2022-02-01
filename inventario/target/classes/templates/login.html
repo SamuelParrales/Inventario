@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/nav.css" rel="stylesheet">
+    <link href="/css/footer.css" rel="stylesheet" >
+    <!-- Iconos -->
+    <link href="/css/all.min.css" rel="stylesheet">
+    <link href="/css/login.css" rel="stylesheet">
+    <link href="/css/index.css" rel="stylesheet">
+ 
+    <!-- Index -->
+  
+</head>
+<body>
+    <div th:replace="/components/nav.html"></div>
+    <div id="logreg-forms">
+        <form class="form-signin" th:action="@{/login}" method="post">
+            <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Iniciar Sesión</h1>
+
+            <div class="input-group">
+              <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Correo Electrónico" required="" autofocus="">
+            </div>
+
+            <div class="input-group">
+              <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Contraseña" required="">
+            </div>
+
+            <div class="input-group">
+              <button class="btn btn-md btn-rounded btn-block form-control submit" type="submit"><i class="fas fa-sign-in-alt"></i> Sign in</button>
+            </div>
+
+            <a href="#" id="forgot_pswd">¿Olvidó su contraseña?</a>
+            <hr>
+            <!-- <p>Don't have an account!</p>  -->
+            <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fas fa-user-plus"></i> Obtener una cuenta</button>
+          </form>
+
+            <form action="#" class="form-reset">
+                <input type="email" id="resetEmail" class="form-control" placeholder="Correo Electrónico" required="" autofocus="">
+                <button class="btn btn-primary btn-block" type="submit">Reset Password</button>
+                <a href="#" id="cancel_reset"><i class="fas fa-angle-left"></i> Volver</a>
+            </form>
+
+            <form action="#" class="form-signup" th:action="@{/cliente/save}" th:object="${cliente}" method="post">
+               
+                <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Registrarse</h1>
+
+                <input type="text" field="*{nombres}" name="nombres" id="user-nombres" class="form-control" placeholder="Nombres" required autofocus="">
+                <input type="text" field="*{apellidos}" name="apellidos" id="user-apellidos" class="form-control" placeholder="Apellidos" required autofocus="">
+                <input type="email" field="*{correo}" name="correo" id="user-email" class="form-control" placeholder="Correo Electrónico" required autofocus="">                
+                <input type="text" field="*{ci}" name="ci" id="cedula" class="form-control" placeholder="Cédula" required autofocus="">
+                <input type="password" field="*{password}" name="password" id="user-repeatpass" class="form-control" placeholder="Contraseña" required autofocus="">
+
+                <div class="input-group">
+                <button class="btn btn-md btn-block submit" type="submit"><i class="fas fa-user-plus"></i> Sign Up</button>
+                </div>
+
+                <a href="#" id="cancel_signup"><i class="fa fa-angle-left"></i> Volver</a>
+            </form>
+            <br>
+
+    </div>
+        <!-- Footer -->
+    <div th:replace="/components/footer.html"></div>
+
+    <script src="/js/login.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

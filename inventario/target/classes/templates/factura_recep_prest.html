@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="stylesheet" href="/css/formRecepcion.css">
+    <link rel="stylesheet" href="/css/index.css">
+<body>
+        <!-- Navegación --> 
+    <div th:replace="/components/nav.html"></div>
+    <section class="container container-xxl">
+        <form class="row">
+            <div class="col-xl-4 my-1">
+                <div class="col-5 input-group ">
+                    <span class="input-group-text">ID</span>
+                    <input th:value="${reservacion.getId()}" id="id" disabled type="text" aria-label="Nombres" class="form-control">
+                </div>
+            </div>
+            <div class="col-xl-3 my-1">
+                <div class="input-group col-2">
+                    <span class="input-group-text">Estado</span>
+                    <div th:switch="${reservacion.estadoActual()}" class="form-control p-0" >
+                        <input th:case="5" value="Reservado"  disabled type="text"  class="form-control">
+                        <input th:case="4" value="Cancelado"  disabled type="text"  class="form-control">
+                        <input th:case="3" value="Prestado"  disabled type="text"  class="form-control">
+                        <input th:case="3" value="Expirado"  disabled type="text"  class="form-control">
+                        <input th:case="3" value="Compensando"  disabled type="text"  class="form-control">
+                        <input th:case="3" value="Recepcionado"  disabled type="text"  class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-5 my-1">
+                <div class="col-5 input-group ">
+                    <span class="input-group-text">Fecha expiración</span>
+                    <input th:value="${reservacion.getFechaCaducida()}" id="fecha-expiracion" disabled type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-xl-12 my-1">
+                <div class="col-5 input-group ">
+                    <span class="input-group-text">Cliente</span>
+                    <input th:value="${reservacion.Cliente.nombres +' '+ reservacion.Cliente.apellidos}" id="nombre-completo" disabled type="text" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-xl-12 my-1">
+                <div class="col-5 input-group ">
+                    <span class="input-group-text">CI</span>
+                    <input th:value="${reservacion.cliente.ci}" id="ci" disabled type="text" aria-label="Nombres" class="form-control">
+                    <span class="input-group-text">Celular</span>
+                    <input th:value="${reservacion.cliente.celular}" id="celular" disabled type="text" aria-label="Nombres" class="form-control">
+                    <span class="input-group-text">Correo</span>
+                    <input th:value="${reservacion.cliente.correo}" id="correo" disabled type="text" aria-label="Nombres" class="form-control">                                        
+                </div>
+            </div>
+            <div class="col-xl-12 my-1">
+                <div class="col-5 input-group ">
+                    <span class="input-group-text">Dirección entrega</span>
+                    <input th:value="${reservacion.direccionEntrega}" id="dir-entrega" disabled type="text" aria-label="Nombres" class="form-control">
+                    <span  class="input-group-text">Garantia</span>
+                    <input th:value="${reservacion.garantia}" id="garantia" disabled type="text" aria-label="Nombres" class="form-control">                                       
+                </div>
+            </div>
+        </form>
+
+
+        <form class="col-xl-12 my-2">
+
+            <table class="table-detalles table table-bordered table-light">
+                <thead class="table-dark">
+                  <tr>
+                    <th class="indice" scope="col">#</th>
+                    <th class="nombre" scope="col">Nombre</th>
+                    <th class="descripcion" scope="col">Descripcion</th>
+                    <th class="cant-p" scope="col">CantP</th>
+                    <th class="valor-p" scope="col">ValorP</th>
+                    <th class="total-pres" scope="col">TotalPres</th>
+                    <th class="cant-d" scope="col">CantP</th>
+                    <th class="valor-u" scope="col">ValorU</th>
+                    <th class="total-per" scope="col">TotalPer</th>
+                    <th class="total" scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Aqui van los detalles -->
+                  <tr th:each="d:${reservacion.detalles}" class="fila-det">
+                    <th class="i" scope="row">1</th>
+                    <td th:text="${d.producto.nombre}" class="nombre-det">A</td>
+                    <td th:text="${d.producto.descripcion}" class="descripcion-det">Aqui va una descripciosn</td>
+                    <td th:text="${d.cantidadPrestada}" class="cant-p-det">1</td>
+                    <td th:text="${d.producto.valorPrestacion}" class="valor-p-det">1</td>
+                    <td th:text="${d.totalPrestacion}" class="total-pres-det">1</td>
+                    <td th:text="${d.cantidadPerdida}" >0</td>
+                    <td th:text="${d.producto.valorUnitario}" class="valor-u-det">1</td>
+                    <td th:text="${d.totalPerdida}" class="total-per-det">1</td>
+                    <td th:text="${d.totalPerdida+d.totalPrestacion}" class="total-det">1</td>
+                  </tr>
+
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="8"></td>
+                    <td>Total $</td>
+                    <td th:text="${reservacion.totalPerdida+reservacion.totalPrestacion}" id="total" class="text-center">0</td>
+
+                  </tr>
+                  <tr>
+                    <td colspan="8"></td>
+                    <td>PagoPres $</td>
+                    <td th:text="${reservacion.valorPagado}"id="pago-pres" class="text-center"></td>
+              
+                  </tr>
+                  <tr>
+                    <td colspan="8"></td>
+                    <td>Saldo $</td>
+                    <td th:text="${(reservacion.totalPerdida+reservacion.totalPrestacion)-reservacion.valorPagado}" id="saldo" class="text-center">0.00</td>
+                   
+                  </tr>
+                </tfoot>
+              </table>
+            
+
+        </form>
+        
+    </section>
+        <!-- Footer -->
+        <div th:replace="/components/footer.html"></div>
+        <!-- Bootstrap -->
+        <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

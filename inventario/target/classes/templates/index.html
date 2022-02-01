@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/nav.css" rel="stylesheet">
+    <link href="css/footer.css" rel="stylesheet" >
+    <!-- Iconos -->
+    <link href="css/all.min.css" rel="stylesheet">
+    <!-- Index -->
+    <link href="css/index.css" rel="stylesheet">
+    
+</head>
+<!--Cuerpo -->
+<body>
+    <!-- Navegación --> 
+    <div th:replace="/components/nav.html"></div>
+
+    <!-- Secciones -->
+    <section class="landing-page container-xxl">
+        <div class="row justify-content-evenly">
+            <div class="text col-10 col-md-4 col-lg-3 ms-md-auto align-self-center">
+                <h1 class="text-center text-white-50">Bienvenido</h1>
+                <h2>Hacemos de tus fiestas y eventos lo mejor para tu disfrute</h2>
+                <a href="/index.html#contactos" class="btn btn-success mb-2"><i class="fas fa-phone-alt me-1"></i>Contactos</a>
+            </div>
+            <div class="img col-sm-12 col-md-7 ms-auto">
+                <img src="./img/vino.jpg" alt="copas de vino">
+            </div>
+            <div class="poligono col-12"></div>
+        </div>
+    </section>
+
+
+    <section id="acerca-de" class="info container-xxl mb-5">
+        <div class="row justify-content-center">
+            <div class="col-10 col-md-6">
+                <h1 class="text-center">¿Quiénes Somos?</h1>
+                <p>J&S CATERING SERVICE es una empresa riobambeña, con inicios desde el año 2000, el cual a través de un sistema de gestión de calidad busca que nuestros clientes cuenten con una empresa de catering completa, donde se pueda llevar a cabo la elaboración total o parcial de su celebración (evento) satisfaciendo las necesidades y deseos de los clientes en su totalidad; evidenciándose el crecimiento empresarial y de igual manera el número de clientes, lo que conlleva a mayores ingresos económicos en la empresa.</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-10 col-md-6">
+                <header class="text-center"><h1>Misión</h1></header>
+            <p>Ofrecer un servicio personalizado a nuestros clientes a través de la eficiencia, brindando calidad bajo estándares de sanidad, comprometidos con cada detalle desde la decoración hasta el evento manteniendo una organización adecuada</p>
+            </div>
+        </div>
+        <div class="poligono col-12"></div>
+    </section>
+
+    <section id="contactos" class="info container-xxl mb-5">
+        <div class="row justify-content-center">
+            <h1 class="text-center">Contactos</h1>   
+            <div class="col-auto">
+                <a href="tel:0987654321">
+                    <span><i class="fas fa-phone-square-alt me-2"></i>0987654321</span>
+                </a>
+            </div>
+            <div class="col-auto">
+                <a href="mailto:correo@correo.com">
+                    <span><i class="far fa-envelope me-2"></i>correo@correo.com</span> 
+                </a>
+            </div>
+        </div>
+        <div class="redes-sociales row justify-content-center mt-2">
+            <a class="col-auto" href="https://www.facebook.com/">
+                <i class=" fab fa-facebook-square"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div th:replace="/components/footer.html"></div>
+    <!-- Bootstrap -->
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

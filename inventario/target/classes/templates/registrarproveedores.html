@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Proveedores</title>
+
+    <link rel="stylesheet" href="/css/procyprovee.css">
+</head>
+<body>
+    <main class="contenedor">
+        <h3 class="centrar-texto">Registrar Proveedores</h3>
+
+        <form class="formulario">
+            <div class="campo">
+                <label class="campo__label" for="nombre">Nombre</label>
+                <input class="campo__field" type="text" id="nombre" 
+                placeholder="Nombre del proveedor">
+            </div>
+            <div class="campo">
+                <label class="campo__label" for="mensaje">Dirección</label>
+                <textarea class="campo__field campo__field--textarea" id="direccion"></textarea>
+            </div>
+            <div class="campo">
+                <label class="campo__label" for="Telefono">Telefono</label>
+                <input class="campo__field" type="text" id="Telefono" 
+                placeholder="Telefono del proveedor">
+            </div>
+            <div class="campo">
+                <label class="campo__label" for="Email">Email</label>
+                <input class="campo__field" type="email" id="Email"
+                placeholder="Email del proveedor">
+            </div>
+
+            <div class="campo">
+                <input type="submit" value="Enviar" class="boton boton--primario">
+            </div>
+        </form>
+    </main>
+</body>
+</html>
+
+<!--int id;
+    String nombre;
+    String direccion;
+    String telefono;
+    String correo;
+    int estado;-->
