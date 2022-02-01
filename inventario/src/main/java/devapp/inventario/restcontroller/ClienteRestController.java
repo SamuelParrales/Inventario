@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import devapp.inventario.dto.ReservacionClientDto;
 import devapp.inventario.entities.Cliente;
 import devapp.inventario.entities.RecepPrest;
-import devapp.inventario.repositories.ClienteRepository;
+
 import devapp.inventario.services.ClienteService;
 import devapp.inventario.services.RecepPrestService;
 import devapp.inventario.services.RecordNotFoundException;
