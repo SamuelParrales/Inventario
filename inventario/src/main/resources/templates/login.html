@@ -47,15 +47,15 @@
                 <a href="#" id="cancel_reset"><i class="fas fa-angle-left"></i> Volver</a>
             </form>
 
-            <form action="#" class="form-signup">
+            <form action="#" class="form-signup" th:action="@{/cliente/save}" th:object="${cliente}" method="post">
                
                 <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Registrarse</h1>
 
-                <input type="text" id="user-nombres" class="form-control" placeholder="Nombres" required="" autofocus="">
-                <input type="text" id="user-apellidos" class="form-control" placeholder="Apellidos" required autofocus="">
-                <input type="email" id="user-email" class="form-control" placeholder="Correo Electrónico" required autofocus="">                
-                <input type="password" id="user-pass" class="form-control" placeholder="Contraseña" required autofocus="">
-                <input type="password" id="user-repeatpass" class="form-control" placeholder="Confirmar contraseña" required autofocus="">
+                <input type="text" field="*{nombres}" name="nombres" id="user-nombres" class="form-control" placeholder="Nombres" required autofocus="">
+                <input type="text" field="*{apellidos}" name="apellidos" id="user-apellidos" class="form-control" placeholder="Apellidos" required autofocus="">
+                <input type="email" field="*{correo}" name="correo" id="user-email" class="form-control" placeholder="Correo Electrónico" required autofocus="">                
+                <input type="text" field="*{ci}" name="ci" id="cedula" class="form-control" placeholder="Cédula" required autofocus="">
+                <input type="password" field="*{password}" name="password" id="user-repeatpass" class="form-control" placeholder="Contraseña" required autofocus="">
 
                 <div class="input-group">
                 <button class="btn btn-md btn-block submit" type="submit"><i class="fas fa-user-plus"></i> Sign Up</button>
