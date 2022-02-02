@@ -9,11 +9,12 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/all.min.css">
     <link rel="stylesheet" href="/css/formRecepcion.css">
-    <link rel="stylesheet" href="/css/index.css">
+  
 <body>
         <!-- Navegación --> 
-    <div th:replace="/components/nav.html"></div>
-    <section class="container container-xxl">
+
+    <section id="factura" class="container container-xxl" >
+        <a class="navbar-brand" href="#">J&S</a>
         <form class="row">
             <div class="col-xl-4 my-1">
                 <div class="col-5 input-group ">
@@ -28,9 +29,9 @@
                         <input th:case="5" value="Reservado"  disabled type="text"  class="form-control">
                         <input th:case="4" value="Cancelado"  disabled type="text"  class="form-control">
                         <input th:case="3" value="Prestado"  disabled type="text"  class="form-control">
-                        <input th:case="3" value="Expirado"  disabled type="text"  class="form-control">
-                        <input th:case="3" value="Compensando"  disabled type="text"  class="form-control">
-                        <input th:case="3" value="Recepcionado"  disabled type="text"  class="form-control">
+                        <input th:case="2" value="Expirado"  disabled type="text"  class="form-control">
+                        <input th:case="1" value="Compensando"  disabled type="text"  class="form-control">
+                        <input th:case="0" value="Recepcionado"  disabled type="text"  class="form-control">
                     </div>
                 </div>
             </div>
@@ -128,8 +129,11 @@
         
     </section>
         <!-- Footer -->
-        <div th:replace="/components/footer.html"></div>
+      
         <!-- Bootstrap -->
+        <script>
+            window.print();
+        </script>
         <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

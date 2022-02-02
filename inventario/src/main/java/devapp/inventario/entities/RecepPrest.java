@@ -155,6 +155,13 @@ public class RecepPrest {
             if(estados==null)
             {
                 estados = new ArrayList<EstRecepPrest>();
+                if(estado.getEstado()!=5)
+                {
+                    EstRecepPrest primerEstado = new EstRecepPrest(this, 5, estado.getEmpleado());
+                    estados.add(primerEstado);
+                }
+
+
                 estados.add(estado);
             }
         }

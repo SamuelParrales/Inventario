@@ -225,6 +225,7 @@
             showCancelButton: true,
             showCloseButton: true
           }).then(accept =>{
+            let id;
               if(accept.isConfirmed)
               {
                   console.log(generateRecepcion())
@@ -240,14 +241,16 @@
                                 }
                             )
                         }
-                            
-                    });
+                       return response.json();     
+                    }).then(data=>id=data.id);
                     Swal.fire(
                     {
                         title: 'Su acción se realizó correctamente',
                         icon: 'success'
                     }
-                  ).then(()=>location = location.origin);
+                  ).then(()=>{   
+                  window.open("/empleado/recep_prest/"+id)  
+                  location = "/empleado/menu"});
                   
               }
               else

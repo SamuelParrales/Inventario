@@ -24,8 +24,8 @@
     <div th:replace="/components/footer.html"></div>
 
     <script  th:inline="javascript">
-        const cantPagina = /*[[${reservacion}]]*/ 'default';
-        console.log(cantPagina);
+        const reservacion = /*[[${reservacion}]]*/ 'default';
+      
     </script>
 
     <script src="/js/sweetalert2.all.js"></script>

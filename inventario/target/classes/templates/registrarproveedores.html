@@ -1,38 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Proveedores</title>
 
-    <link rel="stylesheet" href="/inventario/src/main/resources/static/css/producyprovee.css">
+    <link rel="stylesheet" href="/css/procyprovee.css">
 </head>
 <body>
     <main class="contenedor">
         <h3 class="centrar-texto">Registrar Proveedores</h3>
 
-        <form class="formulario" action="#" th:action="@{/proveedor/save}" th:object="${proveedor}"
-        method="post">
+        <form class="formulario">
             <div class="campo">
                 <label class="campo__label" for="nombre">Nombre</label>
-                <input class="campo__field" field="*{nombre}" name="nombre" type="text" id="nombre" 
+                <input class="campo__field" type="text" id="nombre" 
                 placeholder="Nombre del proveedor">
             </div>
             <div class="campo">
                 <label class="campo__label" for="mensaje">Dirección</label>
-                <textarea class="campo__field campo__field--textarea" id="direccion"
-                field="*{direccion}" name="direccion"></textarea>
+                <textarea class="campo__field campo__field--textarea" id="direccion"></textarea>
             </div>
             <div class="campo">
                 <label class="campo__label" for="Telefono">Telefono</label>
                 <input class="campo__field" type="text" id="Telefono" 
-                field="*{telefono}" name="telefono" placeholder="Telefono del proveedor">
+                placeholder="Telefono del proveedor">
             </div>
             <div class="campo">
                 <label class="campo__label" for="Email">Email</label>
                 <input class="campo__field" type="email" id="Email"
-                field="*{correo}" name="correo"
                 placeholder="Email del proveedor">
             </div>
 

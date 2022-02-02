@@ -1,5 +1,7 @@
 (function()
 {
+ 
+
     const detalles =     //Objeto literal para los detalles
     {
         fila: [],
@@ -70,31 +72,7 @@
     };
 
     
-    // async function postData(pathName,data)
-    // {
-    //     const origin = location.origin;
-    //     const url = origin+pathName;
-    //     return  await fetch(url,        
-    //     {
-    //         method: 'POST',
-    //         headers: 
-    //         {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(data)
-    //     })
-    //     .then(function(response) 
-    //     {
-    //         console.log(response)
-    //         if(response.headers.append.length>=2)
-    //             return response.json();
-    //         else
-    //         {
-    //             return null;
-    //         }
-    //     });
-    // };
-
+  
     async function postData(pathName,data)
     {
         const origin = location.origin;
@@ -102,6 +80,22 @@
         return await fetch(url,        
         {
             method: 'POST',
+            headers: 
+            {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+      
+    };
+
+    async function putData(pathName,data)
+    {
+        const origin = location.origin;
+        const url = origin+pathName;
+        return await fetch(url,        
+        {
+            method: 'PUT',
             headers: 
             {
                 'Content-Type': 'application/json'
@@ -148,9 +142,16 @@
             showCancelButton: true,
             showCloseButton: true
           }).then(accept =>{
+              let id;
               if(accept.isConfirmed)
               {
-                postData('/api/v1/recepprest',generarRecepPrest())
+                  (function()
+                  {
+                    if(isReservacion)
+                    return putData("/api/v1/recepprest/"+reservacion.id,generarRecepPrest());
+                      else
+                    return postData('/api/v1/recepprest',generarRecepPrest())
+                  })()
                 .then(response =>
                     {
                         if(response.status==400)
@@ -162,14 +163,16 @@
                                 }
                             )
                         }
-                            
-                    });
+                        return response.json();
+                    }).then(data=>id= data.id);
                     Swal.fire(
                     {
                         title: 'Su acción se realizó correctamente',
                         icon: 'success'
                     }
-                  ).then(()=>location = location.origin);
+                  ).then(()=>{
+                    window.open("/empleado/recep_prest/"+id)  
+                    location = "/empleado/menu"});
                   
               }
               else
@@ -504,7 +507,21 @@
         }
     };
 
-    
+       //Inicialización
+    //Variable obtenida con thymeleaf
+        //Inicialización
+    //Variable obtenida con thymeleaf
+    const isReservacion = (reservacion!==null);
+
+    console.log(reservacion)
+    if(isReservacion)
+    {
+        for (const d of reservacion.detalles) {
+            addToDetalles(d.producto);
+        }
+        searchCliente(reservacion.cliente.ci);
+        document.querySelector('input[name=ci-cliente]').value = reservacion.cliente.ci;
+    }
   
 })();
 

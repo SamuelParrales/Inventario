@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/all.min.css">
+</head>
+<body>
+  <div th:replace="/components/nav.html"></div>
+    <section class="container container-xxl">
+        <form class="row"  th:action="@{/empleado/recepcion}" method="get">
+            <div class="col-6 mb-3">
+                <label  class="form-label">Fecha inicio</label>
+                <input name="fechai" type="date" class="form-control" >
+              </div>
+              <div class="col-6 mb-3">
+                <label class="form-label">Fecha Final</label>
+                <input name="fechaf" type="date" class="form-control" >
+            </div>
+            <div class="col-6 mb-3">
+                <label  class="form-label">Id Prestación</label>
+                <input name="id" type="text" class="form-control">
+              </div>
+              <div class="col-6 mb-3">
+                <label  class="form-label">CI cliente</label>
+                <input name="ci" type="text" class="form-control" >
+            </div>
+            <div class="row">
+              <button id="enviar" class="btn btn-primary col-auto" >Enviar</button>
+            </div>
+        </form>
+        <form class="col-xl-12 my-2">
+
+            <table class="table-detalles table table-bordered table-light">
+                <thead class="table-dark">
+                  <tr>
+                    <th class="indice" scope="col">#</th>
+                    <th class="id" scope="col">id</th>
+                    <th class="fecha" scope="col">Fecha Emisón</th>
+                    <th class="fecha" scope="col">Fecha Expiración</th>
+                    <th class="cant-d" scope="col">Estado</th>
+                    <th class="cliente" scope="col">cliente</th>
+                    <th class="empleado" scope="col">Empleado</th>
+                    <th class="total" scope="col">Total</th>
+                    <th class="valor-pagado" scope="col">Valor Pagado</th>
+                    <th class="total" scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Aqui van los detalles -->
+                  <tr th:each="p,i:${prestaciones}">
+                    <th th:text="${i.index+1}" scope="row">1</th>
+                    <td th:text="${p.id}" >1</td>
+                    <td th:text="${p.getEstados().get(0).getFecha()}">22/10/12</td>
+                    <td th:text="${p.getFechaCaducida()}">22/10/12</td>
+                    <td th:switch="${p.estadoActual()}" >
+                      <span th:case="5">Reservado</span>
+                      <span th:case="4">Cancelado</span>
+                      <span th:case="3">Prestado</span>
+                      <span th:case="2">Expirado</span>
+                      <span th:case="1">Compensando</span>
+                      <span th:case="0">Recepcionado</span>
+                  </td> 
+                    <td th:text="${p.cliente.nombres+' '+p.cliente.apellidos}"></td>
+                    <td th:text="${p.estados.get(0).empleado.nombres}">Mario neta</td>
+                    <td th:text="${p.totalPrestacion +p.TotalPerdida}">5</td>
+                    <td th:text="${p.valorPagado}"></td>
+                    <td><a th:href="@{/empleado/recepcion/{id}(id=${p.getId()})}" ><i class="fas fa-concierge-bell"></i></a></td>
+                  </tr>
+
+                </tbody>
+                
+              </table>
+ 
+        </form>
+    </section>
+</body>
+</html>

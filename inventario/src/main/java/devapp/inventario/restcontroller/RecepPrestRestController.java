@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import devapp.inventario.dto.PrestacionEmplDto;
 import devapp.inventario.dto.RecepcionDto;
 import devapp.inventario.entities.RecepPrest;
+import devapp.inventario.repositories.EmpleadoRepository;
+import devapp.inventario.services.ClienteService;
+import devapp.inventario.services.EmpleadoService;
 import devapp.inventario.services.RecepPrestService;
 import devapp.inventario.services.RecordNotFoundException;
 
@@ -27,6 +30,9 @@ import devapp.inventario.services.RecordNotFoundException;
 public class RecepPrestRestController {
     @Autowired
     RecepPrestService recepPrestService;
+
+    @Autowired
+    EmpleadoRepository empleadoRepo;
     
     // @GetMapping()
     // public ArrayList<RecepPrest> obtenerRecepPrest(){
@@ -42,15 +48,23 @@ public class RecepPrestRestController {
     public ResponseEntity<RecepPrest> savePrestacion(
     @RequestBody PrestacionEmplDto save) throws RecordNotFoundException
     {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = null;
-        if (principal instanceof UserDetails) {
-        userDetails = (UserDetails) principal;
-        }
-        String userName = userDetails.getUsername();
-        System.out.print(userName);
+        int idEmpleado;
+		try
+		{
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			UserDetails userDetails = null;
+			if (principal instanceof UserDetails) {
+			userDetails = (UserDetails) principal;
+			}
+			String email = userDetails.getUsername();
+			idEmpleado =  empleadoRepo.findByCorreo(email).getId();
+			
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
         
-        Integer idEmpleado = save.getIdEmpleado(); 
         RecepPrest recepPrest = recepPrestService.savePrestacion(save,idEmpleado);
         
         if(recepPrest!=null)
@@ -67,7 +81,24 @@ public class RecepPrestRestController {
 	    @RequestParam(required = false,defaultValue = "update") String action,
 	    @RequestBody(required = false) PrestacionEmplDto prestacionDto)
     {
-        Integer idEmpleado = prestacionDto.getIdEmpleado();
+
+        int idEmpleado;
+		try
+		{
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			UserDetails userDetails = null;
+			if (principal instanceof UserDetails) {
+			userDetails = (UserDetails) principal;
+			}
+			String email = userDetails.getUsername();
+			idEmpleado =  empleadoRepo.findByCorreo(email).getId();
+			
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+        
 		if(action.equals("cancel"))
 			return recepPrestService.cancelReservacionEmpl(idR, idEmpleado);
 
@@ -87,7 +118,23 @@ public class RecepPrestRestController {
 	    @RequestParam(required = false,defaultValue = "update") String action,
 	    @RequestBody(required = false) RecepcionDto recepcionDto)
     {
-        Integer idEmpleado = recepcionDto.getIdEmpleado();
+        int idEmpleado;
+		try
+		{
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			UserDetails userDetails = null;
+			if (principal instanceof UserDetails) {
+			userDetails = (UserDetails) principal;
+			}
+			String email = userDetails.getUsername();
+			idEmpleado =  empleadoRepo.findByCorreo(email).getId();
+			
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+        
         if(action.equals("update"))
         {
             
