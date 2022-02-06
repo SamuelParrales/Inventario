@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:if="${producto}==null">Registrar Productos</title>
+    <title th:if="${producto}!=null">Actualizar Productos</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/vanillaSelectBox.css">
+    <link rel="stylesheet"  href="/css/menu_empleado.css">
+    <link href="/css/all.min.css" rel="stylesheet">
+    <link href="/css/nav.css" rel="stylesheet">
+    <link href="/css/footer.css" rel="stylesheet" >
+
+    
+</head>
+<body>
+    <div th:replace="/components/nav.html"></div>
+
+        
+        <section id="menu-empleado" class="container container-xxl py-5">
+            <h3 class="text-center">Producto</h3>
+            <form  action="/empleado/producto" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input th:if="${producto}==null" required name="nombre" type="text" class="form-control"  placeholder="Nombre del producto">
+                    <input th:if="${producto}!=null" th:value="${producto.nombre}" required name="nombre" type="text" class="form-control"  placeholder="Nombre del producto">
+                  </div>
+                  <div class="mb-3">
+                    <label  class="form-label">Descripción</label>
+                    <textarea th:if="${producto}==null" name="descripcion" class="form-control" placeholder="Descripción" rows="3"></textarea>
+                    <textarea th:if="${producto}!=null" th:text="${producto.descripcion}" name="descripcion" class="form-control" placeholder="Descripción" rows="3"></textarea>
+                  </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" >Valor U</span>
+                    <input th:if="${producto}==null" required type="number" class="form-control" name="valoru" placeholder="Valor Unitario" >
+                    <input th:if="${producto}!=null" th:value="${producto.valorUnitario}" required type="number" class="form-control" name="valoru" placeholder="Valor Unitario" >
+                    <span class="input-group-text ms-1" >Valor Prestación</span>
+                    <input th:if="${producto}==null" required type="number" class="form-control" name="valorp" placeholder="Valor Prestación" >
+                    <input th:if="${producto}!=null" th:value="${producto.valorPrestacion}" required type="number" class="form-control" name="valorp" placeholder="Valor Prestación" >
+                    <span class="input-group-text ms-1" >Cant Disponible</span>
+                    <input th:if="${producto}==null" required type="number" class="form-control" name="cantd" placeholder="Cantidad Disponible" >
+                    <input th:if="${producto}!=null" th:value="${producto.cantDisponible}"  required type="number" class="form-control" name="cantd" placeholder="Cantidad Disponible" >
+                    
+                </div>
+
+
+                <div class="mt-2">
+                    <label  for="proveedores">Proveedores</label>
+                    <select  id="proveedores" multiple size="3" name="proveedores">
+                        <div th:each="p:${proveedores}">
+                            <option th:text="${p.nombre}" th:value="${p.id}">Value 1</option>
+                        </div>
+                    </select>
+    
+                    <label for="proveedores">Categoria</label>
+                    <select name="categoria" id="categoria">
+                        <div th:each="c:${categorias}">
+                            <option th:text="${c.nombre}"   th:value="${c.id}" >Value 1</option>
+                        </div>
+                    </select>
+                </div>
+                <div class="mt-4">
+                    <div th:if="${producto}!=null" class="card-body text-center">
+                        <img width="200" height="180" class= "rounded" th:src="@{/pic/{id}(id=${producto.img}+.jpg)}"> <!-- Aqui va la imagen -->
+                    </div>
+                    <input type="file" name="file"  accept="image/*" class="form-control" /> 
+                </div>
+                <div class="row justify-content-center">
+                    <button  class="col-auto btn btn-primary" type="submit">Enviar</button>
+                </div>
+            </form>
+        </section>
+
+
+        <div th:replace="/components/footer.html"></div>
+
+    <script src="/js/vanillaSelectBox.js"></script>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    
+    const producto = /*[[${producto}]]*/ 'default';
+     
+   
+ /*]]>*/
+
+        console.log(producto);
+        if(producto!=null)
+        {
+            const $proveedores = document.querySelector('#proveedores');
+            const $categoria = document.querySelector('#categoria');
+            for (const $option of $proveedores) 
+            {
+                for (const p of producto.proveedores) 
+                {
+                    if($option.value==p.id)
+                    {
+                       
+                        $option.setAttribute('selected',true);
+                    }    
+                } 
+                    
+            }
+
+            for (const $option of $categoria) 
+            {
+     
+                if($option.value==producto.categoria.id)
+                    $option.setAttribute('selected',true);
+                
+                    
+
+            }
+
+            document.querySelector('form').action ="/empleado/producto/"+producto.id;
+
+        }
+
+
+        let selectProveedores = new vanillaSelectBox("#proveedores",{
+            translations: { 
+            "all": "Todos", 
+            "items": "Proveedores",
+            }
+        });
+        
+        let selectCategorias = new vanillaSelectBox("#categoria");
+
+    </script>
+        <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+<!--    private int id;
+    private String nombre;
+    private String descripcion;
+    private double valorUnitario;
+    private int cantDisponible;
+    private double valorPrestacion;
+    private int cantPrestada;
+    private UUID img; -->

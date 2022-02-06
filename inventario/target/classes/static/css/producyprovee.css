@@ -20,7 +20,7 @@ html{
 body{
     font-family: var(--fuenteParrafos);
     font-size: 1.6rem;
-    line-height: 2;
+  
 }
 
 /*Globales*/
@@ -133,7 +133,7 @@ img{
 }
 
 .campo__field--textarea{
-    height: 20rem;
+    height: 5rem;
 }
 
 .campo__imagen{
