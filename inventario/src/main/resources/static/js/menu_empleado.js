@@ -33,6 +33,13 @@ function toggleClientes(e)
     toggle('#menu-principal','#submenu-clientes');
 }
 
+function toggleProductos(e)
+{
+    e.preventDefault();
+    toggle('#menu-principal','#submenu-productos');
+}
+
+
 (function()
 {
     const d = document;
@@ -49,8 +56,8 @@ function toggleClientes(e)
 
     const $btnMenuProductos = d.getElementById('btn-menu-productos');
     const $backMenuProductos = d.querySelector('#submenu-productos .back');
-    $btnMenuProductos.addEventListener('click',toggleClientes);
-    $backMenuProductos.addEventListener('click',toggleClientes);
+    $btnMenuProductos.addEventListener('click',toggleProductos);
+    $backMenuProductos.addEventListener('click',toggleProductos);
 })();
 
 

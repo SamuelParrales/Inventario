@@ -43,8 +43,8 @@ public class Producto
 	  name = "producto_prov", 
 	  joinColumns = @JoinColumn(name = "idProducto"), 
 	  inverseJoinColumns = @JoinColumn(name = "idProveedor"))
-    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST},fetch = FetchType.EAGER)
-    private List<Proveedor> proveedores;
+    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST} , fetch = FetchType.EAGER)
+    private List<Proveedor> proveedores; 
 
     private int estado;
 

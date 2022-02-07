@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="stylesheet" href="/css/nice-select2.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/forms.css">
+</head>
+<body>
+  <div th:replace="/components/nav.html"></div>
+    <section class="container container-xxl">
+        <form class="row justify-content-center" action="/empleado/producto" method="get">
+            <div class="col-5 mb-3">
+                <label  class="form-label">Nombre</label>
+                <input name="nombre" type="text" class="form-control" >
+              </div>
+  
+            <div class="row justify-content-center">
+                <div class="col-4 mb-3">
+                    <label  class="form-label">Proveedor</label>
+                    <select name="proveedor" id="select-proveedor" class="form-control nice-select" >
+                        <option  value="" selected>Selecionar Proveedor</option>
+                        <option th:each="p:${proveedores}" th:value="${p.id}" th:text="${p.nombre}" >texto</option>
+                    </select>
+                </div>
+                <div class="col-4 mb-3">
+                    <label class="form-label">Categoria</label>
+                    <select name="categoria" id="select-categoria" class="form-control nice-select">
+                        <option value="" selected>Selecionar Categoria</option>
+                        <option th:each="c:${categorias}" th:value="${c.id}" th:text="${c.nombre}" >texto</option>
+                    </select>
+
+                </div>
+                <div class="col-1 mt-4 pt-2">
+                  <button type="submit" id="buscar" class="btn btn-primary col-auto" ><i class="fas fa-search"></i></button>
+                </div>
+
+            </div>
+        </form>
+
+        <table class="table-detalles table table-bordered table-light">
+            <thead class="table-dark">
+              <tr>
+                <th class="indice" scope="col">#</th>
+                <th class="nombre" scope="col">Nombre</th>
+                <th class="descripcion" scope="col">Descripcion</th>
+                <th class="cant-d" scope="col">categoria</th>
+                <th class="cant-p" scope="col">Val Unitario</th>
+                <th class="valor-p" scope="col">Val Pres</th>
+                <th class="total-pres" scope="col">Cant Prestada</th>
+                <th class="total-pres" scope="col">Cant Disponible</th>
+
+                <th class="valor-u" scope="col">Proveedores</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Aqui van los detalles -->
+            <tr th:each="p,i:${productos}">
+                <th th:text="${i.index+1}" scope="row">1</th>
+                <td th:text="${p.nombre}"></td>
+                <td th:text="${p.descripcion}">Aqui va una descripcion</td>
+                <td th:text=${p.Categoria.nombre}> </td>
+                <td th:text=${p.valorUnitario}>2</td>
+                <td th:text="${p.valorPrestacion}">3</td>
+                <td th:text="${p.cantPrestada}">1</td>
+                <td th:text="${p.cantDisponible}"></td>
+                <td>
+                    <select id="producto-proveedor" class="form-select-sm p-0 m-0">
+                        <option th:each="proveedor:${p.proveedores}" th:text="${proveedor.nombre}"> a</option>
+                    </select>
+                </td>
+                
+                <td><a th:href="@{/empleado/producto/{id}(id=${p.getId()})}"><i class="fas fa-edit"></i></a></td>
+                <td><a class="delete" th:href="@{/empleado/producto/{id}(id=${p.getId()})}"><i class="fas fa-trash-alt"></i></a></td>
+                
+            </tr>
+
+            </tbody>
+            
+          </table>
+
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+    </section>
+    <script src="/js/sweetalert2.all.js"></script>
+    <script src="/js/nice-select2.js"></script>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    
+    const cantPag = /*[[${cantPag}]]*/ 'default';
+     
+    const pagActive = /*[[${pageActive}]]*/ 'default';
+ /*]]>*/
+
+
+    
+      let options = {searchable: true};
+      NiceSelect.bind(document.getElementById('select-proveedor'),options);
+      NiceSelect.bind(document.getElementById('select-categoria'),options);
+
+
+      function searchPagination(nPage)
+      {
+        let parametros = location.search.replace('?','');
+        let loops=0;
+        let arrParametros;
+        if(parametros)
+        {
+          arrParametros = parametros.split("&");
+          loops = arrParametros.length;
+        }
+          
+        if(loops===0)
+          return '?pag='+nPage;
+
+        for(let i=0;i<loops;i++)
+        {
+         
+          if(arrParametros[i].substring(0,3)==='pag')
+          {
+            arrParametros[i]= 'pag='+nPage;
+          
+            return '?'+arrParametros.join('&');
+          }
+
+          if(i===loops-1)
+          {
+            return '?pag='+nPage +"&" +arrParametros.join('&');
+          }
+        }
+      }
+
+      //Añadir la  paginación 
+      const $fragment = document.createDocumentFragment();
+      for(let i=0;i<cantPag;i++)
+      {
+        const $li= document.createElement("li");
+        const $a = document.createElement("a");
+        $li.appendChild($a);
+
+        $li.className = 'page-item';
+        $a.className = 'page-link';
+        $a.textContent = (i+1);
+        $a.href = "/empleado/producto"+ searchPagination((i+1))
+  
+        if((pagActive-1)===i)
+          $li.classList.add('active');
+
+        $fragment.appendChild($li)
+      }
+      document.querySelector('.pagination .page-item').after($fragment);
+    
+      // Ejemplo implementando el metodo POST:
+    async function deleteData(url)
+    {
+   
+        return await fetch(url,        
+        {
+            method: 'DELETE',
+            headers: 
+            {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify("")
+        })
+      
+    };
+
+const $btnsDelete = document.getElementsByClassName('delete');
+
+for (const btn of $btnsDelete) 
+{
+  console.log(btn);
+  btn.addEventListener('click',function(e)
+  {
+    console.log(this.href);
+    let href = this.href;
+    e.preventDefault();
+    Swal.fire({
+            title: '¿Esta seguro de realizar esta acción?',
+            icon: 'question',
+            iconHtml: '?',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No',
+            showCancelButton: true,
+            showCloseButton: true
+          }).then(accept =>{
+              let id;
+              if(accept.isConfirmed)
+              {
+                  (function()
+                  {
+                    return deleteData(href);
+                  })()
+                .then(response =>
+                    {
+                        if(response.status==400)
+                        {
+                            Swal.fire(
+                                {
+                                    title: 'Upss! Algo ha salido mal',
+                                    icon: 'error'
+                                }
+                            )
+                        }
+                        return response.json();
+                    }).then(data=>id= data.id);
+                    Swal.fire(
+                    {
+                        title: 'Su acción se realizó correctamente',
+                        icon: 'success'
+                    }
+                  ).then(()=>{
+                    location = "/empleado/producto"});
+                  
+              }
+              else
+              {
+                  Swal.fire(
+                      {
+                          title: 'Su acción ha sido cancelada',
+                          icon: 'warning'
+                      }
+                  )
+              }
+          })
+    
+  })
+};
+
+
+
+
+    </script>
+</body>
+</html>

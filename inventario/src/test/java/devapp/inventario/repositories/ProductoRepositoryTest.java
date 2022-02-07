@@ -59,7 +59,7 @@ public class ProductoRepositoryTest {
     {
         Pageable p = PageRequest.of(0, 2);
         Proveedor proveedor = proveedorRepo.findById(1).get(); //id=1: Sin especificar
-        List<Producto> productos = productoRepo.findAllByProveedores(proveedor,p);
+        List<Producto> productos = productoRepo.findAllByProveedoresAndEstado(proveedor, 1, p);
         assertNotNull(productos);
         assertTrue(productos.size()==2);
     }
