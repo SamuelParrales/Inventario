@@ -19,8 +19,6 @@ import devapp.inventario.dto.PrestacionEmplDto;
 import devapp.inventario.dto.RecepcionDto;
 import devapp.inventario.entities.RecepPrest;
 import devapp.inventario.repositories.EmpleadoRepository;
-import devapp.inventario.services.ClienteService;
-import devapp.inventario.services.EmpleadoService;
 import devapp.inventario.services.RecepPrestService;
 import devapp.inventario.services.RecordNotFoundException;
 

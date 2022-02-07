@@ -6,14 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link rel="stylesheet" href="/css/all.min.css">
     <link rel="stylesheet" href="/css/nice-select2.css">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/forms.css">
+    <link href="/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link href="/css/nav.css" rel="stylesheet">
+    <link href="/css/footer.css" rel="stylesheet" >
+    
+    <link rel="stylesheet"  href="/css/menu_empleado.css">
 </head>
 <body>
   <div th:replace="/components/nav.html"></div>
-    <section class="container container-xxl">
+    <div id="menu-empleado">
+      <section class="container container-xxl">
         <form class="row justify-content-center" action="/empleado/producto" method="get">
             <div class="col-5 mb-3">
                 <label  class="form-label">Nombre</label>
@@ -102,6 +108,10 @@
             </ul>
           </nav>
     </section>
+    <div th:replace="/components/footer.html"></div>
+    </div>
+
+    
     <script src="/js/sweetalert2.all.js"></script>
     <script src="/js/nice-select2.js"></script>
     <script th:inline="javascript">
@@ -252,5 +262,6 @@ for (const btn of $btnsDelete)
 
 
     </script>
+        <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

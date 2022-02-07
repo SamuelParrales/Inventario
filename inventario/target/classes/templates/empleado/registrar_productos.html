@@ -18,8 +18,8 @@
 <body>
     <div th:replace="/components/nav.html"></div>
 
-        
-        <section id="menu-empleado" class="container container-xxl py-5">
+    <div id="menu-empleado">
+        <section  class="container container-xxl py-5">
             <h3 class="text-center">Producto</h3>
             <form  action="/empleado/producto" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
@@ -72,6 +72,8 @@
                 </div>
             </form>
         </section>
+    </div>
+        
 
 
         <div th:replace="/components/footer.html"></div>

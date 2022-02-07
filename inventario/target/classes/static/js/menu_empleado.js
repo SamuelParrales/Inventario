@@ -39,6 +39,13 @@ function toggleProductos(e)
     toggle('#menu-principal','#submenu-productos');
 }
 
+function toggleProveedores(e)
+{
+    e.preventDefault();
+    toggle('#menu-principal','#submenu-proveedores');
+}
+
+
 
 (function()
 {
@@ -58,6 +65,14 @@ function toggleProductos(e)
     const $backMenuProductos = d.querySelector('#submenu-productos .back');
     $btnMenuProductos.addEventListener('click',toggleProductos);
     $backMenuProductos.addEventListener('click',toggleProductos);
+
+
+    const $btnMenuProveedores = d.getElementById('btn-menu-proveedores');
+    const $backMenuProveedores = d.querySelector('#submenu-proveedores .back');
+    $btnMenuProveedores.addEventListener('click',toggleProveedores);
+    $backMenuProveedores.addEventListener('click',toggleProveedores);
+
+    // 
 })();
 
 
