@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http:www.thymeleaf.org">
+    <head>
+    <title>Registro</title>  
+    <meta charset="utf-8">
+    
+    <!--FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Los iconos tipo Solid de Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css">
+    <link rel="stylesheet" type="text/css" href="/css/miforms.css">
+     
+	</head>
+    <body>
+        <div class="modal-dialog text-center">
+            <h2 style="color:#3b4652;">Buscar proveedor</h2>
+           
+           <div class="col-sm-8 main-section">
+                <div class="modal-content">
+                    <div class="col-12 user-img" >
+                         <img src="/img/user3.png">
+                    </div>    
+                    <div>
+                        <form action="#" th:action="@{/proveedor/edit}" th:object="${proveedor}"  method="get">
+                        <div class="form-group mb-1" id="nombres">
+                            <input type="text" name="nombre" field="*{nombre}" class="form-control" placeholder="Nombre del proveedor" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Buscar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    	<script src="/js/bootstrap.bundle.min.js"></script>   	
+</html>
