@@ -27,5 +27,5 @@ public interface ProveedorRepository extends PagingAndSortingRepository<Proveedo
         //Para la paginacion
     public List<Proveedor> findAllByEstado(int estado,Pageable p); //metodo para el borrado logico
     public List<Proveedor> findAllByNombreAndEstado(String nombres,int estado,Pageable p); //metodo para el borrado logico
-    
+    public Proveedor findByNombre(String nombre);
 }
