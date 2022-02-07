@@ -34,7 +34,17 @@ VALUES
 
 
 insert into proveedor(correo,direccion,estado,nombre,telefono) 
-values('','',1,'SIN ESPECIFICAR','');
+values
+('proveedor@proveedor.com','Los Laureles',1,'Carlos Parra','123456789'),
+('qtorres@luevano.net','Padrón de Lemos',1,'Gabriel Quesada','679157152'),
+('valeria51@terra.com','Montes de Sierra',1,'Jaime Riera','971132298'),
+('harorafa2@rosal.com','San Roldán',1,'Rafael Haro','939337604'),
+('mercadoe11@live.com','Viviendas San Pedro',1,'Erik Mercado','954740007'),
+('lpacheco@terra.com','Fabelas Bajas',1,'Lara Pacheco','652770554'),
+('patricia.escalante@ferrer.es','Paseo Zambrano',1,'Patricia Escalante','681552523'),
+('erika.sepulveda@caro.com','Plaza Enrique',1,'Erika Sepulveda','994028284'),
+('dnegrete@yahoo.es','Calle Barreto',1,'Gabriel Fierro','960744225'),
+('lchimbo@rosado.com','Plaza Cortez',1,'Lisa Chimbo','693099935');
 
 insert into PRODUCTO_PROV (id_producto,id_proveedor)
 values
