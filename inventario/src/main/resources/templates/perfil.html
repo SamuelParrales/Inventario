@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,14 +7,23 @@
     <title>Perfil de usuario</title>
 
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <link href="css/nav.css" rel="stylesheet">
+    <link href="css/footer.css" rel="stylesheet" >
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/perfilstyle.css">
+    <style>
+    
+    </style>
 </head>
 <body>
+        <!-- Navegación --> 
+    <div th:replace="/components/nav.html"></div>
     <section class="seccion-perfil-usuario">
         <div class="perfil-usuario-header">
             <div class="perfil-usuario-portada">
                 <div class="perfil-usuario-avatar">
-                    <img src="" alt="img-avatar">
+                    <img src="/img/perfil.jpg" alt="img-avatar">
                     <button type="button" class="boton-avatar">
                         <i class="far fa-image"></i>
                     </button>
@@ -25,18 +34,25 @@
             <div class="perfil-usuario-bio">
                 <h3 class="titulo">Datos del usuario</h3>
             </div>
+            <a class="edit btn btn-primary" href="">Editar</a>
             <div class="perfil-usuario-footer">
                 <ul class="lista-datos">
-                    <li th:text="${#authentication.principal.ci}"><i class="icono fas fa-id-card"></i> Cédula de identidad:</li>
-                    <li th:text="${#authentication.principal.nombres}"><i class="icono fas fa-user"></i> Nombres:</li>
+                    <li><i class="icono fas fa-id-card"></i> Cédula de identidad: <span th:text="${usuario.ci}"></span></li>
+                    <li><i  class="icono fas fa-user"></i> Nombres: <span th:text="${usuario.nombres}"></span></li>
+                    
                 </ul>
                 <ul class="lista-datos">
-                    <li th:text="${#authentication.principal.correo}"><i class="icono fas fa-envelope"></i> Correo: </li>
-                    <li th:text="${#authentication.principal.apellidos}"><i class="icono fas fa-user"></i> Apellidos:</li>
+                    <li><i class="icono fas fa-envelope"></i> Correo: <span th:text="${usuario.correo}"></span></li>
+                    <li><i class="icono fas fa-user"></i> Apellidos: <span th:text="${usuario.apellidos}"></span></li>
                 </ul>
             </div>
         </div>
+ 
     </section>
+        <!-- Footer -->
+        <div th:replace="/components/footer.html"></div>
+        <!-- Bootstrap -->
+        <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 

@@ -6,6 +6,11 @@ html {
     line-height: 1.4;
 }
 
+body
+{
+    background-color: rgb(24, 26, 27);
+}
+
 
 * {
     margin: 0;
@@ -157,4 +162,8 @@ body {
         width: 95%;
     }
     
+}
+.edit
+{
+    font-size: 20px;
 }

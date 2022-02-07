@@ -16,6 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,11 +31,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import devapp.inventario.entities.Categoria;
 import devapp.inventario.entities.Cliente;
+import devapp.inventario.entities.Empleado;
 import devapp.inventario.entities.Producto;
 import devapp.inventario.entities.Proveedor;
 import devapp.inventario.entities.RecepPrest;
 import devapp.inventario.repositories.CategoriaRepository;
 import devapp.inventario.repositories.ClienteRepository;
+import devapp.inventario.repositories.EmpleadoRepository;
 import devapp.inventario.repositories.ProductoRepository;
 import devapp.inventario.repositories.ProveedorRepository;
 import devapp.inventario.repositories.RecepPrestRepository;
@@ -62,6 +66,32 @@ public class EmpleadoController {
 
     @Autowired
     CategoriaRepository categoriaRepo;
+
+    @Autowired
+    EmpleadoRepository empleadoRepo;
+
+    @GetMapping()
+    public String perfil(Model model)
+    {
+        Empleado empleado;
+		try
+		{
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			UserDetails userDetails = null;
+			if (principal instanceof UserDetails) {
+			userDetails = (UserDetails) principal;
+			}
+			String email = userDetails.getUsername();
+			empleado = empleadoRepo.findByCorreo(email);
+            
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+        model.addAttribute("usuario", empleado);
+        return "perfil";
+    }
 
     @GetMapping("/menu") 
     public String menu()

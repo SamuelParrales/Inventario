@@ -3,8 +3,8 @@
     <a  sec:authentication="name" class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
         <li><a class="dropdown-item" href="/empleado/menu"><i class="fab fa-buromobelexperte"></i> Menú</a></li>
-        <li><a sec:authorize="hasRole('ADMIN')" class="dropdown-item" href="#"><i class="fas fa-user-shield"></i> Administración</a></li>
-        <li><a class="dropdown-item" href="#"><i class="fas fa-user-cog"></i> Perfil</a></li>
+        <!-- <li><a sec:authorize="hasRole('ADMIN')" class="dropdown-item" href="#"><i class="fas fa-user-shield"></i> Administración</a></li> -->
+        <li><a class="dropdown-item" href="/empleado"><i class="fas fa-user-cog"></i> Perfil</a></li>
         <li><a class="dropdown-item" href="/logout"><i class="fas fa-door-open"></i> Cerrar Sesión</a></li>
     </ul>
     </li>

@@ -24,14 +24,35 @@ public class ClienteController
 
     @Autowired
     private BCryptPasswordEncoder BCrypt;
-
- 
     
     @Autowired
     ClienteRepository clienterepository;
 
     @Autowired
     RecepPrestRepository reservacionRepo;
+
+    @GetMapping()
+    public String perfil(Model model)
+    {
+        Cliente cliente;
+		try
+		{
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			UserDetails userDetails = null;
+			if (principal instanceof UserDetails) {
+			userDetails = (UserDetails) principal;
+			}
+			String email = userDetails.getUsername();
+			cliente = clienterepository.findByCorreo(email);
+            
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+        model.addAttribute("usuario", cliente);
+        return "perfil";
+    }
 
     @GetMapping("/carrito") 
     public String cart()
